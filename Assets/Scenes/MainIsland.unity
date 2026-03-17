@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 527418401}
   - component: {fileID: 527418400}
   m_Layer: 0
-  m_Name: Tilemap_Island_Base
+  m_Name: Tilemap_BossFortress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1910,7 +1910,7 @@ GameObject:
   - component: {fileID: 1595413747}
   - component: {fileID: 1595413746}
   m_Layer: 0
-  m_Name: Tilemap_Fortress
+  m_Name: Tilemap_Shipwreck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
