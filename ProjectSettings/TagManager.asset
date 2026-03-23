@@ -41,23 +41,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: WaterBackground
     uniqueID: 2207264357
     locked: 0
-  - name: Island
+  - name: Ground
     uniqueID: 2419685615
     locked: 0
-  - name: Terrain
+  - name: WalkInFront
     uniqueID: 460029289
     locked: 0
-  - name: Props
+  - name: Collision
     uniqueID: 3342182701
     locked: 0
-  - name: Characters
+  - name: Player
     uniqueID: 3708811675
     locked: 0
-  - name: UI
+  - name: WalkBehind
     uniqueID: 2214634423
+    locked: 0
+  - name: Decor
+    uniqueID: 2864193811
     locked: 0
   m_RenderingLayers:
   - Default
