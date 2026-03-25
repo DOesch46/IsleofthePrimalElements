@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e31e80c212171614d854942a7e864453, type: 3}
-  m_Name: HubWorld
+  m_Name: MainIsland
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: Elementara Hub
   sceneName: HubWorld
