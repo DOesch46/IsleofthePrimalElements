@@ -47,20 +47,26 @@ TagManager:
   - name: Ground
     uniqueID: 2419685615
     locked: 0
-  - name: WalkInFront
+  - name: FortressBase
     uniqueID: 460029289
     locked: 0
-  - name: Collision
+  - name: Fortress
     uniqueID: 3342182701
     locked: 0
-  - name: Player
+  - name: WalkinFront
     uniqueID: 3708811675
     locked: 0
-  - name: WalkBehind
+  - name: Character
     uniqueID: 2214634423
     locked: 0
-  - name: Decor
+  - name: WalkBehind
     uniqueID: 2864193811
+    locked: 0
+  - name: Enimies
+    uniqueID: 128902159
+    locked: 0
+  - name: UI
+    uniqueID: 2025979161
     locked: 0
   m_RenderingLayers:
   - Default
