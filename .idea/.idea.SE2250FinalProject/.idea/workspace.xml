@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="" />
+    <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Levels/EarthLevel.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Levels/EarthLevel.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Levels/FireLevel.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Levels/FireLevel.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Levels/HubWorld.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Levels/HubWorld.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Levels/LightningLevel.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Levels/LightningLevel.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Levels/WaterLevel.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Levels/WaterLevel.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Levels/ZerathFortress.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Levels/ZerathFortress.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FireLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FireLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,9 +25,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/LevelData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LevelExit.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="3B8csDhvdekiV0IpMl7GcGiFT8q" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -30,6 +40,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "core-progression",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -78,7 +89,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773874346317</updated>
-      <workItem from="1773874352031" duration="9827000" />
+      <workItem from="1773874352031" duration="10237000" />
+      <workItem from="1774459899936" duration="63000" />
     </task>
     <servers />
   </component>

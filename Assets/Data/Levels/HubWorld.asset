@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31e80c212171614d854942a7e864453, type: 3}
   m_Name: HubWorld
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: New Level
-  sceneName: 
-  description: 
+  levelName: Elementara Hub
+  sceneName: HubWorld
+  description: The central island where you choose your path.
   elementType: 0
   bossName: 
   unlockedByDefault: 1

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31e80c212171614d854942a7e864453, type: 3}
   m_Name: LightningLevel
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: New Level
-  sceneName: 
+  levelName: Voltaris Spire
+  sceneName: LightningLevel
   description: 
-  elementType: 0
-  bossName: 
+  elementType: 4
+  bossName: Voltaris
   unlockedByDefault: 1
   requiresAllElements: 0
   requiredLevels: []

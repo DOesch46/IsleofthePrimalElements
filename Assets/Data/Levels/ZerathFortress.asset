@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31e80c212171614d854942a7e864453, type: 3}
   m_Name: ZerathFortress
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: New Level
-  sceneName: 
+  levelName: Zerath's Fortress
+  sceneName: ZerathFortress
   description: 
   elementType: 0
-  bossName: 
+  bossName: Zerath
   unlockedByDefault: 0
   requiresAllElements: 1
   requiredLevels: []
