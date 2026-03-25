@@ -53,20 +53,23 @@ TagManager:
   - name: Fortress
     uniqueID: 3342182701
     locked: 0
-  - name: WalkinFront
+  - name: Decor
     uniqueID: 3708811675
     locked: 0
-  - name: Character
+  - name: BuildingsBase
     uniqueID: 2214634423
     locked: 0
-  - name: WalkBehind
+  - name: Character
     uniqueID: 2864193811
     locked: 0
-  - name: Enimies
+  - name: Enemies
     uniqueID: 128902159
     locked: 0
-  - name: UI
+  - name: BuildingsRoof
     uniqueID: 2025979161
+    locked: 0
+  - name: UI
+    uniqueID: 1839885609
     locked: 0
   m_RenderingLayers:
   - Default
