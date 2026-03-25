@@ -47,11 +47,6 @@ public class CollisionHandler : MonoBehaviour
         groundLayer = LayerMask.NameToLayer(groundLayerName);
     }
 
-    private void Update()
-    {
-        CheckLanding();
-    }
-
     // -------------------------------------------------------------------------
     // Collision Callbacks
     // -------------------------------------------------------------------------
