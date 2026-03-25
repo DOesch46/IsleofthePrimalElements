@@ -49,7 +49,7 @@ public class CollisionHandler : MonoBehaviour
 
     private void Update()
     {
-        CheckLanding();
+        //CheckLanding();
     }
 
     // -------------------------------------------------------------------------

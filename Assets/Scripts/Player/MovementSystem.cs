@@ -61,7 +61,7 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     public void Move(float horizontalInput)
     {
-        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     public void OnJumpReleased()
     {
-        if (rb.velocity.y > 0)
+        if (rb.linearVelocity.y > 0)
             isJumping = false;
     }
 
@@ -95,7 +95,7 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     public Vector2 GetVelocity()
     {
-        return rb.velocity;
+        return rb.linearVelocity;
     }
 
     // -------------------------------------------------------------------------
@@ -142,15 +142,15 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     private void UpdateGravity()
     {
-        if (rb.velocity.y < 0)
+        if (rb.linearVelocity.y < 0)
         {
             // Falling — apply stronger gravity
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallGravityMultiplier - 1) * Time.deltaTime;
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallGravityMultiplier - 1) * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0 && !isJumping)
+        else if (rb.linearVelocity.y > 0 && !isJumping)
         {
             // Jump button released early — cut the jump short
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpGravityMultiplier - 1) * Time.deltaTime;
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpGravityMultiplier - 1) * Time.deltaTime;
         }
     }
 
@@ -159,7 +159,7 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     private void ExecuteJump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         jumpBufferCounter = 0f;
         coyoteTimeCounter = 0f;
         isJumping = true;

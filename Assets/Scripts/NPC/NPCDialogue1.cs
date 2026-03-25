@@ -7,7 +7,7 @@ using System.Collections;
 /// Supports multi-line dialogue sequences with continue-on-press flow.
 /// Reusable across all levels — just set the dialogue lines in the Inspector.
 /// </summary>
-public class NPCDialogue : MonoBehaviour, IInteractable
+public class NPCDialogue1 : MonoBehaviour, IInteractable
 {
     // -------------------------------------------------------------------------
     // Inspector Settings
