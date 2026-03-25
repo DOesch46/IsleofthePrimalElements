@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff173d2ec0eb414aa35ee6ceff85af7, type: 3}
+  m_Name: OldManDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  npcName: Old Man
+  npcPortrait: {fileID: 293257118, guid: 7d915c6cfe24f6047a4cebd3c64206ce, type: 3}
+  dialogueLines:
+  - Hello young Man!
+  - I may need your help
+  typingSpeed: 0.05
+  voiceSound: {fileID: 0}
+  voicePitch: 1
+  autoProgressLines: 0100
+  autoProgressDelay: 1.5
