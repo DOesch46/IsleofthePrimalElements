@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Singleton manager that tracks all game progression.
 /// Persists between scenes and handles saving/loading.
-/// 
+///
 /// Access from anywhere using: GameProgressManager.Instance
 /// </summary>
 public class GameProgressManager : MonoBehaviour
@@ -13,9 +13,9 @@ public class GameProgressManager : MonoBehaviour
     // =====================================================
     // SINGLETON PATTERN
     // =====================================================
-    
+
     private static GameProgressManager instance;
-    
+
     /// <summary>
     /// Access the GameProgressManager from anywhere in your code.
     /// Example: GameProgressManager.Instance.HasElement(ElementType.Fire)
@@ -27,7 +27,7 @@ public class GameProgressManager : MonoBehaviour
             if (instance == null)
             {
                 instance = FindFirstObjectByType<GameProgressManager>();
-                
+
                 if (instance == null)
                 {
                     GameObject managerObject = new GameObject("GameProgressManager");
@@ -42,7 +42,7 @@ public class GameProgressManager : MonoBehaviour
     // =====================================================
     // INSPECTOR SETTINGS
     // =====================================================
-    
+
     [Header("Level Data References")]
     [Tooltip("Drag all your LevelData assets here")]
     [SerializeField] private List<LevelData> allLevels = new List<LevelData>();
@@ -50,20 +50,22 @@ public class GameProgressManager : MonoBehaviour
     [Header("Save Settings")]
     [Tooltip("Should progress be saved to PlayerPrefs?")]
     [SerializeField] private bool enableSaving = true;
-    
+
     [Tooltip("Key prefix for PlayerPrefs saves")]
     [SerializeField] private string saveKeyPrefix = "Elementara_";
 
     [Header("Debug Info (Read Only)")]
     [SerializeField] private List<string> completedLevelNames = new List<string>();
     [SerializeField] private List<string> collectedElementNames = new List<string>();
+    [SerializeField] private int debugCoinCount = 0;
 
     // =====================================================
     // PRIVATE DATA
     // =====================================================
-    
+
     private HashSet<string> completedLevels = new HashSet<string>();
     private HashSet<ElementType> collectedElements = new HashSet<ElementType>();
+    private int totalCoins = 0;
 
     // =====================================================
     // UNITY LIFECYCLE
@@ -80,18 +82,72 @@ public class GameProgressManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-        
+
         if (enableSaving)
         {
             LoadProgress();
         }
-        
+
         Debug.Log("GameProgressManager initialized.");
     }
 
     private void Start()
     {
         UpdateDebugLists();
+    }
+
+    // =====================================================
+    // COIN TRACKING
+    // =====================================================
+
+    /// <summary>
+    /// Adds coins to the player's total.
+    /// Call this from your coin pickup script:
+    /// GameProgressManager.Instance.AddCoins(1);
+    /// </summary>
+    public void AddCoins(int amount)
+    {
+        totalCoins += amount;
+        debugCoinCount = totalCoins;
+        Debug.Log($"Coins collected: {totalCoins}");
+
+        if (enableSaving)
+        {
+            SaveProgress();
+        }
+    }
+
+    /// <summary>
+    /// Removes coins from the player's total.
+    /// Returns true if the player had enough coins.
+    /// </summary>
+    public bool SpendCoins(int amount)
+    {
+        if (totalCoins >= amount)
+        {
+            totalCoins -= amount;
+            debugCoinCount = totalCoins;
+            Debug.Log($"Spent {amount} coins. Remaining: {totalCoins}");
+
+            if (enableSaving)
+            {
+                SaveProgress();
+            }
+            return true;
+        }
+        else
+        {
+            Debug.Log($"Not enough coins! Have {totalCoins}, need {amount}.");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Gets the current coin count.
+    /// </summary>
+    public int GetCoins()
+    {
+        return totalCoins;
     }
 
     // =====================================================
@@ -125,9 +181,9 @@ public class GameProgressManager : MonoBehaviour
         {
             collectedElements.Add(element);
             Debug.Log($"Element collected: {element}!");
-            
+
             UpdateDebugLists();
-            
+
             if (enableSaving)
             {
                 SaveProgress();
@@ -154,9 +210,9 @@ public class GameProgressManager : MonoBehaviour
         {
             collectedElements.Remove(element);
             Debug.Log($"Element lost: {element}! You must reclaim it.");
-            
+
             UpdateDebugLists();
-            
+
             if (enableSaving)
             {
                 SaveProgress();
@@ -247,184 +303,82 @@ public class GameProgressManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Marks a level as incomplete.
-    /// Used if player loses to Zerath and must redo a level.
-    /// </summary>
-    public void ResetLevelCompletion(LevelData levelData)
-    {
-        if (levelData == null)
-        {
-            return;
-        }
-
-        if (completedLevels.Contains(levelData.sceneName))
-        {
-            completedLevels.Remove(levelData.sceneName);
-            Debug.Log($"Level reset: {levelData.levelName}");
-            
-            UpdateDebugLists();
-            
-            if (enableSaving)
-            {
-                SaveProgress();
-            }
-        }
-    }
-
     // =====================================================
-    // LEVEL UNLOCK CHECKING
+    // LEVEL LOADING
     // =====================================================
 
     /// <summary>
-    /// Checks if a level is unlocked and accessible.
-    /// </summary>
-    public bool IsLevelUnlocked(LevelData levelData)
-    {
-        if (levelData == null)
-        {
-            return false;
-        }
-
-        if (levelData.unlockedByDefault)
-        {
-            return true;
-        }
-
-        if (levelData.requiresAllElements)
-        {
-            return HasAllElements();
-        }
-
-        if (levelData.requiredLevels != null && levelData.requiredLevels.Length > 0)
-        {
-            foreach (LevelData required in levelData.requiredLevels)
-            {
-                if (!IsLevelCompleted(required))
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    // =====================================================
-    // SCENE LOADING
-    // =====================================================
-
-    /// <summary>
-    /// Loads a level if it's unlocked.
+    /// Attempts to load a level using its LevelData.
+    /// Called by BiomePortal and LevelExit.
     /// </summary>
     public bool TryLoadLevel(LevelData levelData)
     {
         if (levelData == null)
         {
-            Debug.LogWarning("Tried to load a null level!");
+            Debug.LogWarning("TryLoadLevel: LevelData is null!");
             return false;
         }
 
-        if (!IsLevelUnlocked(levelData))
+        if (string.IsNullOrEmpty(levelData.sceneName))
         {
-            Debug.Log($"Level '{levelData.levelName}' is locked!");
+            Debug.LogWarning($"TryLoadLevel: '{levelData.levelName}' has no scene name assigned!");
             return false;
         }
 
-        Debug.Log($"Loading level: {levelData.levelName}");
+        Debug.Log($"Loading level: {levelData.levelName} (Scene: {levelData.sceneName})");
         SceneManager.LoadScene(levelData.sceneName);
         return true;
     }
 
     /// <summary>
-    /// Loads a scene directly by name.
+    /// Attempts to load a level by scene name directly.
     /// </summary>
-    public void LoadScene(string sceneName)
+    public bool TryLoadLevel(string sceneName)
     {
-        Debug.Log($"Loading scene: {sceneName}");
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            Debug.LogWarning("TryLoadLevel: Scene name is null or empty!");
+            return false;
+        }
+
+        Debug.Log($"Loading level: {sceneName}");
         SceneManager.LoadScene(sceneName);
+        return true;
     }
 
     // =====================================================
-    // LEVEL DATA HELPERS
+    // SAVE / LOAD
     // =====================================================
 
-    /// <summary>
-    /// Finds a LevelData asset by its scene name.
-    /// </summary>
-    public LevelData GetLevelDataBySceneName(string sceneName)
+    private void SaveProgress()
     {
-        foreach (LevelData level in allLevels)
-        {
-            if (level != null && level.sceneName == sceneName)
-            {
-                return level;
-            }
-        }
-        return null;
-    }
+        // Save completed levels
+        string levelsSave = string.Join(",", completedLevels);
+        PlayerPrefs.SetString(saveKeyPrefix + "CompletedLevels", levelsSave);
 
-    /// <summary>
-    /// Finds a LevelData asset by element type.
-    /// </summary>
-    public LevelData GetLevelDataByElement(ElementType element)
-    {
-        foreach (LevelData level in allLevels)
-        {
-            if (level != null && level.elementType == element)
-            {
-                return level;
-            }
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Gets the LevelData for the current scene.
-    /// </summary>
-    public LevelData GetCurrentLevelData()
-    {
-        string currentScene = SceneManager.GetActiveScene().name;
-        return GetLevelDataBySceneName(currentScene);
-    }
-
-    // =====================================================
-    // SAVE / LOAD SYSTEM
-    // =====================================================
-
-    /// <summary>
-    /// Saves current progress to PlayerPrefs.
-    /// </summary>
-    public void SaveProgress()
-    {
-        string completedLevelsString = string.Join(",", completedLevels);
-        PlayerPrefs.SetString(saveKeyPrefix + "CompletedLevels", completedLevelsString);
-
+        // Save collected elements
         List<string> elementStrings = new List<string>();
         foreach (ElementType element in collectedElements)
         {
             elementStrings.Add(element.ToString());
         }
-        string elementsString = string.Join(",", elementStrings);
-        PlayerPrefs.SetString(saveKeyPrefix + "CollectedElements", elementsString);
+        string elementsSave = string.Join(",", elementStrings);
+        PlayerPrefs.SetString(saveKeyPrefix + "CollectedElements", elementsSave);
+
+        // Save coins
+        PlayerPrefs.SetInt(saveKeyPrefix + "TotalCoins", totalCoins);
 
         PlayerPrefs.Save();
-        
-        Debug.Log("Progress saved!");
+        Debug.Log("Progress saved.");
     }
 
-    /// <summary>
-    /// Loads saved progress from PlayerPrefs.
-    /// </summary>
-    public void LoadProgress()
+    private void LoadProgress()
     {
-        completedLevels.Clear();
-        collectedElements.Clear();
-
-        string completedLevelsString = PlayerPrefs.GetString(saveKeyPrefix + "CompletedLevels", "");
-        if (!string.IsNullOrEmpty(completedLevelsString))
+        // Load completed levels
+        string levelsSave = PlayerPrefs.GetString(saveKeyPrefix + "CompletedLevels", "");
+        if (!string.IsNullOrEmpty(levelsSave))
         {
-            string[] levels = completedLevelsString.Split(',');
+            string[] levels = levelsSave.Split(',');
             foreach (string level in levels)
             {
                 if (!string.IsNullOrEmpty(level))
@@ -434,37 +388,25 @@ public class GameProgressManager : MonoBehaviour
             }
         }
 
-        string elementsString = PlayerPrefs.GetString(saveKeyPrefix + "CollectedElements", "");
-        if (!string.IsNullOrEmpty(elementsString))
+        // Load collected elements
+        string elementsSave = PlayerPrefs.GetString(saveKeyPrefix + "CollectedElements", "");
+        if (!string.IsNullOrEmpty(elementsSave))
         {
-            string[] elements = elementsString.Split(',');
-            foreach (string elementName in elements)
+            string[] elements = elementsSave.Split(',');
+            foreach (string element in elements)
             {
-                if (System.Enum.TryParse(elementName, out ElementType element))
+                if (System.Enum.TryParse(element, out ElementType parsedElement))
                 {
-                    collectedElements.Add(element);
+                    collectedElements.Add(parsedElement);
                 }
             }
         }
 
-        UpdateDebugLists();
-        Debug.Log($"Progress loaded! Completed levels: {completedLevels.Count}, Elements: {collectedElements.Count}");
-    }
+        // Load coins
+        totalCoins = PlayerPrefs.GetInt(saveKeyPrefix + "TotalCoins", 0);
+        debugCoinCount = totalCoins;
 
-    /// <summary>
-    /// Deletes all saved progress.
-    /// </summary>
-    public void ClearAllProgress()
-    {
-        completedLevels.Clear();
-        collectedElements.Clear();
-        
-        PlayerPrefs.DeleteKey(saveKeyPrefix + "CompletedLevels");
-        PlayerPrefs.DeleteKey(saveKeyPrefix + "CollectedElements");
-        PlayerPrefs.Save();
-
-        UpdateDebugLists();
-        Debug.Log("All progress cleared!");
+        Debug.Log($"Progress loaded. Levels: {completedLevels.Count}, Elements: {collectedElements.Count}, Coins: {totalCoins}");
     }
 
     // =====================================================
@@ -474,28 +416,39 @@ public class GameProgressManager : MonoBehaviour
     private void UpdateDebugLists()
     {
         completedLevelNames.Clear();
-        completedLevelNames.AddRange(completedLevels);
+        foreach (string level in completedLevels)
+        {
+            completedLevelNames.Add(level);
+        }
 
         collectedElementNames.Clear();
         foreach (ElementType element in collectedElements)
         {
             collectedElementNames.Add(element.ToString());
         }
+
+        debugCoinCount = totalCoins;
     }
 
-    [ContextMenu("Debug: Grant All Elements")]
-    public void DebugGrantAllElements()
+    /// <summary>
+    /// Resets all progress. Use for testing or new game.
+    /// </summary>
+    public void ResetAllProgress()
     {
-        CollectElement(ElementType.Fire);
-        CollectElement(ElementType.Water);
-        CollectElement(ElementType.Earth);
-        CollectElement(ElementType.Lightning);
-        Debug.Log("DEBUG: All elements granted!");
-    }
+        completedLevels.Clear();
+        collectedElements.Clear();
+        totalCoins = 0;
 
-    [ContextMenu("Debug: Clear All Progress")]
-    public void DebugClearProgress()
-    {
-        ClearAllProgress();
+        UpdateDebugLists();
+
+        if (enableSaving)
+        {
+            PlayerPrefs.DeleteKey(saveKeyPrefix + "CompletedLevels");
+            PlayerPrefs.DeleteKey(saveKeyPrefix + "CollectedElements");
+            PlayerPrefs.DeleteKey(saveKeyPrefix + "TotalCoins");
+            PlayerPrefs.Save();
+        }
+
+        Debug.Log("All progress has been reset.");
     }
 }
