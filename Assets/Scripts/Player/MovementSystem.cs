@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
-/// Handles all player movement: horizontal walking, jumping, and gravity tuning.
-/// Works with Rigidbody2D for physics-based movement.
-/// Depends on GroundChecker for grounded state.
+/// Handles top-down 2D player movement using Rigidbody2D.
+/// Moves the player in all four directions based on input.
+/// No gravity, jumping, or ground detection needed for top-down.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovementSystem : MonoBehaviour
@@ -13,27 +14,13 @@ public class MovementSystem : MonoBehaviour
     // -------------------------------------------------------------------------
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 7f;
-
-    [Header("Jumping")]
-    [SerializeField] private float jumpForce = 14f;
-    [SerializeField] private float coyoteTimeDuration = 0.12f;  // grace period after walking off a ledge
-    [SerializeField] private float jumpBufferDuration = 0.12f;  // grace period for pressing jump just before landing
-
-    [Header("Gravity Tuning")]
-    [SerializeField] private float fallGravityMultiplier = 2.5f;    // faster fall for less floatiness
-    [SerializeField] private float lowJumpGravityMultiplier = 2f;   // faster fall when jump is released early
+    [SerializeField] private float moveSpeed = 5f;
 
     // -------------------------------------------------------------------------
     // Private State
     // -------------------------------------------------------------------------
 
     private Rigidbody2D rb;
-    private GroundChecker groundChecker;
-
-    private float coyoteTimeCounter;
-    private float jumpBufferCounter;
-    private bool isJumping;
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -42,14 +29,12 @@ public class MovementSystem : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        groundChecker = GetComponentInChildren<GroundChecker>();
-    }
 
-    private void Update()
-    {
-        UpdateCoyoteTime();
-        UpdateJumpBuffer();
-        UpdateGravity();
+        // Top-down games must have zero gravity
+        rb.gravityScale = 0f;
+
+        // Prevent any accidental rotation from physics collisions
+        rb.freezeRotation = true;
     }
 
     // -------------------------------------------------------------------------
@@ -57,111 +42,40 @@ public class MovementSystem : MonoBehaviour
     // -------------------------------------------------------------------------
 
     /// <summary>
-    /// Moves the player horizontally. Pass the raw axis input (-1, 0, or 1).
+    /// Moves the player in any direction using the full 2D input vector.
+    /// normalized() ensures diagonal movement isn't faster than cardinal.
     /// </summary>
-    public void Move(float horizontalInput)
+    public void Move(Vector2 input)
     {
-        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = input.normalized * moveSpeed;
     }
 
     /// <summary>
-    /// Attempts a jump. Uses coyote time and jump buffer for forgiving feel.
+    /// Stops all movement immediately. Called when no input is held.
     /// </summary>
-    public void TryJump()
+    public void Stop()
     {
-        jumpBufferCounter = jumpBufferDuration;
+        rb.linearVelocity = Vector2.zero;
     }
 
     /// <summary>
-    /// Called when the jump button is released. Enables variable jump height.
-    /// </summary>
-    public void OnJumpReleased()
-    {
-        if (rb.linearVelocity.y > 0)
-            isJumping = false;
-    }
-
-    /// <summary>
-    /// Returns true if the player is on the ground.
-    /// </summary>
-    public bool IsGrounded()
-    {
-        return groundChecker != null && groundChecker.IsGrounded();
-    }
-
-    /// <summary>
-    /// Returns the current velocity of the Rigidbody2D.
-    /// Used by PlayerController for animator state.
+    /// Returns current velocity for use by the animator.
     /// </summary>
     public Vector2 GetVelocity()
     {
         return rb.linearVelocity;
     }
 
-    // -------------------------------------------------------------------------
-    // Private Helpers
-    // -------------------------------------------------------------------------
+    /// <summary>
+    /// Returns current move speed. Useful for progression-based upgrades later.
+    /// </summary>
+    public float GetMoveSpeed() => moveSpeed;
 
     /// <summary>
-    /// Tracks how long since the player was last grounded.
-    /// Allows jumping for a short window after walking off a ledge.
+    /// Allows progression system to upgrade movement speed.
     /// </summary>
-    private void UpdateCoyoteTime()
+    public void SetMoveSpeed(float newSpeed)
     {
-        if (IsGrounded())
-        {
-            coyoteTimeCounter = coyoteTimeDuration;
-            isJumping = false;
-        }
-        else
-        {
-            coyoteTimeCounter -= Time.deltaTime;
-        }
-    }
-
-    /// <summary>
-    /// Handles the jump buffer — executes a buffered jump as soon as the
-    /// player lands, even if they pressed the button slightly early.
-    /// </summary>
-    private void UpdateJumpBuffer()
-    {
-        if (jumpBufferCounter > 0f)
-        {
-            jumpBufferCounter -= Time.deltaTime;
-
-            if (coyoteTimeCounter > 0f && !isJumping)
-            {
-                ExecuteJump();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Applies extra gravity when falling or when jump is released early.
-    /// This makes the jump arc feel intentional rather than floaty.
-    /// </summary>
-    private void UpdateGravity()
-    {
-        if (rb.linearVelocity.y < 0)
-        {
-            // Falling — apply stronger gravity
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallGravityMultiplier - 1) * Time.deltaTime;
-        }
-        else if (rb.linearVelocity.y > 0 && !isJumping)
-        {
-            // Jump button released early — cut the jump short
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpGravityMultiplier - 1) * Time.deltaTime;
-        }
-    }
-
-    /// <summary>
-    /// Applies the jump impulse and resets relevant counters.
-    /// </summary>
-    private void ExecuteJump()
-    {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-        jumpBufferCounter = 0f;
-        coyoteTimeCounter = 0f;
-        isJumping = true;
+        moveSpeed = newSpeed;
     }
 }

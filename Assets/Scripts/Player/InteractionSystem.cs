@@ -1,10 +1,12 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
 /// Detects nearby IInteractable objects and triggers interactions on input.
 /// Uses OverlapCircle to find candidates, picks the closest valid one,
 /// and notifies the UI system to show/hide the interaction prompt.
+///
+/// Interaction is triggered externally by PlayerController via TriggerInteraction(),
+/// which is called from the OnInteract Input System callback.
 /// </summary>
 public class InteractionSystem : MonoBehaviour
 {
@@ -38,12 +40,23 @@ public class InteractionSystem : MonoBehaviour
     private void Update()
     {
         RefreshTarget();
-        HandleInteractInput();
     }
 
     // -------------------------------------------------------------------------
     // Public API
     // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Called by PlayerController when the Interact input fires.
+    /// Triggers interaction on the current closest target if one exists.
+    /// </summary>
+    public void TriggerInteraction()
+    {
+        if (currentTarget != null && currentTarget.IsInteractable)
+        {
+            currentTarget.Interact(playerController);
+        }
+    }
 
     /// <summary>
     /// Returns the currently targeted interactable, or null if none is in range.
@@ -96,17 +109,6 @@ public class InteractionSystem : MonoBehaviour
         }
 
         return closest;
-    }
-
-    /// <summary>
-    /// Reads interact input and calls Interact() on the current target if available.
-    /// </summary>
-    private void HandleInteractInput()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && currentTarget != null && currentTarget.IsInteractable)
-        {
-            currentTarget.Interact(playerController);
-        }
     }
 
     /// <summary>
