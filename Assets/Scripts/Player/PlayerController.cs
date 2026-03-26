@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         movementSystem.Move(moveInput);
-        FlipSpriteToFaceDirection(moveInput);
         UpdateAnimator();
     }
 
