@@ -13036,8 +13036,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 992992507820831070, guid: e635c34e7b8ae3848a7d314a7be91aa6, type: 3}
   m_PrefabInstance: {fileID: 335950234}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &389568975
 GameObject:
   m_ObjectHideFlags: 0
@@ -13207,7 +13205,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
->>>>>>> 94892eeb50ac95b5d625df8bb8933c6a12a77d76
 --- !u!1 &402252328
 GameObject:
   m_ObjectHideFlags: 0
