@@ -1,14 +1,21 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
-/// Central MonoBehaviour for the player. Reads input and delegates
-/// to focused subsystems: MovementSystem, CollisionHandler, InteractionSystem.
+/// Central MonoBehaviour for the player in a top-down 2D game.
 ///
-/// This class does NOT contain physics math, collision logic, or interaction
-/// details — it only coordinates. Each subsystem is independently testable.
+/// Receives Input System callbacks via Send Messages behavior on PlayerInput.
+/// Stores input values and delegates to MovementSystem, CollisionHandler,
+/// and InteractionSystem each frame.
 ///
-/// Setup: Attach this to the Player GameObject. Assign GroundCheck child
-/// transform. The subsystem components should also be on the same GameObject.
+/// Top-down specific: uses full Vector2 input (WASD/arrows in all directions),
+/// no jumping or gravity involved.
+///
+/// REQUIRED SETUP:
+/// - PlayerInput component on this GameObject, Behavior = Send Messages
+/// - Default Map set to "Player"
+/// - Actions asset has: Move (Value/Vector2), Interact (Button)
+/// - Rigidbody2D with Gravity Scale = 0, Freeze Rotation Z checked
 /// </summary>
 [RequireComponent(typeof(MovementSystem))]
 [RequireComponent(typeof(CollisionHandler))]
@@ -31,12 +38,18 @@ public class PlayerController : MonoBehaviour
     private InteractionSystem interactionSystem;
 
     // -------------------------------------------------------------------------
+    // Input State — stored from callbacks, consumed in Update
+    // -------------------------------------------------------------------------
+
+    private Vector2 moveInput;
+
+    // -------------------------------------------------------------------------
     // Animator Parameter Hashes (cached for performance)
     // -------------------------------------------------------------------------
 
-    private static readonly int AnimSpeed        = Animator.StringToHash("Speed");
-    private static readonly int AnimIsGrounded   = Animator.StringToHash("IsGrounded");
-    private static readonly int AnimVerticalVelocity = Animator.StringToHash("VerticalVelocity");
+    private static readonly int AnimSpeedX   = Animator.StringToHash("SpeedX");
+    private static readonly int AnimSpeedY   = Animator.StringToHash("SpeedY");
+    private static readonly int AnimIsMoving = Animator.StringToHash("IsMoving");
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -51,72 +64,63 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        HandleMovementInput();
-        HandleJumpInput();
-        UpdateCollisionState();
+        movementSystem.Move(moveInput);
         UpdateAnimator();
     }
 
     // -------------------------------------------------------------------------
-    // Input Handling — reads raw input and passes values to subsystems
-    // -------------------------------------------------------------------------
-
-    private void HandleMovementInput()
-    {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        movementSystem.Move(horizontalInput);
-
-        FlipSpriteToFaceDirection(horizontalInput);
-    }
-
-    private void HandleJumpInput()
-    {
-        if (Input.GetButtonDown("Jump"))
-            movementSystem.TryJump();
-
-        if (Input.GetButtonUp("Jump"))
-            movementSystem.OnJumpReleased();
-    }
-
-    // -------------------------------------------------------------------------
-    // State Updates
+    // Input System Callbacks (Send Messages)
+    // Unity automatically calls these when the matching action fires.
+    // Method name = "On" + exact action name from your Input Actions asset.
     // -------------------------------------------------------------------------
 
     /// <summary>
-    /// Passes current grounded state to CollisionHandler so it can detect landing.
+    /// Receives Move input as a Vector2 (x = horizontal, y = vertical).
+    /// Called every frame the move value changes.
     /// </summary>
-    private void UpdateCollisionState()
+    private void OnMove(InputValue value)
     {
-        collisionHandler.UpdateGroundedState(movementSystem.IsGrounded());
+        moveInput = value.Get<Vector2>();
     }
 
     /// <summary>
-    /// Pushes velocity and grounded state to the Animator each frame.
+    /// Receives Interact button press.
+    /// </summary>
+    private void OnInteract(InputValue value)
+    {
+        if (value.isPressed)
+            interactionSystem.TriggerInteraction();
+    }
+
+    // -------------------------------------------------------------------------
+    // Private Helpers
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Flips the sprite horizontally to face the direction of movement.
+    /// Only flips on horizontal input to avoid snapping on pure vertical movement.
+    /// </summary>
+    private void FlipSpriteToFaceDirection(Vector2 input)
+    {
+        if (input.x == 0) return;
+
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(input.x);
+        transform.localScale = scale;
+    }
+
+    /// <summary>
+    /// Updates animator parameters each frame if an Animator is assigned.
+    /// SpeedX and SpeedY allow directional walk animations.
+    /// IsMoving is a simple bool for idle vs walk blend.
     /// </summary>
     private void UpdateAnimator()
     {
         if (animator == null) return;
 
         Vector2 velocity = movementSystem.GetVelocity();
-
-        animator.SetFloat(AnimSpeed, Mathf.Abs(velocity.x));
-        animator.SetBool(AnimIsGrounded, movementSystem.IsGrounded());
-        animator.SetFloat(AnimVerticalVelocity, velocity.y);
-    }
-
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
-
-    /// <summary>
-    /// Flips the player sprite to face the direction of movement.
-    /// </summary>
-    private void FlipSpriteToFaceDirection(float horizontalInput)
-    {
-        if (horizontalInput == 0) return;
-
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(horizontalInput);
-        transform.localScale = scale;
+        animator.SetFloat(AnimSpeedX, velocity.x);
+        animator.SetFloat(AnimSpeedY, velocity.y);
+        animator.SetBool(AnimIsMoving, velocity.sqrMagnitude > 0.01f);
     }
 }
