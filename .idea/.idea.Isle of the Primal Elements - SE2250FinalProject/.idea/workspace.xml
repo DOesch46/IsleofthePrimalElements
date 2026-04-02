@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="73eda162-296f-429d-9eb5-fff8f4f8417d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Isle of the Primal Elements - SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Isle of the Primal Elements - SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NPC/NPC.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPC.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/TerradonController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/TerradonController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCombat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCombat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PlayerInputActions.inputactions" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +101,8 @@
       <workItem from="1774457327036" duration="612000" />
       <workItem from="1774460461022" duration="1632000" />
       <workItem from="1774968167504" duration="672000" />
+      <workItem from="1775094274160" duration="6000" />
+      <workItem from="1775094294185" duration="2615000" />
     </task>
     <task id="LOCAL-00001" summary="Added Lightning Animation Script">
       <option name="closed" value="true" />

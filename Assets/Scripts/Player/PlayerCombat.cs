@@ -46,6 +46,7 @@ public class PlayerCombat : MonoBehaviour
     private float cooldownTimer  = 0f;
     private float hitboxTimer    = 0f;
     private bool  hitboxActive   = false;
+    private Vector2 lastMoveDirection = Vector2.right;
 
     private static readonly int AnimAttack = Animator.StringToHash("Attack");
 
@@ -78,6 +79,13 @@ public class PlayerCombat : MonoBehaviour
                 if (attackHitbox != null)
                     attackHitbox.SetActive(false);
             }
+        }
+        //Track last movement direction
+        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+
+        if (rb2d.linearVelocity.sqrMagnitude > 0.1f)
+        {
+            lastMoveDirection = rb2d.linearVelocity.normalized;
         }
     }
 
@@ -112,6 +120,9 @@ public class PlayerCombat : MonoBehaviour
         // Enable hitbox for a brief window
         if (attackHitbox != null)
         {
+            //Move hitbox in front of player based on direction
+            attackHitbox.transform.localPosition = lastMoveDirection * 0.7f;
+            
             attackHitbox.SetActive(true);
             hitboxActive = true;
             hitboxTimer  = hitboxActiveTime;
@@ -140,10 +151,10 @@ public class PlayerCombat : MonoBehaviour
             if (hit.gameObject == gameObject) continue; // don't hit self
 
             // Try to damage a boss
-            TerradonController boss = hit.GetComponent<TerradonController>();
-            if (boss != null)
+            IDamageable damageable = hit.GetComponent<IDamageable>();
+            if (damageable != null)
             {
-                boss.TakeDamage(attackDamage);
+                damageable.TakeDamage(attackDamage);
                 continue;
             }
 
@@ -162,9 +173,11 @@ public class PlayerCombat : MonoBehaviour
     /// </summary>
     public void OnHitboxTrigger(Collider2D other)
     {
-        TerradonController boss = other.GetComponent<TerradonController>();
-        if (boss != null)
-            boss.TakeDamage(attackDamage);
+        Debug.Log("Hit: " + other.name);
+        
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable != null)
+            damageable.TakeDamage(attackDamage);
 
         // Add other enemy/boss types here as you build them out.
     }

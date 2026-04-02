@@ -23,7 +23,7 @@ using System.Collections;
 ///   Stomp       — charges up, then releases a shockwave knockback.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class TerradonController : MonoBehaviour
+public class TerradonController : MonoBehaviour, IDamageable
 {
     // -------------------------------------------------------------------------
     // Inspector — Stats
