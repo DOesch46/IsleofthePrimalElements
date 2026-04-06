@@ -21,6 +21,8 @@ public class MovementSystem : MonoBehaviour
     // -------------------------------------------------------------------------
 
     private Rigidbody2D rb;
+    private Vector2 currentDirection;
+    private Vector2 previousInput;
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -47,7 +49,41 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     public void Move(Vector2 input)
     {
-        rb.linearVelocity = input.normalized * moveSpeed;
+        // Lock to cardinal directions — last pressed key wins
+        if (input.sqrMagnitude < 0.01f)
+        {
+            currentDirection = Vector2.zero;
+            previousInput = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        // Find which axis just changed (newly pressed)
+        bool xNew = Mathf.Abs(input.x) > 0.1f && Mathf.Abs(previousInput.x) < 0.1f;
+        bool yNew = Mathf.Abs(input.y) > 0.1f && Mathf.Abs(previousInput.y) < 0.1f;
+
+        if (xNew && !yNew)
+            currentDirection = new Vector2(Mathf.Sign(input.x), 0f);
+        else if (yNew && !xNew)
+            currentDirection = new Vector2(0f, Mathf.Sign(input.y));
+        else if (xNew && yNew)
+        {
+            // Both pressed same frame — pick stronger
+            if (Mathf.Abs(input.x) >= Mathf.Abs(input.y))
+                currentDirection = new Vector2(Mathf.Sign(input.x), 0f);
+            else
+                currentDirection = new Vector2(0f, Mathf.Sign(input.y));
+        }
+        // else: nothing new pressed, keep current direction
+
+        // If the held key for current direction was released, switch to the other
+        if (currentDirection.x != 0f && Mathf.Abs(input.x) < 0.1f)
+            currentDirection = new Vector2(0f, Mathf.Sign(input.y));
+        else if (currentDirection.y != 0f && Mathf.Abs(input.y) < 0.1f)
+            currentDirection = new Vector2(Mathf.Sign(input.x), 0f);
+
+        previousInput = input;
+        rb.linearVelocity = currentDirection * moveSpeed;
     }
 
     /// <summary>
@@ -64,6 +100,14 @@ public class MovementSystem : MonoBehaviour
     public Vector2 GetVelocity()
     {
         return rb.linearVelocity;
+    }
+
+    /// <summary>
+    /// Returns the snapped cardinal direction for animator use.
+    /// </summary>
+    public Vector2 GetDirection()
+    {
+        return currentDirection;
     }
 
     /// <summary>
