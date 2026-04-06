@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Detection")]
     [SerializeField] private float detectionRange = 8f;
-    [SerializeField] private float stopDistance = 1.2f;
+    [SerializeField] private float stopDistance = 0.6f;
 
     // -------------------------------------------------------------------------
     // Private State

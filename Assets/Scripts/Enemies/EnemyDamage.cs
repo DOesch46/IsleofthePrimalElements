@@ -1,12 +1,13 @@
 using UnityEngine;
 
 /// <summary>
-/// Deals contact damage to the player when the enemy touches them.
+/// Deals contact damage to the player when the enemy is close enough.
+/// Uses distance checking instead of collider callbacks for reliability
+/// with Kinematic Rigidbody2D enemies.
 ///
 /// SETUP:
 /// 1. Attach to the enemy GameObject (alongside EnemyAI and EnemyHealth).
-/// 2. Requires a Collider2D on the enemy (non-trigger for physics, or trigger for overlap).
-/// 3. Tag the Player as "Player" and ensure it has PlayerHealth.
+/// 2. Tag the Player as "Player" and ensure it has PlayerHealth.
 /// </summary>
 public class EnemyDamage : MonoBehaviour
 {
@@ -17,57 +18,49 @@ public class EnemyDamage : MonoBehaviour
     [Header("Damage Settings")]
     [SerializeField] private float contactDamage = 10f;
     [SerializeField] private float damageCooldown = 1f;
+    [SerializeField] private float damageRange = 0.8f;
 
     // -------------------------------------------------------------------------
     // Private State
     // -------------------------------------------------------------------------
 
     private float cooldownTimer = 0f;
+    private Transform player;
+    private PlayerHealth playerHealth;
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
     // -------------------------------------------------------------------------
 
+    private void Start()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+            playerHealth = playerObj.GetComponent<PlayerHealth>();
+            Debug.Log($"EnemyDamage: Found player. PlayerHealth: {playerHealth != null}");
+        }
+        else
+        {
+            Debug.LogWarning("EnemyDamage: No Player found!");
+        }
+    }
+
     private void Update()
     {
         if (cooldownTimer > 0f)
             cooldownTimer -= Time.deltaTime;
-    }
 
-    // -------------------------------------------------------------------------
-    // Collision Detection (supports both trigger and non-trigger colliders)
-    // -------------------------------------------------------------------------
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        TryDamagePlayer(collision.gameObject);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        TryDamagePlayer(collision.gameObject);
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        TryDamagePlayer(other.gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        TryDamagePlayer(other.gameObject);
-    }
-
-    private void TryDamagePlayer(GameObject other)
-    {
+        if (player == null || playerHealth == null) return;
         if (cooldownTimer > 0f) return;
-        if (!other.CompareTag("Player")) return;
 
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-        if (playerHealth == null) return;
-
-        playerHealth.TakeDamage(contactDamage);
-        cooldownTimer = damageCooldown;
-        Debug.Log($"Enemy dealt {contactDamage} damage to player!");
+        float distance = Vector2.Distance(transform.position, player.position);
+        if (distance <= damageRange)
+        {
+            playerHealth.TakeDamage(contactDamage);
+            cooldownTimer = damageCooldown;
+            Debug.Log($"Enemy dealt {contactDamage} damage to player!");
+        }
     }
 }
