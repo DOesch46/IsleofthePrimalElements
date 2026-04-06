@@ -64,6 +64,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameStateManager.IsUIOpen)
+        {
+            movementSystem.Stop();
+            return;
+        }
+
         movementSystem.Move(moveInput);
         UpdateAnimator();
     }
