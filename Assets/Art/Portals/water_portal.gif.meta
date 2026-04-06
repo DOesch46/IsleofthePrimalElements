@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6463262bb9d5947478e8be995eef2064
+guid: dcf55e5b96c94974f93c4a9716b8936e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7424053242836965343
-    second: water_portal_0
+      213: -2932041653265702405
+    second: WaterPortal-ezgif.com-rotate_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,10 +100,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: water_portal_0
+      name: WaterPortal-ezgif.com-rotate_0
       rect:
         serializedVersion: 2
-        x: 130
+        x: 138
         y: 29
         width: 230
         height: 440
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 128ad13f8e678f890800000000000000
-      internalID: -7424053242836965343
+      spriteID: bf1e276a6ab4f47d0800000000000000
+      internalID: -2932041653265702405
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      water_portal_0: -7424053242836965343
+      WaterPortal-ezgif.com-rotate_0: -2932041653265702405
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
