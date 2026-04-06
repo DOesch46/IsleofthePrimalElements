@@ -13,7 +13,5 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventorySO
   ownedItems:
-  - {fileID: 11400000, guid: 1ae05ca2213074279a48535370d60666, type: 2}
-  - {fileID: 11400000, guid: 4e288a40b49d449ca88c240e1e552a7b, type: 2}
-  - {fileID: 11400000, guid: f22c3bcacc72b4888980a327af98f100, type: 2}
   - {fileID: 11400000, guid: 55214b0836f54457393909ac87de33de, type: 2}
+  - {fileID: 11400000, guid: 1ae05ca2213074279a48535370d60666, type: 2}
