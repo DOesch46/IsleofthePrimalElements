@@ -302,6 +302,47 @@ public class GameProgressManager : MonoBehaviour
             SaveProgress();
         }
     }
+    
+    // =====================================================
+    // LEVEL UNLOCK CHECKING
+    // =====================================================
+
+    /// <summary>
+    /// Checks if a level is unlocked and accessible.
+    /// </summary>
+    public bool IsLevelUnlocked(LevelData levelData)
+    {
+        if (levelData == null)
+        {
+            return false;
+        }
+
+        // Check if unlocked by default (elemental levels and hub)
+        if (levelData.unlockedByDefault)
+        {
+            return true;
+        }
+
+        // Check if requires all elements (Zerath's Fortress)
+        if (levelData.requiresAllElements)
+        {
+            return HasAllElements();
+        }
+
+        // Check if required levels are completed
+        if (levelData.requiredLevels != null && levelData.requiredLevels.Length > 0)
+        {
+            foreach (LevelData required in levelData.requiredLevels)
+            {
+                if (!IsLevelCompleted(required))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     // =====================================================
     // LEVEL LOADING

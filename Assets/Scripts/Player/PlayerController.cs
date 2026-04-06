@@ -7,15 +7,6 @@ using UnityEngine.InputSystem;
 /// Receives Input System callbacks via Send Messages behavior on PlayerInput.
 /// Stores input values and delegates to MovementSystem, CollisionHandler,
 /// and InteractionSystem each frame.
-///
-/// Top-down specific: uses full Vector2 input (WASD/arrows in all directions),
-/// no jumping or gravity involved.
-///
-/// REQUIRED SETUP:
-/// - PlayerInput component on this GameObject, Behavior = Send Messages
-/// - Default Map set to "Player"
-/// - Actions asset has: Move (Value/Vector2), Interact (Button)
-/// - Rigidbody2D with Gravity Scale = 0, Freeze Rotation Z checked
 /// </summary>
 [RequireComponent(typeof(MovementSystem))]
 [RequireComponent(typeof(CollisionHandler))]
@@ -23,33 +14,21 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     // -------------------------------------------------------------------------
-    // Inspector References
-    // -------------------------------------------------------------------------
-
-    [Header("Animator (optional)")]
-    [SerializeField] private Animator animator;
-
-    // -------------------------------------------------------------------------
     // Subsystem References
     // -------------------------------------------------------------------------
 
     private MovementSystem movementSystem;
     private CollisionHandler collisionHandler;
     private InteractionSystem interactionSystem;
+    private Animator animator;
 
     // -------------------------------------------------------------------------
-    // Input State — stored from callbacks, consumed in Update
+    // Input State
     // -------------------------------------------------------------------------
 
     private Vector2 moveInput;
-
-    // -------------------------------------------------------------------------
-    // Animator Parameter Hashes (cached for performance)
-    // -------------------------------------------------------------------------
-
-    private static readonly int AnimSpeedX   = Animator.StringToHash("SpeedX");
-    private static readonly int AnimSpeedY   = Animator.StringToHash("SpeedY");
-    private static readonly int AnimIsMoving = Animator.StringToHash("IsMoving");
+    private string currentAnimState = "";
+    private string characterPrefix = "Blue";
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -60,6 +39,20 @@ public class PlayerController : MonoBehaviour
         movementSystem    = GetComponent<MovementSystem>();
         collisionHandler  = GetComponent<CollisionHandler>();
         interactionSystem = GetComponent<InteractionSystem>();
+        animator          = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        // Re-grab animator after CharacterLoader swaps the controller
+        animator = GetComponent<Animator>();
+
+        // Determine character prefix
+        int selected = PlayerPrefs.GetInt("SelectedCharacter", 0);
+        characterPrefix = selected == 0 ? "Blue" : "Red";
+
+        // Play idle immediately
+        PlayAnim(characterPrefix + "Idle");
     }
 
     private void Update()
@@ -76,22 +69,13 @@ public class PlayerController : MonoBehaviour
 
     // -------------------------------------------------------------------------
     // Input System Callbacks (Send Messages)
-    // Unity automatically calls these when the matching action fires.
-    // Method name = "On" + exact action name from your Input Actions asset.
     // -------------------------------------------------------------------------
 
-    /// <summary>
-    /// Receives Move input as a Vector2 (x = horizontal, y = vertical).
-    /// Called every frame the move value changes.
-    /// </summary>
     private void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
 
-    /// <summary>
-    /// Receives Interact button press.
-    /// </summary>
     private void OnInteract(InputValue value)
     {
         if (value.isPressed)
@@ -99,34 +83,36 @@ public class PlayerController : MonoBehaviour
     }
 
     // -------------------------------------------------------------------------
-    // Private Helpers
+    // Animation — uses animator.Play() directly, no transitions needed
     // -------------------------------------------------------------------------
 
-    /// <summary>
-    /// Flips the sprite horizontally to face the direction of movement.
-    /// Only flips on horizontal input to avoid snapping on pure vertical movement.
-    /// </summary>
-    private void FlipSpriteToFaceDirection(Vector2 input)
+    private void PlayAnim(string stateName)
     {
-        if (input.x == 0) return;
-
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(input.x);
-        transform.localScale = scale;
+        if (currentAnimState == stateName) return;
+        currentAnimState = stateName;
+        animator.Play(stateName, 0, 0f);
     }
 
-    /// <summary>
-    /// Updates animator parameters each frame if an Animator is assigned.
-    /// SpeedX and SpeedY allow directional walk animations.
-    /// IsMoving is a simple bool for idle vs walk blend.
-    /// </summary>
     private void UpdateAnimator()
     {
-        if (animator == null) return;
+        if (animator == null || animator.runtimeAnimatorController == null) return;
 
-        Vector2 velocity = movementSystem.GetVelocity();
-        animator.SetFloat(AnimSpeedX, velocity.x);
-        animator.SetFloat(AnimSpeedY, velocity.y);
-        animator.SetBool(AnimIsMoving, velocity.sqrMagnitude > 0.01f);
+        Vector2 direction = movementSystem.GetDirection();
+        bool isMoving = direction.sqrMagnitude > 0.01f;
+
+        if (!isMoving)
+        {
+            PlayAnim(characterPrefix + "Idle");
+            return;
+        }
+
+        if (direction.y > 0.1f)
+            PlayAnim(characterPrefix + "WalkUp");
+        else if (direction.y < -0.1f)
+            PlayAnim(characterPrefix + "WalkDown");
+        else if (direction.x < -0.1f)
+            PlayAnim(characterPrefix + "WalkLeft");
+        else if (direction.x > 0.1f)
+            PlayAnim(characterPrefix + "WalkRight");
     }
 }
