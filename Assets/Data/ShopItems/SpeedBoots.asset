@@ -17,5 +17,5 @@ MonoBehaviour:
   icon: {fileID: 0}
   price: 50
   effectType: 0
-  effectValue: 2
+  effectValue: 10
   abilityId: 

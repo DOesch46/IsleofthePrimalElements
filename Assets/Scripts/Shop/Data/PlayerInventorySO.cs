@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "PlayerInventory", menuName = "Player/Inventory")]
+
 public class PlayerInventorySO : ScriptableObject
 {
     public List<ShopItemSO> ownedItems = new List<ShopItemSO>();
@@ -17,6 +18,11 @@ public class PlayerInventorySO : ScriptableObject
 
         ownedItems.Add(item);
         OnItemAdded?.Invoke(item);
+    }
+    
+    public void ResetInventory()
+    {
+        ownedItems.Clear();
     }
 
     public void Clear()

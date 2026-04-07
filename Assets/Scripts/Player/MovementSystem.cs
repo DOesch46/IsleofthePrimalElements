@@ -109,15 +109,12 @@ public class MovementSystem : MonoBehaviour
     {
         return currentDirection;
     }
-
-    /// <summary>
+    
     /// Returns current move speed. Useful for progression-based upgrades later.
-    /// </summary>
     public float GetMoveSpeed() => moveSpeed;
 
-    /// <summary>
+
     /// Allows progression system to upgrade movement speed.
-    /// </summary>
     public void SetMoveSpeed(float newSpeed)
     {
         moveSpeed = newSpeed;

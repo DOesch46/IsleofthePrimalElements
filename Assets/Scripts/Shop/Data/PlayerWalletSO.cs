@@ -12,6 +12,11 @@ public class PlayerWalletSO : ScriptableObject
     public event Action<int> OnCoinsChanged;
 
     public bool CanAfford(int amount) => coins >= amount;
+    
+    public void ResetWallet(int startingCoins = 200)
+    {
+        coins = startingCoins;
+    }
 
     public void AddCoins(int amount)
     {
