@@ -40,12 +40,14 @@ public class PlayerStats : MonoBehaviour
     public void AddMaxHealthBonus(float amount)
     {
         bonusMaxHealth += amount;
+        PushStatsToSystems();
         OnStatsChanged?.Invoke();
     }
 
     public void AddAttackBonus(float amount)
     {
         bonusAttack += amount;
+        PushStatsToSystems();
         OnStatsChanged?.Invoke();
     }
 
@@ -80,5 +82,13 @@ public class PlayerStats : MonoBehaviour
         MovementSystem movement = GetComponent<MovementSystem>();
         if (movement != null)
             movement.SetMoveSpeed(Speed);
+
+        PlayerCombat combat = GetComponent<PlayerCombat>();
+        if (combat != null)
+            combat.SetAttackDamage(Attack);
+
+        PlayerHealth health = GetComponent<PlayerHealth>();
+        if (health != null)
+            health.SetMaxHealth(MaxHealth);
     }
 }

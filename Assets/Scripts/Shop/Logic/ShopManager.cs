@@ -20,6 +20,15 @@ public class ShopManager : MonoBehaviour
     public bool CanAfford(ShopItemSO item) => wallet.CanAfford(item.price);
     public bool AlreadyOwned(ShopItemSO item) => inventory.HasItem(item);
 
+    
+    private void Awake()
+{
+    // Reset SO data at start of play session (editor safety)
+    #if UNITY_EDITOR
+    inventory.ResetInventory();
+    wallet.ResetWallet(200);
+    #endif
+}
     public bool TryPurchase(ShopItemSO item)
     {
         if (inventory.HasItem(item))

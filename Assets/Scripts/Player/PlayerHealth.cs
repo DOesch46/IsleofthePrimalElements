@@ -1,18 +1,6 @@
 using UnityEngine;
 using System;
 
-/// <summary>
-/// Simple player health component.
-///
-/// SETUP:
-/// - Attach to the same Player GameObject as PlayerController.
-/// - Wire up the HealthBarUI in the Inspector if you have one.
-/// - Bosses and hazards call TakeDamage(amount) directly.
-///
-/// NOTE: If you already have a PlayerHealth.cs in your project, skip this file.
-/// Just make sure your existing version has a public TakeDamage(float) method
-/// so FallingRock and TerradonController can call it.
-/// </summary>
 public class PlayerHealth : MonoBehaviour
 {
     // -------------------------------------------------------------------------
@@ -21,18 +9,13 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private float maxHealth       = 100f;
-    [SerializeField] private float invincibleTime  = 0.8f;   // brief invincibility after a hit
-
-    // HealthBarUI reference removed — wire up via the OnHealthChanged event instead
+    [SerializeField] private float invincibleTime  = 0.8f;
 
     // -------------------------------------------------------------------------
     // Events
     // -------------------------------------------------------------------------
 
-    /// <summary>Fired when health changes. Passes (current, max).</summary>
     public event Action<float, float> OnHealthChanged;
-
-    /// <summary>Fired when the player reaches 0 HP.</summary>
     public event Action OnDied;
 
     // -------------------------------------------------------------------------
@@ -67,10 +50,6 @@ public class PlayerHealth : MonoBehaviour
     // Public API
     // -------------------------------------------------------------------------
 
-    /// <summary>
-    /// Deal damage to the player.
-    /// Called by FallingRock, TerradonController shockwave, hazard zones, etc.
-    /// </summary>
     public void TakeDamage(float amount)
     {
         if (isDead || invincibleTimer > 0f) return;
@@ -86,7 +65,6 @@ public class PlayerHealth : MonoBehaviour
             Die();
     }
 
-    /// <summary>Heals the player up to maxHealth.</summary>
     public void Heal(float amount)
     {
         if (isDead) return;
@@ -103,6 +81,26 @@ public class PlayerHealth : MonoBehaviour
     public float GetHealthFraction() => currentHealth / maxHealth;
     public bool  IsDead()            => isDead;
 
+    /// <summary>
+    /// Called by PlayerStats to apply max health bonus from shop items.
+    /// Increases max health and heals to the new max.
+    /// </summary>
+    public void SetMaxHealth(float newMax)
+    {
+        float oldMax = maxHealth;
+        maxHealth = newMax;
+
+        // Heal by the amount max health increased
+        float increase = newMax - oldMax;
+        if (increase > 0f)
+            currentHealth += increase;
+
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        RefreshUI();
+    }
+
     // -------------------------------------------------------------------------
     // Private Helpers
     // -------------------------------------------------------------------------
@@ -112,7 +110,6 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         OnDied?.Invoke();
         Debug.Log("Player died!");
-        // Hook GameManager.Instance.OnPlayerDeath() here if you have one
     }
 
     private void RefreshUI()

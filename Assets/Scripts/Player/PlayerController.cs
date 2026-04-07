@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private MovementSystem movementSystem;
     private CollisionHandler collisionHandler;
     private InteractionSystem interactionSystem;
+    private DashSystem dashSystem;
     private Animator animator;
 
     // -------------------------------------------------------------------------
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         movementSystem    = GetComponent<MovementSystem>();
         collisionHandler  = GetComponent<CollisionHandler>();
         interactionSystem = GetComponent<InteractionSystem>();
+        dashSystem        = GetComponent<DashSystem>();
         animator          = GetComponent<Animator>();
     }
 
@@ -63,6 +65,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        // Don't override dash velocity with normal movement
+        if (dashSystem != null && dashSystem.IsDashing)
+            return;
+
         movementSystem.Move(moveInput);
         UpdateAnimator();
     }
@@ -80,6 +86,12 @@ public class PlayerController : MonoBehaviour
     {
         if (value.isPressed)
             interactionSystem.TriggerInteraction();
+    }
+
+    private void OnDash(InputValue value)
+    {
+        if (value.isPressed && dashSystem != null)
+            dashSystem.TryDash();
     }
 
     // -------------------------------------------------------------------------
