@@ -44,6 +44,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // -------------------------------------------------------------------------
 
     private float currentHealth;
+    private bool isInvulnerable = false;
+    private Animator animator;
+    private bool isDead = false;
+
+    // Golem controller parameter hashes
+    private static readonly int AnimHit   = Animator.StringToHash("Hit");
+    private static readonly int AnimDeath = Animator.StringToHash("Death");
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -52,6 +59,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void Awake()
     {
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     // -------------------------------------------------------------------------
@@ -60,6 +68,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (isInvulnerable || isDead) return;
+
         currentHealth -= damage;
         Debug.Log($"{gameObject.name} took {damage} damage. Health: {currentHealth}/{maxHealth}");
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -68,6 +78,24 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         {
             Die();
         }
+        else
+        {
+            // Play hit animation
+            if (animator != null)
+                animator.SetTrigger(AnimHit);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Invulnerability — used by BossCutsceneTrigger to protect boss
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Makes this enemy immune to all damage.
+    /// </summary>
+    public void SetInvulnerable(bool invulnerable)
+    {
+        isInvulnerable = invulnerable;
     }
 
     // -------------------------------------------------------------------------
@@ -76,7 +104,19 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        isDead = true;
         Debug.Log($"{gameObject.name} died!");
+
+        // Stop enemy from moving/attacking
+        EnemyAI ai = GetComponent<EnemyAI>();
+        if (ai != null) ai.enabled = false;
+
+        EnemyDamage dmg = GetComponent<EnemyDamage>();
+        if (dmg != null) dmg.enabled = false;
+
+        // Play death animation
+        if (animator != null)
+            animator.SetTrigger(AnimDeath);
 
         // Drop coins
         DropCoins();
@@ -90,6 +130,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         // Fire event for any listeners
         OnEnemyDied?.Invoke(gameObject);
 
+        // Wait for death animation then destroy
+        StartCoroutine(DestroyAfterDeathAnim());
+    }
+
+    private System.Collections.IEnumerator DestroyAfterDeathAnim()
+    {
+        // Wait for death animation to play
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 

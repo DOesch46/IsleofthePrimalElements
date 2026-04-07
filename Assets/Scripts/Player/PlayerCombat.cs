@@ -108,18 +108,33 @@ public class PlayerCombat : MonoBehaviour
 
     private void FallbackOverlapAttack()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.2f);
+        // Attack in the direction the player is facing, not a circle around them
+        Vector2 attackPos = (Vector2)transform.position + lastMoveDirection * 0.7f;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos, 0.5f);
+
+        // Only damage the closest enemy, not everything in range
+        float closestDist = float.MaxValue;
+        IDamageable closestTarget = null;
+
         foreach (Collider2D hit in hits)
         {
             if (hit.gameObject == gameObject) continue;
+            if (hit.transform.IsChildOf(transform)) continue;
 
             IDamageable damageable = hit.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.TakeDamage(attackDamage);
-                continue;
+                float dist = Vector2.Distance(transform.position, hit.transform.position);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestTarget = damageable;
+                }
             }
         }
+
+        if (closestTarget != null)
+            closestTarget.TakeDamage(attackDamage);
     }
 
     // -------------------------------------------------------------------------

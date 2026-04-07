@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelect.unity
     guid: 8e4670055963f4943af5387ea2351bf0
   - enabled: 1
+    path: Assets/Scenes/Levels/LightningLevel.unity
+    guid: 00e42ee0a4b596d438783661f434e540
+  - enabled: 1
     path: Assets/Scenes/HouseScene.unity
     guid: 5152e3f3b05ef412e8068dc3aa4db23e
   - enabled: 1
