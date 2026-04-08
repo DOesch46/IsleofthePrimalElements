@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 63290372532297826}
   - component: {fileID: 5200868442600228855}
   - component: {fileID: 760333081691566507}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514095525815be3468e89e002c75a4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementSystem
-  moveSpeed: 5
+  moveSpeed: 3
 --- !u!114 &7371413604887642107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddf9e1841c2c294f9b3454f8cafc959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionSystem
-  detectionRadius: 5
+  detectionRadius: 3
   interactableLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -260,7 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3ec4f371cd66c147b43d930c539eb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  animator: {fileID: 63290372532297826}
 --- !u!114 &1364251235442529285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,5 +327,6 @@ MonoBehaviour:
   attackDamage: 20
   attackCooldown: 0.5
   hitboxActiveTime: 0.15
+  attackRange: 4
   attackHitbox: {fileID: 0}
   animator: {fileID: 0}

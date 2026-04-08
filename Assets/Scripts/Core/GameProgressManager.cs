@@ -490,6 +490,9 @@ public class GameProgressManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
+        // Reset all shop upgrades and potions
+        ShopManager.ResetAllUpgrades();
+
         Debug.Log("All progress has been reset.");
     }
 }
