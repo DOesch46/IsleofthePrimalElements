@@ -16,6 +16,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // Inspector Settings
     // -------------------------------------------------------------------------
 
+    [SerializeField] private bool isBoss = false;
+    [SerializeField] private ElementType elementReward;
+    
     [Header("Health")]
     [SerializeField] private float maxHealth = 50f;
 
@@ -104,6 +107,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
+
         isDead = true;
         Debug.Log($"{gameObject.name} died!");
 
@@ -118,14 +122,25 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (animator != null)
             animator.SetTrigger(AnimDeath);
 
-        // Drop coins
-        DropCoins();
+       // Drop coins
+DropCoins();
 
-        // Notify the level objective system
-        if (LevelObjective.Instance != null)
-        {
-            LevelObjective.Instance.EnemyDefeated();
-        }
+// ADD THIS (ABILITY UNLOCK)
+Debug.Log("isBoss = " + isBoss);
+
+if (isBoss)
+{
+    Debug.Log("UNLOCKING ABILITY");
+    if (isBoss)
+{
+    GameProgressManager.Instance.CollectElement(elementReward);
+}
+}
+// Notify the level objective system
+if (LevelObjective.Instance != null)
+{
+    LevelObjective.Instance.EnemyDefeated();
+}
 
         // Fire event for any listeners
         OnEnemyDied?.Invoke(gameObject);

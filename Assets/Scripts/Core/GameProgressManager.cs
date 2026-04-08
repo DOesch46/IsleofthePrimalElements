@@ -15,7 +15,32 @@ public class GameProgressManager : MonoBehaviour
     // =====================================================
 
     private static GameProgressManager instance;
+    
+    //Ability unlock state
 
+    public bool fireUnlocked = false;
+    public bool waterUnlocked = false;
+    public bool earthUnlocked = false;
+    public bool lightningUnlocked = false;
+
+    public void UnlockAbility(string ability)
+{
+    switch (ability)
+    {
+        case "fire":
+            fireUnlocked = true;
+            break;
+        case "water":
+            waterUnlocked = true;
+            break;
+        case "earth":
+            earthUnlocked = true;
+            break;
+        case "lightning":
+            lightningUnlocked = true;
+            break;
+    }
+}
     /// <summary>
     /// Access the GameProgressManager from anywhere in your code.
     /// Example: GameProgressManager.Instance.HasElement(ElementType.Fire)
@@ -93,6 +118,7 @@ public class GameProgressManager : MonoBehaviour
 
     private void Start()
     {
+        ResetAllProgress();
         UpdateDebugLists();
     }
 
@@ -492,4 +518,20 @@ public class GameProgressManager : MonoBehaviour
 
         Debug.Log("All progress has been reset.");
     }
+    private void OnEnable()
+{
+    ItemPickup.OnItemCollected += HandleItemCollected;
+}
+
+private void OnDisable()
+{
+    ItemPickup.OnItemCollected -= HandleItemCollected;
+}
+private void HandleItemCollected(ItemPickup.ItemData item)
+{
+    if (item.itemName.ToLower().Contains("coin"))
+    {
+        AddCoins(1);
+    }
+}
 }
