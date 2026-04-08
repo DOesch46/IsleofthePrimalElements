@@ -42,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
+        
         if (invincibleTimer > 0f)
             invincibleTimer -= Time.deltaTime;
     }

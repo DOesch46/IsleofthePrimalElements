@@ -32,9 +32,8 @@ public class EnemyAI : MonoBehaviour
     private Transform player;
     private Animator animator;
 
-    private static readonly int AnimMoveX = Animator.StringToHash("MoveX");
-    private static readonly int AnimMoveY = Animator.StringToHash("MoveY");
-    private static readonly int AnimSpeed = Animator.StringToHash("Speed");
+    // Golem controller parameters
+    private static readonly int AnimRun = Animator.StringToHash("Run");
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -67,6 +66,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
+        // Don't move if currently attacking
+        EnemyDamage dmg = GetComponent<EnemyDamage>();
+        if (dmg != null && dmg.IsAttacking)
+        {
+            UpdateAnimator(Vector2.zero);
+            return;
+        }
+
         Vector2 direction = (player.position - transform.position);
         float distance = direction.magnitude;
 
@@ -90,9 +97,16 @@ public class EnemyAI : MonoBehaviour
     {
         if (animator == null) return;
 
-        animator.SetFloat(AnimMoveX, direction.x);
-        animator.SetFloat(AnimMoveY, direction.y);
-        animator.SetFloat(AnimSpeed, direction.sqrMagnitude);
+        bool isMoving = direction.sqrMagnitude > 0.01f;
+        animator.SetBool(AnimRun, isMoving);
+
+        // Flip sprite to face movement direction
+        if (Mathf.Abs(direction.x) > 0.01f)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
+            transform.localScale = scale;
+        }
     }
 
     // -------------------------------------------------------------------------

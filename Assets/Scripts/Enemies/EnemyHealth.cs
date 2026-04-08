@@ -16,6 +16,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // Inspector Settings
     // -------------------------------------------------------------------------
 
+    [SerializeField] private bool isBoss = false;
+    [SerializeField] private ElementType elementReward;
+    
     [Header("Health")]
     [SerializeField] private float maxHealth = 50f;
 
@@ -44,6 +47,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // -------------------------------------------------------------------------
 
     private float currentHealth;
+    private bool isInvulnerable = false;
+    private Animator animator;
+    private bool isDead = false;
+
+    // Golem controller parameter hashes
+    private static readonly int AnimHit   = Animator.StringToHash("Hit");
+    private static readonly int AnimDeath = Animator.StringToHash("Death");
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -52,6 +62,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void Awake()
     {
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     // -------------------------------------------------------------------------
@@ -60,6 +71,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (isInvulnerable || isDead) return;
+
         currentHealth -= damage;
         Debug.Log($"{gameObject.name} took {damage} damage. Health: {currentHealth}/{maxHealth}");
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -68,6 +81,24 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         {
             Die();
         }
+        else
+        {
+            // Play hit animation
+            if (animator != null)
+                animator.SetTrigger(AnimHit);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Invulnerability — used by BossCutsceneTrigger to protect boss
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Makes this enemy immune to all damage.
+    /// </summary>
+    public void SetInvulnerable(bool invulnerable)
+    {
+        isInvulnerable = invulnerable;
     }
 
     // -------------------------------------------------------------------------
@@ -76,20 +107,52 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
+
+        isDead = true;
         Debug.Log($"{gameObject.name} died!");
 
-        // Drop coins
-        DropCoins();
+        // Stop enemy from moving/attacking
+        EnemyAI ai = GetComponent<EnemyAI>();
+        if (ai != null) ai.enabled = false;
 
-        // Notify the level objective system
-        if (LevelObjective.Instance != null)
-        {
-            LevelObjective.Instance.EnemyDefeated();
-        }
+        EnemyDamage dmg = GetComponent<EnemyDamage>();
+        if (dmg != null) dmg.enabled = false;
+
+        // Play death animation
+        if (animator != null)
+            animator.SetTrigger(AnimDeath);
+
+       // Drop coins
+DropCoins();
+
+// ADD THIS (ABILITY UNLOCK)
+Debug.Log("isBoss = " + isBoss);
+
+if (isBoss)
+{
+    Debug.Log("UNLOCKING ABILITY");
+    if (isBoss)
+{
+    GameProgressManager.Instance.CollectElement(elementReward);
+}
+}
+// Notify the level objective system
+if (LevelObjective.Instance != null)
+{
+    LevelObjective.Instance.EnemyDefeated();
+}
 
         // Fire event for any listeners
         OnEnemyDied?.Invoke(gameObject);
 
+        // Wait for death animation then destroy
+        StartCoroutine(DestroyAfterDeathAnim());
+    }
+
+    private System.Collections.IEnumerator DestroyAfterDeathAnim()
+    {
+        // Wait for death animation to play
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 

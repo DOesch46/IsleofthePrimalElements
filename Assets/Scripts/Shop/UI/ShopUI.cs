@@ -31,9 +31,7 @@ public class ShopUI : MonoBehaviour
     private void OnEnable()
     {
         if (shopManager != null)
-        {
-            shopManager.OnPurchaseSuccess += HandlePurchaseSuccess;
-        }
+            shopManager.OnUpgradePurchased += HandlePurchaseSuccess;
 
         PlayerWalletSO wallet = shopManager?.GetWallet();
         if (wallet != null)
@@ -43,9 +41,7 @@ public class ShopUI : MonoBehaviour
     private void OnDisable()
     {
         if (shopManager != null)
-        {
-            shopManager.OnPurchaseSuccess -= HandlePurchaseSuccess;
-        }
+            shopManager.OnUpgradePurchased -= HandlePurchaseSuccess;
 
         PlayerWalletSO wallet = shopManager?.GetWallet();
         if (wallet != null)
@@ -72,17 +68,17 @@ public class ShopUI : MonoBehaviour
         foreach (Transform child in itemContainer)
             Destroy(child.gameObject);
 
-        foreach (ShopItemSO item in shopManager.GetCatalog().items)
+        foreach (ShopUpgradeSO upgrade in shopManager.GetCatalog().upgrades)
         {
             GameObject slot = Instantiate(itemSlotPrefab, itemContainer);
             ShopItemSlotUI slotUI = slot.GetComponent<ShopItemSlotUI>();
-            slotUI.Setup(item, shopManager);
+            slotUI.Setup(upgrade, shopManager);
         }
     }
 
-    private void HandlePurchaseSuccess(ShopItemSO item)
+    private void HandlePurchaseSuccess()
     {
-        // Refresh all slots to update button states
+        // Refresh all slots to update button states and levels
         PopulateItems();
     }
 

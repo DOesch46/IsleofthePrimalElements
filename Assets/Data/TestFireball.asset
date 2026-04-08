@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityData
   abilityName: Fireball
   description: 
-  icon: {fileID: -2413806693520163455, guid: c6230b02c36b1724cb6cdf59ac44c58f, type: 3}
+  icon: {fileID: -6607481912129624618, guid: 886b32ec229c40c468816109e9b580d8, type: 3}
   element: 1
   abilityType: 0
   damage: 20

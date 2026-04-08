@@ -94,6 +94,15 @@ public class PlayerController : MonoBehaviour
             dashSystem.TryDash();
     }
 
+    private void OnUsePotion(InputValue value)
+    {
+        if (!value.isPressed) return;
+
+        ShopManager shop = FindFirstObjectByType<ShopManager>();
+        if (shop != null)
+            shop.UseHealthPotion();
+    }
+
     // -------------------------------------------------------------------------
     // Animation — uses animator.Play() directly, no transitions needed
     // -------------------------------------------------------------------------

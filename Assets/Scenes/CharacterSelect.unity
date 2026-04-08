@@ -1389,6 +1389,8 @@ MonoBehaviour:
   selectSound: {fileID: 0}
   playSound: {fileID: 0}
   sfxSource: {fileID: 0}
+  wallet: {fileID: 11400000, guid: 5b38bc4c0a6554054ae95ebd832c421f, type: 2}
+  inventory: {fileID: 11400000, guid: 67010612838904abab124579352e12cd, type: 2}
   frameInterval: 0.2
   gameSceneName: MainIsland
 --- !u!82 &1618219341

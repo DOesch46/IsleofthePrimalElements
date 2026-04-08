@@ -8,9 +8,11 @@ public class PlayerCombat : MonoBehaviour
     // -------------------------------------------------------------------------
 
     [Header("Attack Settings")]
-    [SerializeField] private float attackDamage   = 20f;
-    [SerializeField] private float attackCooldown = 0.5f;
-    [SerializeField] private float hitboxActiveTime = 0.15f;
+    [SerializeField] private float attackDamage      = 10f;
+    [SerializeField] private float attackCooldown    = 0.5f;
+    [SerializeField] private float hitboxActiveTime  = 0.15f;
+    [SerializeField] private float attackRange       = 4f;
+    [SerializeField] private float hitboxOffset      = 0.7f;
 
     [Header("References")]
     [Tooltip("Child GameObject with a Trigger Collider2D used as the melee hitbox.")]
@@ -91,7 +93,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (attackHitbox != null)
         {
-            attackHitbox.transform.localPosition = lastMoveDirection * 0.7f;
+            attackHitbox.transform.localPosition = lastMoveDirection * hitboxOffset;
             attackHitbox.SetActive(true);
             hitboxActive = true;
             hitboxTimer  = hitboxActiveTime;
@@ -108,18 +110,33 @@ public class PlayerCombat : MonoBehaviour
 
     private void FallbackOverlapAttack()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.2f);
+        // Attack in the direction the player is facing, not a circle around them
+        Vector2 attackPos = (Vector2)transform.position + lastMoveDirection * hitboxOffset;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos, attackRange);
+
+        // Only damage the closest enemy, not everything in range
+        float closestDist = float.MaxValue;
+        IDamageable closestTarget = null;
+
         foreach (Collider2D hit in hits)
         {
             if (hit.gameObject == gameObject) continue;
+            if (hit.transform.IsChildOf(transform)) continue;
 
             IDamageable damageable = hit.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.TakeDamage(attackDamage);
-                continue;
+                float dist = Vector2.Distance(transform.position, hit.transform.position);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestTarget = damageable;
+                }
             }
         }
+
+        if (closestTarget != null)
+            closestTarget.TakeDamage(attackDamage);
     }
 
     // -------------------------------------------------------------------------
@@ -128,6 +145,14 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnHitboxTrigger(Collider2D other)
     {
+        // Only damage things that are actually close to the player
+        float dist = Vector2.Distance(transform.position, other.transform.position);
+        if (dist > attackRange)
+        {
+            Debug.Log($"Ignored hit on {other.name} — too far away ({dist:F1} units)");
+            return;
+        }
+
         Debug.Log("Hit: " + other.name);
 
         IDamageable damageable = other.GetComponent<IDamageable>();
@@ -136,11 +161,27 @@ public class PlayerCombat : MonoBehaviour
     }
 
     /// <summary>
-    /// Called by PlayerStats to apply attack bonus from shop items.
+    /// Called by PlayerStats to enforce consistent stats across all levels.
     /// </summary>
     public void SetAttackDamage(float newDamage)
     {
         attackDamage = newDamage;
+    }
+
+    public float GetAttackRange() => attackRange;
+
+    public void SetAttackRange(float newRange)
+    {
+        attackRange = newRange;
+
+        AttackRangeIndicator indicator = GetComponent<AttackRangeIndicator>();
+        if (indicator != null)
+            indicator.SetRange(newRange);
+    }
+
+    public void SetAttackCooldown(float newCooldown)
+    {
+        attackCooldown = newCooldown;
     }
 
     // -------------------------------------------------------------------------
@@ -150,6 +191,6 @@ public class PlayerCombat : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, 1.2f);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
