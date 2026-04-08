@@ -40,10 +40,6 @@ public class DashSystem : MonoBehaviour
     /// </summary>
     public void TryDash()
     {
-        // Must own the Dash Scroll
-        if (playerStats != null && !playerStats.HasAbility("dash"))
-            return;
-
         if (!canDash || isDashing)
             return;
 

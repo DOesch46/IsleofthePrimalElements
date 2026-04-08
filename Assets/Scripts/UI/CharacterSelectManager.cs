@@ -148,6 +148,10 @@ public class CharacterSelectManager : MonoBehaviour
         PlayerPrefs.SetInt(CHARACTER_PREF_KEY, selectedCharacter);
         PlayerPrefs.Save();
 
+        // Reset all progression, upgrades, and coins for a fresh start
+        if (GameProgressManager.Instance != null)
+            GameProgressManager.Instance.ResetAllProgress();
+
         SceneManager.LoadScene(gameSceneName);
     }
 }
