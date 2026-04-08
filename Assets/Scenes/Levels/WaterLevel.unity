@@ -115931,6 +115931,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4015274812017613642, guid: 03620407838a4404b8be0257e0be53de, type: 3}
+      propertyPath: isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015274812017613642, guid: 03620407838a4404b8be0257e0be53de, type: 3}
+      propertyPath: elementReward
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7443151598799506014, guid: 03620407838a4404b8be0257e0be53de, type: 3}
       propertyPath: m_Name
       value: Aqualis, Keeper of the Tides

@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    private static UIManager instance;
 
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 🔥 makes UI persist
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("UI persisted"); 
         }
         else
         {
