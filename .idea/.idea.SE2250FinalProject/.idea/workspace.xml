@@ -6,8 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shop/Logic/ShopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shop/Logic/ShopManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Tilesets/Pallettes/Palette_Earth.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Tilesets/Pallettes/Palette_Earth.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/FireLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/FireLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/TerradonController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/TerradonController.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +31,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scenes/CharacterSelect.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/ElementType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/LevelData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EarthLevel/ArenaRevealTrigger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EarthLevel/BossHealthBarUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRockSpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LevelExit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/CameraFollow.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -117,6 +127,7 @@
       <workItem from="1775518348693" duration="161000" />
       <workItem from="1775518521299" duration="83000" />
       <workItem from="1775523145703" duration="130000" />
+      <workItem from="1775602786996" duration="704000" />
     </task>
     <servers />
   </component>

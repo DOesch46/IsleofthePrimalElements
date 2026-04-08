@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 63290372532297826}
   - component: {fileID: 5200868442600228855}
   - component: {fileID: 760333081691566507}
+  - component: {fileID: -9204236019957695473}
+  - component: {fileID: 5002017393351138375}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -260,7 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3ec4f371cd66c147b43d930c539eb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  animator: {fileID: 63290372532297826}
 --- !u!114 &1364251235442529285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,3 +331,34 @@ MonoBehaviour:
   hitboxActiveTime: 0.15
   attackHitbox: {fileID: 0}
   animator: {fileID: 0}
+--- !u!114 &-9204236019957695473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678054871860919119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb15b1d5e1ce48b9b79ed7b31efe4dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  inventory: {fileID: 11400000, guid: 67010612838904abab124579352e12cd, type: 2}
+  baseSpeed: 5
+  baseMaxHealth: 100
+  baseAttack: 10
+--- !u!114 &5002017393351138375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678054871860919119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9f614fc6d5e4af999498bdb91b62e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashSystem
+  dashSpeed: 35
+  dashDuration: 0.25
+  dashCooldown: 1
