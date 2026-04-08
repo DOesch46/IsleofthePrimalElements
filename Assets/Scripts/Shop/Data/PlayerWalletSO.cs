@@ -12,15 +12,25 @@ public class PlayerWalletSO : ScriptableObject
     public event Action<int> OnCoinsChanged;
 
     public bool CanAfford(int amount) => coins >= amount;
-    
-    public void ResetWallet(int startingCoins = 200)
+
+    /// <summary>
+    /// Syncs wallet coins from GameProgressManager (the real source of truth).
+    /// Call this on every scene load so the wallet always matches saved progress.
+    /// </summary>
+    public void SyncFromProgress()
     {
-        coins = startingCoins;
+        if (GameProgressManager.Instance != null)
+        {
+            coins = GameProgressManager.Instance.GetCoins();
+            OnCoinsChanged?.Invoke(coins);
+        }
     }
 
     public void AddCoins(int amount)
     {
         coins += amount;
+        // Keep GameProgressManager in sync
+        GameProgressManager.Instance?.AddCoins(amount);
         OnCoinsChanged?.Invoke(coins);
     }
 
@@ -29,17 +39,15 @@ public class PlayerWalletSO : ScriptableObject
         if (!CanAfford(amount)) return false;
 
         coins -= amount;
+        // Keep GameProgressManager in sync
+        GameProgressManager.Instance?.SpendCoins(amount);
         OnCoinsChanged?.Invoke(coins);
         return true;
     }
 
-    /// <summary>
-    /// Call this at game start to reset between play sessions.
-    /// ScriptableObject values persist in the editor.
-    /// </summary>
-    public void Reset(int startingCoins = 0)
+    public void Reset()
     {
-        coins = startingCoins;
+        coins = 0;
         OnCoinsChanged?.Invoke(coins);
     }
 }

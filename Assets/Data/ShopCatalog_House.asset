@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af90f5e8f09684f37b36b967c6501d0c, type: 3}
   m_Name: ShopCatalog_House
   m_EditorClassIdentifier: Assembly-CSharp::ShopCatalogSO
-  items:
-  - {fileID: 11400000, guid: 55214b0836f54457393909ac87de33de, type: 2}
-  - {fileID: 11400000, guid: f22c3bcacc72b4888980a327af98f100, type: 2}
-  - {fileID: 11400000, guid: 4e288a40b49d449ca88c240e1e552a7b, type: 2}
-  - {fileID: 11400000, guid: 1ae05ca2213074279a48535370d60666, type: 2}
+  upgrades:
+  - {fileID: 11400000, guid: 8f83bdca57dc21c4084c107b52eba7d6, type: 2}
+  - {fileID: 11400000, guid: abbb6e4f19d93a24daf2878243de2682, type: 2}
+  - {fileID: 11400000, guid: 778f47a3b3235e742b09a7f720d6f9a7, type: 2}
+  - {fileID: 11400000, guid: 97e56ca869864e34f80be8a401cbc1f6, type: 2}

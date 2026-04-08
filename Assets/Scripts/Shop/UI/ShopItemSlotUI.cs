@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Represents a single item row in the shop UI.
+/// Represents a single upgrade row in the shop UI.
 /// This is a prefab that gets instantiated by ShopUI.
 /// </summary>
 public class ShopItemSlotUI : MonoBehaviour
@@ -16,18 +16,35 @@ public class ShopItemSlotUI : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text buyButtonText;
 
-    private ShopItemSO item;
+    private ShopUpgradeSO upgrade;
     private ShopManager shopManager;
 
-    public void Setup(ShopItemSO item, ShopManager manager)
+    public void Setup(ShopUpgradeSO upgrade, ShopManager manager)
     {
-        this.item = item;
+        this.upgrade = upgrade;
         this.shopManager = manager;
 
-        if (iconImage != null) iconImage.sprite = item.icon;
-        if (nameText != null) nameText.text = item.itemName;
-        if (descriptionText != null) descriptionText.text = item.description;
-        if (priceText != null) priceText.text = $"{item.price}";
+        int currentLevel = manager.GetUpgradeLevel(upgrade.upgradeType);
+
+        if (iconImage != null && upgrade.icon != null)
+            iconImage.sprite = upgrade.icon;
+
+        // Show upgrade level for stat upgrades, potion count for potions
+        if (upgrade.upgradeType == UpgradeType.HealthPotion)
+        {
+            int potions = manager.GetHealthPotionCount();
+            if (nameText != null) nameText.text = upgrade.upgradeName;
+            if (descriptionText != null) descriptionText.text = $"{upgrade.description} (Owned: {potions})";
+        }
+        else
+        {
+            string maxLabel = upgrade.maxLevel > 0 ? $" (Lv {currentLevel}/{upgrade.maxLevel})" : "";
+            if (nameText != null) nameText.text = upgrade.upgradeName + maxLabel;
+            if (descriptionText != null) descriptionText.text = upgrade.description;
+        }
+
+        int cost = upgrade.GetCost(currentLevel);
+        if (priceText != null) priceText.text = $"{cost}";
 
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(OnBuyClicked);
@@ -37,18 +54,19 @@ public class ShopItemSlotUI : MonoBehaviour
 
     private void OnBuyClicked()
     {
-        shopManager.TryPurchase(item);
-        RefreshButtonState();
+        shopManager.TryPurchase(upgrade);
     }
 
     private void RefreshButtonState()
     {
-        if (shopManager.AlreadyOwned(item))
+        int currentLevel = shopManager.GetUpgradeLevel(upgrade.upgradeType);
+
+        if (upgrade.IsMaxed(currentLevel))
         {
-            buyButtonText.text = "Owned";
+            buyButtonText.text = "MAXED";
             buyButton.interactable = false;
         }
-        else if (!shopManager.CanAfford(item))
+        else if (!shopManager.CanAfford(upgrade))
         {
             buyButtonText.text = "Can't Afford";
             buyButton.interactable = false;

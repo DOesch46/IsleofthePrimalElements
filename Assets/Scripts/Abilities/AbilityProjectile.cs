@@ -104,9 +104,20 @@ public class AbilityProjectile : MonoBehaviour
             }
         }
 
-        int finalDamage = Mathf.RoundToInt(damage * multiplier);
+        float finalDamage = damage * multiplier;  // ← CHANGED: use float, not int
         Debug.Log($"{abilityName} hit {target.name} for {finalDamage} damage! (x{multiplier})");
 
-        target.SendMessage("TakeDamage", finalDamage, SendMessageOptions.DontRequireReceiver);
+        // Use interface instead of SendMessage                          
+        IDamageable damageable = target.GetComponent<IDamageable>();     
+        if (damageable != null)                                          
+        {                                                                
+            damageable.TakeDamage(finalDamage);                          
+        }                                                                
+        else                                                             
+        {                                                                
+            // Fallback for anything without IDamageable                 
+            target.SendMessage("TakeDamage", finalDamage,               
+                SendMessageOptions.DontRequireReceiver);                 
+        }                                                                
     }
 }
