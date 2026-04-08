@@ -1,0 +1,721 @@
+fileFormatVersion: 2
+guid: 1e7571d0602a6c24eb4e14f58471553a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8319078431061220218
+    second: Aqualis_0
+  - first:
+      213: 1793493987622970289
+    second: Aqualis_1
+  - first:
+      213: -1342678609444019219
+    second: Aqualis_2
+  - first:
+      213: 5024452154875891369
+    second: Aqualis_3
+  - first:
+      213: 96917351077271091
+    second: Aqualis_4
+  - first:
+      213: -2733786676082523212
+    second: Aqualis_5
+  - first:
+      213: -7230011214406766485
+    second: Aqualis_6
+  - first:
+      213: 8731538604896764603
+    second: Aqualis_7
+  - first:
+      213: -4016682215571738239
+    second: Aqualis_8
+  - first:
+      213: 6325027964914533589
+    second: Aqualis_9
+  - first:
+      213: 317935738628495479
+    second: Aqualis_10
+  - first:
+      213: 5847342440134281010
+    second: Aqualis_11
+  - first:
+      213: -4510125277476754040
+    second: Aqualis_12
+  - first:
+      213: -9158783141530297044
+    second: Aqualis_13
+  - first:
+      213: 5266260369803955220
+    second: Aqualis_14
+  - first:
+      213: -1465107692614672379
+    second: Aqualis_15
+  - first:
+      213: -1746442208695977142
+    second: Aqualis_16
+  - first:
+      213: 6063422740255800445
+    second: Aqualis_17
+  - first:
+      213: 1751040141351377959
+    second: Aqualis_18
+  - first:
+      213: -72419254095560849
+    second: Aqualis_19
+  - first:
+      213: 251424272184775597
+    second: Aqualis_20
+  - first:
+      213: 9115293258557335572
+    second: Aqualis_21
+  - first:
+      213: 898982878915447614
+    second: Aqualis_22
+  - first:
+      213: -8681152579454628075
+    second: Aqualis_23
+  - first:
+      213: 4972681480945600211
+    second: Aqualis_24
+  - first:
+      213: 5897874043606169782
+    second: Aqualis_25
+  - first:
+      213: 6858578938166999572
+    second: Aqualis_26
+  - first:
+      213: 9184623859495813155
+    second: Aqualis_27
+  - first:
+      213: -5057909858231721802
+    second: Aqualis_28
+  - first:
+      213: 7638473453888804567
+    second: Aqualis_29
+  - first:
+      213: -8854240699523403823
+    second: Aqualis_30
+  - first:
+      213: -2124466356191026589
+    second: Aqualis_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Aqualis_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b9406b1cd437370800000000000000
+      internalID: 8319078431061220218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_1
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 576
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b3e0178745c3e810800000000000000
+      internalID: 1793493987622970289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_2
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 576
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de3e2942be8dd5de0800000000000000
+      internalID: -1342678609444019219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_3
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 576
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aec25a3d907ab540800000000000000
+      internalID: 5024452154875891369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_4
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 576
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 336588b31d1585100800000000000000
+      internalID: 96917351077271091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_5
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 576
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b3c7689083af0ad0800000000000000
+      internalID: -2733786676082523212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b60b1335b17d9ab90800000000000000
+      internalID: -7230011214406766485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_7
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 384
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb24b777918ac2970800000000000000
+      internalID: 8731538604896764603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_8
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 384
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 181b7356ec0e148c0800000000000000
+      internalID: -4016682215571738239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_9
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 384
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d484233c6307c750800000000000000
+      internalID: 6325027964914533589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_10
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 384
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7785a5aaed8896400800000000000000
+      internalID: 317935738628495479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_11
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 384
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 237054008fee52150800000000000000
+      internalID: 5847342440134281010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88dec7fa4f0d861c0800000000000000
+      internalID: -4510125277476754040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_13
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 192
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2d1042124775e080800000000000000
+      internalID: -9158783141530297044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_14
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 192
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41cc1ec87e3851940800000000000000
+      internalID: 5266260369803955220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_15
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 192
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 500a208e054eaabe0800000000000000
+      internalID: -1465107692614672379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_16
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 192
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4b7de1701463c7e0800000000000000
+      internalID: -1746442208695977142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_17
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 192
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7cf8fb5bda952450800000000000000
+      internalID: 6063422740255800445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72cd2bc2bb1fc4810800000000000000
+      internalID: 1751040141351377959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_19
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 0
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6f3cb47217befef0800000000000000
+      internalID: -72419254095560849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_20
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 0
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da31c7f1b0d3d7300800000000000000
+      internalID: 251424272184775597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aqualis_21
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 0
+        width: 234
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 418a2db7ce6008e70800000000000000
+      internalID: 9115293258557335572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2c25a243ae99a4e499167fc6285bd650
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":234.0,"y":192.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Aqualis_0: 8319078431061220218
+      Aqualis_1: 1793493987622970289
+      Aqualis_10: 317935738628495479
+      Aqualis_11: 5847342440134281010
+      Aqualis_12: -4510125277476754040
+      Aqualis_13: -9158783141530297044
+      Aqualis_14: 5266260369803955220
+      Aqualis_15: -1465107692614672379
+      Aqualis_16: -1746442208695977142
+      Aqualis_17: 6063422740255800445
+      Aqualis_18: 1751040141351377959
+      Aqualis_19: -72419254095560849
+      Aqualis_2: -1342678609444019219
+      Aqualis_20: 251424272184775597
+      Aqualis_21: 9115293258557335572
+      Aqualis_3: 5024452154875891369
+      Aqualis_4: 96917351077271091
+      Aqualis_5: -2733786676082523212
+      Aqualis_6: -7230011214406766485
+      Aqualis_7: 8731538604896764603
+      Aqualis_8: -4016682215571738239
+      Aqualis_9: 6325027964914533589
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
