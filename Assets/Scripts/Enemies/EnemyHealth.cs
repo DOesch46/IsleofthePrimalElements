@@ -32,6 +32,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [Tooltip("How far coins scatter from the death position.")]
     [SerializeField] private float coinScatterRadius = 0.5f;
 
+    [SerializeField] private GameObject tridentDrop;
     // -------------------------------------------------------------------------
     // Events
     // -------------------------------------------------------------------------
@@ -124,6 +125,12 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
        // Drop coins
 DropCoins();
+
+// Spawn trident if this is the boss
+if (isBoss && tridentDrop != null)
+{
+    Instantiate(tridentDrop, transform.position, Quaternion.identity);
+}
 
 // ADD THIS (ABILITY UNLOCK)
 Debug.Log("isBoss = " + isBoss);

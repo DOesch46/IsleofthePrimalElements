@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &931759988676911442
+--- !u!1001 &345526527623277302
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.6261
+      value: 3.74
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -81.07088
+      value: -13.77
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46,15 +46,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4121716824555509787, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4206821368869029864, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 12
+      value: 14.625
       objectReference: {fileID: 0}
     - target: {fileID: 4206821368869029864, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
@@ -110,14 +110,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7756645740764539660, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_Name
-      value: Aqualis, Keeper of the Tides Variant
+      value: Aqualis, Keeper of the Tides
       objectReference: {fileID: 0}
     - target: {fileID: 8802249905495933604, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 5166484311376492116, guid: dca6de215bc12d44f867d28984b6232f, type: 3}
+      objectReference: {fileID: 8319078431061220218, guid: 1e7571d0602a6c24eb4e14f58471553a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7756645740764539660, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3214791188175517561}
   m_SourcePrefab: {fileID: 100100000, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
+--- !u!1 &8029542926078214650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7756645740764539660, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
+  m_PrefabInstance: {fileID: 345526527623277302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3214791188175517561
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029542926078214650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 892b8ad3276d5b8428c6b42ad6804d4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

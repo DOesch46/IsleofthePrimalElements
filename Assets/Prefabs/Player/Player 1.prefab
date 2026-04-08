@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2654031506192530721}
   - component: {fileID: 4329434114879710460}
   - component: {fileID: 1376277581556795292}
+  - component: {fileID: 3266390072278348396}
   m_Layer: 6
   m_Name: Player 1
   m_TagString: Player
@@ -459,6 +460,8 @@ MonoBehaviour:
   attackDamage: 20
   attackCooldown: 0.5
   hitboxActiveTime: 0.15
+  attackRange: 4
+  hitboxOffset: 0.7
   attackHitbox: {fileID: 4354164979573649807}
   animator: {fileID: 0}
 --- !u!114 &4329434114879710460
@@ -473,10 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb15b1d5e1ce48b9b79ed7b31efe4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  inventory: {fileID: 11400000, guid: 67010612838904abab124579352e12cd, type: 2}
-  baseSpeed: 5
-  baseMaxHealth: 100
-  baseAttack: 10
+  wallet: {fileID: 0}
 --- !u!114 &1376277581556795292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,3 +492,25 @@ MonoBehaviour:
   dashSpeed: 35
   dashDuration: 0.25
   dashCooldown: 1
+--- !u!114 &3266390072278348396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759645125006065095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cce8f6f7c86d724cabeb4176eb01d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWaterAbility
+  abilityKey: 113
+  maxChargeTime: 1.5
+  wavePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  minDamage: 10
+  maxDamage: 30
+  minSpeed: 6
+  maxSpeed: 12
+  minScale: 1
+  maxScale: 2
