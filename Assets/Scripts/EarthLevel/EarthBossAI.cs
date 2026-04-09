@@ -53,21 +53,20 @@ public class EarthBossAI : MonoBehaviour
 
     private void Awake()
     {
-        // FIX 1: Make sure the boss renders above the ground tiles.
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
+        // HARDCODED — ignores the serialized field so Unity can't override it
         if (spriteRenderer != null)
         {
-            spriteRenderer.sortingLayerName = sortingLayerName;
-            spriteRenderer.sortingOrder = sortingOrder;
+            spriteRenderer.sortingLayerName = "Enemies";
+            spriteRenderer.sortingOrder = 6;
         }
 
-        // Also fix any child SpriteRenderers (e.g. animation children)
         foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
         {
-            sr.sortingLayerName = sortingLayerName;
-            sr.sortingOrder = sortingOrder;
+            sr.sortingLayerName = "Enemies";
+            sr.sortingOrder = 6;
         }
     }
 
