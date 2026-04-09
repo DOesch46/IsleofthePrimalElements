@@ -46,8 +46,13 @@ public class ChargedWaveProjectile : MonoBehaviour
 
     private void RotateToDirection()
     {
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        transform.rotation = Quaternion.identity;
+
+        if (spriteRenderer == null)
+            return;
+
+        spriteRenderer.flipX = moveDirection.x < 0f;
+        spriteRenderer.flipY = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

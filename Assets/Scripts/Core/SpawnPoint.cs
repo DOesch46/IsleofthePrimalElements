@@ -1,12 +1,23 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SpawnPoint : MonoBehaviour
 {
-    [SerializeField] private string transitionId;
+    [FormerlySerializedAs("transitionId")]
+    [SerializeField] private string spawnId;
+
+    [Header("Spawn Point")]
     [SerializeField] private bool isDefault = false;
 
-    public string TransitionId => transitionId;
+    public string SpawnId => spawnId;
+    public string TransitionId => spawnId;
     public bool IsDefault => isDefault;
+
+    public bool Matches(string requestedSpawnId)
+    {
+        return !string.IsNullOrWhiteSpace(requestedSpawnId) &&
+               string.Equals(spawnId, requestedSpawnId, System.StringComparison.Ordinal);
+    }
 
     private void OnDrawGizmos()
     {
