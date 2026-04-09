@@ -23,6 +23,9 @@ public class LevelData : ScriptableObject
     [Header("Element Settings")]
     [Tooltip("Which element does this level represent? Use 'None' for Hub or intro areas.")]
     public ElementType elementType = ElementType.None;
+
+    [Tooltip("If true, completing this level grants its element automatically. Disable this when the element comes from a pickup such as the trident.")]
+    public bool grantElementOnComplete = true;
     
     [Tooltip("Name of the boss in this level (leave empty if no boss)")]
     public string bossName = "";

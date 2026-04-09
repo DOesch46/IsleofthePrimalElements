@@ -51,6 +51,10 @@ public class SceneSpawnHandler : MonoBehaviour
         if (playerBody != null)
             playerBody.linearVelocity = Vector2.zero;
 
+        PlayerRespawn playerRespawn = player.GetComponent<PlayerRespawn>();
+        if (playerRespawn != null)
+            playerRespawn.SetRespawnPosition(targetSpawn.transform.position, targetSpawn.SpawnId);
+
         Debug.Log(
             $"SceneSpawnHandler placed player at SpawnPoint '{targetSpawn.SpawnId}' in scene '{SceneManager.GetActiveScene().name}'.");
     }

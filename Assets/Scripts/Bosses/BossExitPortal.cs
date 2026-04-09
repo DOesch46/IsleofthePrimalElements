@@ -49,7 +49,7 @@ public class BossExitPortal : MonoBehaviour
         if (currentLevel != null && GameProgressManager.Instance != null)
         {
             GameProgressManager.Instance.CompleteLevel(currentLevel);
-            Debug.Log($"Level '{currentLevel.levelName}' completed! Element granted.");
+            Debug.Log($"Level '{currentLevel.levelName}' completed! grantElementOnComplete={currentLevel.grantElementOnComplete}");
         }
 
         // Transition back to the hub, spawning at the matching SpawnPoint

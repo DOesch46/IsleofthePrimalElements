@@ -17,6 +17,9 @@ public class BossPortalSpawner : MonoBehaviour
     [SerializeField] private string returnSceneName = "MainIsland";
     [SerializeField] private string returnSpawnId = "HubReturn";
 
+    [Header("Boss Progress")]
+    [SerializeField] private string bossProgressId = string.Empty;
+
     [Header("Optional Progress")]
     [SerializeField] private LevelData completedLevel;
 
@@ -37,11 +40,24 @@ public class BossPortalSpawner : MonoBehaviour
         if (portalSpawned || deadEnemy != gameObject)
             return;
 
+        string resolvedBossProgressId = ResolveBossProgressId();
+        if (GameProgressManager.Instance != null && !string.IsNullOrWhiteSpace(resolvedBossProgressId))
+        {
+            GameProgressManager.Instance.MarkBossDefeated(resolvedBossProgressId);
+            Debug.Log($"{name}: Boss defeat recorded with id '{resolvedBossProgressId}'.");
+        }
+
         SpawnPortal();
     }
 
     private void SpawnPortal()
     {
+        if (portalSpawned)
+        {
+            Debug.Log($"{name}: Portal spawn skipped because it already exists in this scene.");
+            return;
+        }
+
         if (portalPrefab == null)
         {
             Debug.LogWarning($"BossPortalSpawner on '{name}' has no portal prefab assigned.");
@@ -68,5 +84,28 @@ public class BossPortalSpawner : MonoBehaviour
 
         Debug.Log(
             $"BossPortalSpawner spawned a portal at {spawnPosition} for scene '{returnSceneName}' and SpawnId '{returnSpawnId}'.");
+    }
+
+    public void EnsurePortalExistsForCompletedBoss()
+    {
+        if (portalSpawned)
+        {
+            Debug.Log($"{name}: Completed-boss portal already exists.");
+            return;
+        }
+
+        Debug.Log($"{name}: Boss is already defeated. Ensuring return portal exists.");
+        SpawnPortal();
+    }
+
+    private string ResolveBossProgressId()
+    {
+        if (!string.IsNullOrWhiteSpace(bossProgressId))
+            return bossProgressId;
+
+        if (completedLevel != null && !string.IsNullOrWhiteSpace(completedLevel.sceneName))
+            return completedLevel.sceneName + "_Boss";
+
+        return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + "_Boss";
     }
 }

@@ -148,7 +148,7 @@ public class LevelExit : MonoBehaviour
         Debug.Log($"Level '{currentLevel.levelName}' completed!");
         
         // If this level has an element, confirm it was granted
-        if (currentLevel.IsElementalLevel)
+        if (currentLevel.IsElementalLevel && currentLevel.grantElementOnComplete)
         {
             Debug.Log($"Element '{currentLevel.elementType}' has been granted!");
         }
