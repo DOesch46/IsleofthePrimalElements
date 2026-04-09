@@ -23,6 +23,7 @@ public class MovementSystem : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 currentDirection;
     private Vector2 previousInput;
+    private bool movementEnabled = true;
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -49,6 +50,12 @@ public class MovementSystem : MonoBehaviour
     /// </summary>
     public void Move(Vector2 input)
     {
+        if (!movementEnabled)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         // Lock to cardinal directions — last pressed key wins
         if (input.sqrMagnitude < 0.01f)
         {
@@ -93,6 +100,20 @@ public class MovementSystem : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
     }
+
+    public void SetMovementEnabled(bool enabled)
+    {
+        movementEnabled = enabled;
+
+        if (!movementEnabled)
+        {
+            currentDirection = Vector2.zero;
+            previousInput = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    public bool IsMovementEnabled() => movementEnabled;
 
     /// <summary>
     /// Returns current velocity for use by the animator.

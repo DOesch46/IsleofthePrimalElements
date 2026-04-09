@@ -49,6 +49,7 @@ public class PlayerCombat : MonoBehaviour
     private float waveChargeTime = 0f;
     private MovementSystem movementSystem;
     private Rigidbody2D rb2d;
+    private PlayerHealth playerHealth;
     private Vector2 lastMoveDirection = Vector2.right;
 
     private static readonly int AnimAttack = Animator.StringToHash("Attack");
@@ -61,12 +62,17 @@ public class PlayerCombat : MonoBehaviour
     {
         movementSystem = GetComponent<MovementSystem>();
         rb2d = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         if (attackHitbox != null)
             attackHitbox.SetActive(false);
 
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        Debug.Log(
+            $"{name}: PlayerCombat initialized. Water unlocked={GameProgressManager.Instance != null && GameProgressManager.Instance.HasElement(ElementType.Water)}, " +
+            $"waveProjectilePrefabAssigned={waveProjectilePrefab != null}.");
     }
 
     private void Update()
@@ -122,10 +128,16 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         if (keyboard.qKey.wasPressedThisFrame)
+        {
+            Debug.Log($"{name}: Q pressed for water ability.");
             BeginWaveCharge();
+        }
 
         if (keyboard.qKey.wasReleasedThisFrame)
+        {
+            Debug.Log($"{name}: Q released for water ability.");
             ReleaseWaveCharge();
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -136,12 +148,15 @@ public class PlayerCombat : MonoBehaviour
     {
         if (!value.isPressed)      return;
         if (cooldownTimer > 0f)    return;
+        if (IsPlayerDead())        return;
 
         PerformAttack();
     }
 
     private void OnWaveAbility(InputValue value)
     {
+        Debug.Log($"{name}: OnWaveAbility callback received. isPressed={value.isPressed}.");
+
         if (value.isPressed)
         {
             BeginWaveCharge();
@@ -158,6 +173,12 @@ public class PlayerCombat : MonoBehaviour
 
     private void PerformAttack()
     {
+        if (IsPlayerDead())
+        {
+            Debug.Log($"{name}: Attack ignored because player is dead.");
+            return;
+        }
+
         cooldownTimer = attackCooldown;
 
         if (animator != null)
@@ -234,11 +255,12 @@ public class PlayerCombat : MonoBehaviour
 
     public void BeginWaveCharge()
     {
-        if (!CanUseWaveAttack())
+        if (!CanUseWaveAttack(logReason: true))
             return;
 
         isWaveCharging = true;
         waveChargeTime = 0f;
+        Debug.Log($"{name}: Water wave charge started.");
     }
 
     public void ReleaseWaveCharge()
@@ -247,6 +269,7 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         float chargePercent = maxWaveChargeTime <= 0f ? 1f : waveChargeTime / maxWaveChargeTime;
+        Debug.Log($"{name}: Water wave released. ChargePercent={chargePercent:F2}.");
         FireWave(chargePercent);
         CancelWaveCharge();
     }
@@ -257,20 +280,39 @@ public class PlayerCombat : MonoBehaviour
         waveChargeTime = 0f;
     }
 
-    private bool CanUseWaveAttack()
+    private bool CanUseWaveAttack(bool logReason = false)
     {
-        if (GameStateManager.IsUIOpen)
+        if (IsPlayerDead())
+        {
+            if (logReason)
+                Debug.Log($"{name}: Water wave blocked because player is dead.");
             return false;
+        }
 
-        return GameProgressManager.Instance != null &&
-               GameProgressManager.Instance.HasElement(ElementType.Water);
+        if (GameStateManager.IsUIOpen)
+        {
+            if (logReason)
+                Debug.Log($"{name}: Water wave blocked because UI is open.");
+            return false;
+        }
+
+        bool unlocked = GameProgressManager.Instance != null &&
+                        GameProgressManager.Instance.HasElement(ElementType.Water);
+
+        if (logReason)
+        {
+            Debug.Log(
+                $"{name}: Water wave unlock check. unlocked={unlocked}, managerPresent={GameProgressManager.Instance != null}, prefabAssigned={waveProjectilePrefab != null}.");
+        }
+
+        return unlocked;
     }
 
     private void FireWave(float chargePercent)
     {
         if (waveProjectilePrefab == null)
         {
-            Debug.LogWarning("Wave projectile prefab is not assigned on PlayerCombat.");
+            Debug.LogWarning($"{name}: Wave projectile prefab is not assigned on PlayerCombat.");
             return;
         }
 
@@ -309,10 +351,13 @@ public class PlayerCombat : MonoBehaviour
         GameObject wave = Instantiate(waveProjectilePrefab, spawnPosition, Quaternion.identity);
         wave.transform.localScale = selectedScale;
 
+        Debug.Log(
+            $"{name}: Spawning water wave. ChargePercent={chargePercent:F2}, DamageMultiplier={selectedDamageMultiplier}, Speed={selectedSpeed}, SpawnPosition={spawnPosition}, Facing={facingDirection}.");
+
         ChargedWaveProjectile projectile = wave.GetComponent<ChargedWaveProjectile>();
         if (projectile == null)
         {
-            Debug.LogWarning("ChargedWaveProjectile component missing on wave projectile prefab.");
+            Debug.LogWarning($"{name}: ChargedWaveProjectile component missing on wave projectile prefab '{waveProjectilePrefab.name}'.");
             Destroy(wave);
             return;
         }
@@ -323,6 +368,8 @@ public class PlayerCombat : MonoBehaviour
             selectedSprite,
             facingDirection,
             ElementType.Water);
+
+        Debug.Log($"{name}: Water wave projectile initialized successfully.");
     }
 
     /// <summary>
@@ -352,6 +399,11 @@ public class PlayerCombat : MonoBehaviour
     public Vector2 GetLastMoveDirection()
     {
         return lastMoveDirection;
+    }
+
+    private bool IsPlayerDead()
+    {
+        return playerHealth != null && playerHealth.IsDead();
     }
     // -------------------------------------------------------------------------
     // Editor Gizmos

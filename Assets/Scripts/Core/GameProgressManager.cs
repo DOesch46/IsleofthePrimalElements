@@ -82,6 +82,7 @@ public class GameProgressManager : MonoBehaviour
     [Header("Debug Info (Read Only)")]
     [SerializeField] private List<string> completedLevelNames = new List<string>();
     [SerializeField] private List<string> collectedElementNames = new List<string>();
+    [SerializeField] private List<string> defeatedBossNames = new List<string>();
     [SerializeField] private int debugCoinCount = 0;
 
     // =====================================================
@@ -89,6 +90,7 @@ public class GameProgressManager : MonoBehaviour
     // =====================================================
 
     private HashSet<string> completedLevels = new HashSet<string>();
+    private HashSet<string> defeatedBosses = new HashSet<string>();
     private HashSet<ElementType> collectedElements = new HashSet<ElementType>();
     private int totalCoins = 0;
 
@@ -329,6 +331,36 @@ public class GameProgressManager : MonoBehaviour
             SaveProgress();
         }
     }
+
+    public bool IsBossDefeated(string bossId)
+    {
+        if (string.IsNullOrWhiteSpace(bossId))
+            return false;
+
+        return defeatedBosses.Contains(bossId);
+    }
+
+    public void MarkBossDefeated(string bossId)
+    {
+        if (string.IsNullOrWhiteSpace(bossId))
+        {
+            Debug.LogWarning("MarkBossDefeated called with an empty bossId.");
+            return;
+        }
+
+        if (defeatedBosses.Add(bossId))
+        {
+            Debug.Log($"Boss defeat recorded: {bossId}");
+            UpdateDebugLists();
+
+            if (enableSaving)
+                SaveProgress();
+        }
+        else
+        {
+            Debug.Log($"Boss defeat already recorded: {bossId}");
+        }
+    }
     
     // =====================================================
     // LEVEL UNLOCK CHECKING
@@ -433,6 +465,10 @@ public class GameProgressManager : MonoBehaviour
         string elementsSave = string.Join(",", elementStrings);
         PlayerPrefs.SetString(saveKeyPrefix + "CollectedElements", elementsSave);
 
+        // Save defeated bosses
+        string bossSave = string.Join(",", defeatedBosses);
+        PlayerPrefs.SetString(saveKeyPrefix + "DefeatedBosses", bossSave);
+
         // Save coins
         PlayerPrefs.SetInt(saveKeyPrefix + "TotalCoins", totalCoins);
 
@@ -470,13 +506,27 @@ public class GameProgressManager : MonoBehaviour
             }
         }
 
+        // Load defeated bosses
+        string bossSave = PlayerPrefs.GetString(saveKeyPrefix + "DefeatedBosses", "");
+        if (!string.IsNullOrEmpty(bossSave))
+        {
+            string[] bosses = bossSave.Split(',');
+            foreach (string bossId in bosses)
+            {
+                if (!string.IsNullOrWhiteSpace(bossId))
+                    defeatedBosses.Add(bossId);
+            }
+        }
+
         UpdateLegacyUnlockFlags();
 
         // Load coins
         totalCoins = PlayerPrefs.GetInt(saveKeyPrefix + "TotalCoins", 0);
         debugCoinCount = totalCoins;
 
-        Debug.Log($"Progress loaded. Levels: {completedLevels.Count}, Elements: {collectedElements.Count}, Coins: {totalCoins}");
+        UpdateDebugLists();
+
+        Debug.Log($"Progress loaded. Levels: {completedLevels.Count}, Elements: {collectedElements.Count}, Bosses: {defeatedBosses.Count}, Coins: {totalCoins}");
     }
 
     // =====================================================
@@ -497,6 +547,12 @@ public class GameProgressManager : MonoBehaviour
             collectedElementNames.Add(element.ToString());
         }
 
+        defeatedBossNames.Clear();
+        foreach (string bossId in defeatedBosses)
+        {
+            defeatedBossNames.Add(bossId);
+        }
+
         debugCoinCount = totalCoins;
     }
 
@@ -506,6 +562,7 @@ public class GameProgressManager : MonoBehaviour
     public void ResetAllProgress()
     {
         completedLevels.Clear();
+        defeatedBosses.Clear();
         collectedElements.Clear();
         totalCoins = 0;
         UpdateLegacyUnlockFlags();
@@ -516,6 +573,7 @@ public class GameProgressManager : MonoBehaviour
         {
             PlayerPrefs.DeleteKey(saveKeyPrefix + "CompletedLevels");
             PlayerPrefs.DeleteKey(saveKeyPrefix + "CollectedElements");
+            PlayerPrefs.DeleteKey(saveKeyPrefix + "DefeatedBosses");
             PlayerPrefs.DeleteKey(saveKeyPrefix + "TotalCoins");
             PlayerPrefs.Save();
         }

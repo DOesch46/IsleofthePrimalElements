@@ -24,6 +24,9 @@ public class EnemyDamage : MonoBehaviour
     [Tooltip("Time before the attack animation deals damage (windup).")]
     [SerializeField] private float attackWindup = 0.4f;
 
+    [Tooltip("Animator trigger used for the enemy attack animation.")]
+    [SerializeField] private string attackTriggerName = "Attack";
+
     // -------------------------------------------------------------------------
     // Private State
     // -------------------------------------------------------------------------
@@ -38,8 +41,7 @@ public class EnemyDamage : MonoBehaviour
     /// <summary>Other scripts can check this to know if the enemy is mid-attack.</summary>
     public bool IsAttacking => isAttacking;
 
-    // Golem controller parameter
-    private static readonly int AnimAttack = Animator.StringToHash("Attack");
+    private int animAttackHash;
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
@@ -49,6 +51,11 @@ public class EnemyDamage : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         enemyAI = GetComponent<EnemyAI>();
+
+        if (string.IsNullOrWhiteSpace(attackTriggerName))
+            attackTriggerName = "Attack";
+
+        animAttackHash = Animator.StringToHash(attackTriggerName);
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -60,6 +67,11 @@ public class EnemyDamage : MonoBehaviour
         else
         {
             Debug.LogWarning("EnemyDamage: No Player found!");
+        }
+
+        if (animator == null)
+        {
+            Debug.LogWarning($"{name}: EnemyDamage has no Animator. Attack animation will not play.");
         }
     }
 
@@ -97,7 +109,10 @@ public class EnemyDamage : MonoBehaviour
 
         // Now trigger the attack animation (works from Idle state)
         if (animator != null)
-            animator.SetTrigger(AnimAttack);
+        {
+            animator.SetTrigger(animAttackHash);
+            Debug.Log($"{name}: Enemy attack animation triggered with parameter '{attackTriggerName}'.");
+        }
 
         // Wait for windup before dealing damage
         yield return new WaitForSeconds(attackWindup);
@@ -109,7 +124,7 @@ public class EnemyDamage : MonoBehaviour
             if (distance <= damageRange * 1.5f)
             {
                 playerHealth.TakeDamage(contactDamage);
-                Debug.Log($"Enemy dealt {contactDamage} damage to player!");
+                Debug.Log($"{name}: Enemy dealt {contactDamage} damage to player.");
             }
         }
 

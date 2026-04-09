@@ -20693,6 +20693,21 @@ MonoBehaviour:
   hitboxOffset: 0.7
   attackHitbox: {fileID: 322720483}
   animator: {fileID: 1994866361}
+  waveProjectilePrefab: {fileID: 9087665198237984896, guid: 319e1267513d6a74f981926c94226732, type: 3}
+  maxWaveChargeTime: 1.5
+  waveSpawnDistance: 0.6
+  smallWaveDamageMultiplier: 1
+  mediumWaveDamageMultiplier: 2
+  largeWaveDamageMultiplier: 3
+  smallWaveSpeed: 6
+  mediumWaveSpeed: 9
+  largeWaveSpeed: 12
+  smallWaveScale: {x: 0.35, y: 0.35, z: 1}
+  mediumWaveScale: {x: 0.5, y: 0.5, z: 1}
+  largeWaveScale: {x: 0.7, y: 0.7, z: 1}
+  smallWaveSprite: {fileID: -676709965, guid: 8b1af597d3f345f43a3e5fb7a615108b, type: 3}
+  mediumWaveSprite: {fileID: 1163415448, guid: 8b1af597d3f345f43a3e5fb7a615108b, type: 3}
+  largeWaveSprite: {fileID: 694261327, guid: 8b1af597d3f345f43a3e5fb7a615108b, type: 3}
 --- !u!114 &1994866359
 MonoBehaviour:
   m_ObjectHideFlags: 0
