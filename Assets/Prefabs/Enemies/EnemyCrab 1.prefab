@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -3010836838299200512}
   m_Layer: 0
   m_Name: EnemyCrab 1
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -197,10 +197,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d344005996bdffc4681e4978f85261b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 50
+  isBoss: 0
+  elementReward: 0
+  maxHealth: 200
   coinPrefab: {fileID: 8305527822653216029, guid: 9a471a929b973b243b669a5e18170c20, type: 3}
   coinDropCount: 3
   coinScatterRadius: 0.5
+  tridentDrop: {fileID: 0}
 --- !u!114 &6193804726320922809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +219,7 @@ MonoBehaviour:
   contactDamage: 10
   damageCooldown: 1
   damageRange: 0.8
+  attackWindup: 0.4
 --- !u!114 &-3010836838299200512
 MonoBehaviour:
   m_ObjectHideFlags: 0
