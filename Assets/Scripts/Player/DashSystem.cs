@@ -43,6 +43,10 @@ public class DashSystem : MonoBehaviour
         if (!canDash || isDashing)
             return;
 
+        // Dash is only available after defeating the Lightning boss
+        if (GameProgressManager.Instance == null || !GameProgressManager.Instance.HasElement(ElementType.Lightning))
+            return;
+
         Vector2 direction = movementSystem.GetDirection();
 
         // Can't dash if not moving in any direction

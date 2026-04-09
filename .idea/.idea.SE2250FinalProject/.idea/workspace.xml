@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Data/TestFireball.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/TestFireball.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/FireEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/FireEnemy.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FireballPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FireballPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/FireLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/FireLevel.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/AbilityProjectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fire.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fire/EnemyKillCounter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fire/EnemyKillCounter.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+    <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="Merge branch 'main' of https://github.com/DOesch46/SE2250FinalProject&#10;&#10;# Conflicts:&#10;#&#9;.idea/.idea.SE2250FinalProject/.idea/workspace.xml&#10;#&#9;Assets/Prefabs/Player/Player.prefab&#10;#&#9;Assets/Scenes/Levels/FireLevel.unity&#10;#&#9;Assets/Scenes/MainIsland.unity&#10;#&#9;obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/ArenaRevealTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/ArenaRevealTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/BossHealthBarUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/BossHealthBarUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossAI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossHealth.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +73,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.3.5f2\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/6000.3.5f2/Unity.app/Contents/MacOS/Unity" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath C:\Users\deepa\Documents\SE2250FinalProject -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\deepa\Documents\SE2250FinalProject" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -88,7 +83,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.3.5f2\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/6000.3.5f2/Unity.app/Contents/MacOS/Unity" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\deepa\Documents\SE2250FinalProject -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\deepa\Documents\SE2250FinalProject" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -135,7 +130,6 @@
       <workItem from="1775518348693" duration="161000" />
       <workItem from="1775518521299" duration="83000" />
       <workItem from="1775523145703" duration="130000" />
-      <workItem from="1775620282098" duration="9335000" />
     </task>
     <servers />
   </component>
