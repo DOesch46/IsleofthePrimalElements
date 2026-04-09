@@ -319,7 +319,7 @@ public class GameProgressManager : MonoBehaviour
             Debug.Log($"Level completed: {levelData.levelName}!");
         }
 
-        if (levelData.IsElementalLevel)
+        if (levelData.IsElementalLevel && levelData.grantElementOnComplete)
         {
             CollectElement(levelData.elementType);
         }
@@ -425,6 +425,7 @@ public class GameProgressManager : MonoBehaviour
             return false;
         }
 
+        SpawnManager.CaptureCurrentPlayerHealthForNextScene();
         Debug.Log($"Loading level: {levelData.levelName} (Scene: {levelData.sceneName})");
         SceneManager.LoadScene(levelData.sceneName);
         return true;
@@ -441,6 +442,7 @@ public class GameProgressManager : MonoBehaviour
             return false;
         }
 
+        SpawnManager.CaptureCurrentPlayerHealthForNextScene();
         Debug.Log($"Loading level: {sceneName}");
         SceneManager.LoadScene(sceneName);
         return true;

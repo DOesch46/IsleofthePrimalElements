@@ -15,6 +15,7 @@ public class TridentPickup : MonoBehaviour
 
         if (GameProgressManager.Instance != null)
         {
+            Debug.Log($"TridentPickup: '{playerObject.name}' picked up the trident. Unlocking element {unlockElement}.");
             GameProgressManager.Instance.CollectElement(unlockElement);
         }
         else

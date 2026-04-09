@@ -65,6 +65,7 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         RefreshUI();
+        StartCoroutine(ApplyPersistedHealthAfterSceneLoad());
     }
 
     private void Update()
@@ -131,6 +132,18 @@ public class PlayerHealth : MonoBehaviour
     public float GetMaxHealth()      => maxHealth;
     public float GetHealthFraction() => currentHealth / maxHealth;
     public bool  IsDead()            => isDead;
+
+    public void RestoreHealthFraction(float healthFraction)
+    {
+        float clampedFraction = Mathf.Clamp01(healthFraction);
+        currentHealth = Mathf.Clamp(maxHealth * clampedFraction, 0f, maxHealth);
+        invincibleTimer = 0f;
+
+        Debug.Log($"{name}: Restored persisted health to {currentHealth}/{maxHealth} (fraction {clampedFraction:F2}).");
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        RefreshUI();
+    }
 
     public bool RespawnFromDeathScreen()
     {
@@ -243,6 +256,16 @@ public class PlayerHealth : MonoBehaviour
 
         CompleteRespawn();
         Debug.Log($"{name}: Player respawned automatically at full health {currentHealth}/{maxHealth}.");
+    }
+
+    private IEnumerator ApplyPersistedHealthAfterSceneLoad()
+    {
+        yield return null;
+
+        if (!SpawnManager.TryConsumePendingPlayerHealthFraction(out float persistedFraction))
+            yield break;
+
+        RestoreHealthFraction(persistedFraction);
     }
 
     private void SetGameplayEnabled(bool enabled)

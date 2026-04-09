@@ -10,6 +10,8 @@ public static class SpawnManager
 {
     private static string pendingSceneName;
     private static string pendingSpawnId;
+    private static bool hasPendingPlayerHealth;
+    private static float pendingPlayerHealthFraction = 1f;
 
     public static string PendingSceneName => pendingSceneName;
     public static string PendingSpawnId => pendingSpawnId;
@@ -31,9 +33,45 @@ public static class SpawnManager
             return;
         }
 
+        CaptureCurrentPlayerHealthForNextScene();
         SetPendingSpawn(sceneName, spawnId);
         Debug.Log($"SpawnManager loading scene '{sceneName}'.");
         SceneManager.LoadScene(sceneName);
+    }
+
+    public static void CaptureCurrentPlayerHealthForNextScene()
+    {
+        PlayerHealth playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
+        if (playerHealth == null)
+        {
+            Debug.LogWarning("SpawnManager could not find PlayerHealth to persist before scene load.");
+            ClearPendingPlayerHealth();
+            return;
+        }
+
+        float maxHealth = playerHealth.GetMaxHealth();
+        float currentHealth = playerHealth.GetCurrentHealth();
+        pendingPlayerHealthFraction = maxHealth <= 0f ? 1f : Mathf.Clamp01(currentHealth / maxHealth);
+        hasPendingPlayerHealth = true;
+
+        Debug.Log(
+            $"SpawnManager captured player health for next scene. Current={currentHealth}, Max={maxHealth}, Fraction={pendingPlayerHealthFraction:F2}.");
+    }
+
+    public static bool TryConsumePendingPlayerHealthFraction(out float healthFraction)
+    {
+        if (!hasPendingPlayerHealth)
+        {
+            healthFraction = 1f;
+            return false;
+        }
+
+        healthFraction = pendingPlayerHealthFraction;
+        hasPendingPlayerHealth = false;
+        pendingPlayerHealthFraction = 1f;
+
+        Debug.Log($"SpawnManager consumed persisted player health fraction {healthFraction:F2}.");
+        return true;
     }
 
     public static bool HasPendingSpawnForScene(string sceneName)
@@ -60,5 +98,11 @@ public static class SpawnManager
     {
         pendingSceneName = string.Empty;
         pendingSpawnId = string.Empty;
+    }
+
+    public static void ClearPendingPlayerHealth()
+    {
+        hasPendingPlayerHealth = false;
+        pendingPlayerHealthFraction = 1f;
     }
 }

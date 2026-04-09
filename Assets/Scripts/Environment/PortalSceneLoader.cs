@@ -73,7 +73,7 @@ public class PortalSceneLoader : MonoBehaviour
         {
             GameProgressManager.Instance.CompleteLevel(completedLevel);
             Debug.Log(
-                $"PortalSceneLoader marked level '{completedLevel.levelName}' as complete.");
+                $"PortalSceneLoader marked level '{completedLevel.levelName}' as complete. grantElementOnComplete={completedLevel.grantElementOnComplete}");
         }
 
         Debug.Log(
