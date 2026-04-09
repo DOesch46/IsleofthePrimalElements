@@ -110,6 +110,13 @@ public class BossCutsceneTrigger : MonoBehaviour
 
     private void Start()
     {
+        BoxCollider2D triggerCollider = GetComponent<BoxCollider2D>();
+        if (triggerCollider != null && !triggerCollider.isTrigger)
+        {
+            triggerCollider.isTrigger = true;
+            Debug.LogWarning($"{name}: Boss cutscene collider was not a trigger. It has been corrected automatically.");
+        }
+
         if (bossGameObject != null)
         {
             EnemyHealth bossHealth = bossGameObject.GetComponent<EnemyHealth>();
@@ -389,7 +396,11 @@ public class BossCutsceneTrigger : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
 
         // Add the barrier script to destroy enemies that bump into it
-        barrier.AddComponent<BossArenaBarrier>();
+        BossArenaBarrier barrierScript = barrier.AddComponent<BossArenaBarrier>();
+        PlayerHealth playerHealth = playerController != null ? playerController.GetComponent<PlayerHealth>() : null;
+        barrierScript.Setup(bossGameObject, playerHealth);
+
+        Debug.Log($"{name}: Spawned arena barrier at {transform.position}. It will be removed when the player dies or the boss is defeated.");
     }
 
     /// <summary>
