@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   element: 1
   abilityType: 0
-  damage: 15
+  damage: 20
   cooldown: 0.5
   duration: 0
   range: 5
