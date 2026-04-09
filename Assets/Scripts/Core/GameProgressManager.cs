@@ -556,6 +556,15 @@ public class GameProgressManager : MonoBehaviour
         debugCoinCount = totalCoins;
     }
 
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetAllProgress();
+            Debug.Log("Progress reset via R key");
+        }
+    }
     /// <summary>
     /// Resets all progress. Use for testing or new game.
     /// </summary>
