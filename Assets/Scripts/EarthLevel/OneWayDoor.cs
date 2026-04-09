@@ -27,8 +27,16 @@ public class OneWayDoor : MonoBehaviour
     {
         if (other.CompareTag("Player") && playerInside)
         {
-            doorCollider.isTrigger = false;
-            Debug.Log("Arena door locked!");
+            playerInside = false;
+            // Don't lock the door anymore — keep it as trigger so player can re-enter
+            Debug.Log("Player passed through arena door.");
         }
+    }
+
+    public void UnlockDoor()
+    {
+        doorCollider.isTrigger = true;
+        playerInside = false;
+        Debug.Log("Arena door unlocked!");
     }
 }
