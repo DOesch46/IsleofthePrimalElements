@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalBossScene.unity
     guid: c9f4fe1e326482f44bdb98f44f7b9a97
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: 8b9f2c3f365d6f941ae8559876293a7c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

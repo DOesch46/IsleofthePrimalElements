@@ -8,6 +8,14 @@ public class HealthUI : MonoBehaviour
     public Image fill;
     public PlayerHealth player;
 
+    private void Awake()
+    {
+        if (player == null)
+        {
+            player = FindFirstObjectByType<PlayerHealth>();
+        }
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += HandleSceneLoaded;
@@ -27,7 +35,6 @@ public class HealthUI : MonoBehaviour
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"HealthUI: Scene loaded '{scene.name}'. Rebinding player health UI.");
         StartCoroutine(RebindNextFrame());
     }
 
@@ -52,13 +59,12 @@ public class HealthUI : MonoBehaviour
 
         if (player == null)
         {
-            Debug.LogWarning("HealthUI: Could not find PlayerHealth to bind.");
+            Debug.LogWarning("HealthUI: Could not find PlayerHealth.");
             fill.fillAmount = 0f;
             return;
         }
 
         player.OnHealthChanged += UpdateHealth;
-        Debug.Log($"HealthUI: Bound to player '{player.name}'.");
         UpdateHealth(player.GetCurrentHealth(), player.GetMaxHealth());
     }
 
@@ -75,6 +81,5 @@ public class HealthUI : MonoBehaviour
 
         float normalized = max <= 0f ? 0f : current / max;
         fill.fillAmount = normalized;
-        Debug.Log($"HealthUI: Updated fill to {normalized:F2} ({current}/{max}).");
     }
 }
