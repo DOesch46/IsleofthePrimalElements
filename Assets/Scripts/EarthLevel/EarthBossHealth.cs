@@ -21,6 +21,16 @@ public class EarthBossHealth : MonoBehaviour, IDamageable
 
     public float HealthFraction => currentHealth / maxHealth;
     public bool  IsDead         => isDead;
+    
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
 
     private void Start()
     {
@@ -44,6 +54,10 @@ public class EarthBossHealth : MonoBehaviour, IDamageable
 
         if (currentHealth <= 0f)
             Die();
+        
+        HitFlash flash = GetComponent<HitFlash>();
+        if (flash != null)
+            flash.Flash();
     }
 
     private void Die()
