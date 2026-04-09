@@ -59,7 +59,20 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // -------------------------------------------------------------------------
     // Unity Lifecycle
     // -------------------------------------------------------------------------
+    public float GetMaxHealth()
+{
+    return maxHealth;
+}
+    public float GetCurrentHealth()
+{
+    return currentHealth;
+}
 
+public void SetCurrentHealth(float value)
+{
+    currentHealth = value;
+    OnHealthChanged?.Invoke(currentHealth, maxHealth);
+}
     private void Awake()
     {
         currentHealth = maxHealth;
