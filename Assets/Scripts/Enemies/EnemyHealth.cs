@@ -132,22 +132,24 @@ if (isBoss && tridentDrop != null)
     Instantiate(tridentDrop, transform.position, Quaternion.identity);
 }
 
-// ADD THIS (ABILITY UNLOCK)
-Debug.Log("isBoss = " + isBoss);
+        if (isBoss)
+        {
+            if (tridentDrop != null)
+            {
+                Debug.Log($"{gameObject.name}: Boss died with a pickup-based reward. Element unlock is deferred to the trident pickup.");
+            }
+            else if (elementReward != ElementType.None && GameProgressManager.Instance != null)
+            {
+                Debug.Log($"{gameObject.name}: Granting boss element reward {elementReward} on death.");
+                GameProgressManager.Instance.CollectElement(elementReward);
+            }
+        }
 
-if (isBoss)
-{
-    Debug.Log("UNLOCKING ABILITY");
-    if (isBoss)
-{
-    GameProgressManager.Instance.CollectElement(elementReward);
-}
-}
-// Notify the level objective system
-if (LevelObjective.Instance != null)
-{
-    LevelObjective.Instance.EnemyDefeated();
-}
+        // Notify the level objective system
+        if (LevelObjective.Instance != null)
+        {
+            LevelObjective.Instance.EnemyDefeated();
+        }
 
         // Fire event for any listeners
         OnEnemyDied?.Invoke(gameObject);
