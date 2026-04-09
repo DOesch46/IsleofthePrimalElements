@@ -16,6 +16,7 @@ MonoBehaviour:
   sceneName: WaterLevel
   description: 
   elementType: 2
+  grantElementOnComplete: 0
   bossName: Aqualis
   unlockedByDefault: 1
   requiresAllElements: 0

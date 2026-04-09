@@ -59,11 +59,11 @@ public class BiomePortal : MonoBehaviour
             return;
         }
 
-        // Use SceneTransitionManager if a transitionId is set (for spawn point matching)
-        if (!string.IsNullOrEmpty(transitionId) && SceneTransitionManager.Instance != null)
+        // Use SpawnManager when a spawn/transition ID is set.
+        if (!string.IsNullOrEmpty(transitionId))
         {
             Debug.Log($"Loading: {destinationLevel.levelName} with transitionId: {transitionId}");
-            SceneTransitionManager.Instance.TransitionToScene(destinationLevel.sceneName, transitionId);
+            SpawnManager.LoadSceneAtSpawn(destinationLevel.sceneName, transitionId);
         }
         else if (GameProgressManager.Instance != null)
         {

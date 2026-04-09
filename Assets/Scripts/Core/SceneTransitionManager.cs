@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Lightweight singleton that persists across scenes.
@@ -8,8 +7,6 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance { get; private set; }
-
-    private string lastTransitionId;
 
     private void Awake()
     {
@@ -28,9 +25,8 @@ public class SceneTransitionManager : MonoBehaviour
     /// </summary>
     public void TransitionToScene(string sceneName, string transitionId)
     {
-        lastTransitionId = transitionId;
-        SceneManager.LoadScene(sceneName);
+        SpawnManager.LoadSceneAtSpawn(sceneName, transitionId);
     }
 
-    public string GetLastTransitionId() => lastTransitionId;
+    public string GetLastTransitionId() => SpawnManager.PendingSpawnId;
 }

@@ -9,6 +9,33 @@ using UnityEngine;
 /// </summary>
 public class BossArenaBarrier : MonoBehaviour
 {
+    private GameObject trackedBoss;
+    private PlayerHealth trackedPlayerHealth;
+
+    public void Setup(GameObject bossObject, PlayerHealth playerHealth)
+    {
+        trackedBoss = bossObject;
+
+        if (trackedPlayerHealth != null)
+            trackedPlayerHealth.OnDied -= HandlePlayerDied;
+
+        trackedPlayerHealth = playerHealth;
+
+        if (trackedPlayerHealth != null)
+            trackedPlayerHealth.OnDied += HandlePlayerDied;
+
+        Debug.Log($"BossArenaBarrier: Setup complete. Boss='{trackedBoss?.name ?? "None"}', Player='{trackedPlayerHealth?.name ?? "None"}'.");
+    }
+
+    private void Update()
+    {
+        if (trackedBoss == null)
+        {
+            Debug.Log("BossArenaBarrier: Boss is gone. Removing arena barrier.");
+            Destroy(gameObject);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // If a mini enemy hits the barrier, destroy it
@@ -16,5 +43,17 @@ public class BossArenaBarrier : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+    }
+
+    private void HandlePlayerDied()
+    {
+        Debug.Log("BossArenaBarrier: Player died. Removing arena barrier so the player can re-enter the arena.");
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (trackedPlayerHealth != null)
+            trackedPlayerHealth.OnDied -= HandlePlayerDied;
     }
 }

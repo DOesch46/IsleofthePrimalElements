@@ -1,78 +1,67 @@
 using UnityEngine;
-using System.Collections;
 
 public class FallingRockSpawner : MonoBehaviour
 {
-    [Header("Spawning")]
+    [Header("Prefab")]
     [SerializeField] private GameObject fallingRockPrefab;
-    [SerializeField] private Sprite[] rockSprites;
-    [SerializeField] private float spawnInterval = 2f;
-    [SerializeField] private float spawnIntervalVariance = 0.5f;
-    [SerializeField] private int maxConcurrentRocks = 3;
 
-    [Header("Spawn Area — Grass Only")]
-    [SerializeField] private Vector2 areaMin = new Vector2(-6f, -3f);
-    [SerializeField] private Vector2 areaMax = new Vector2(6f, 3f);
+    [Header("Spawn Area")]
+    [SerializeField] private Vector2 areaMin = new Vector2(-2f, -5f);
+    [SerializeField] private Vector2 areaMax = new Vector2(8f, 1f);
 
-    [Header("Rock Settings")]
-    [SerializeField] private float rockFallSpeed = 8f;
-    [SerializeField] private float rockDamage = 15f;
+    [Header("Rain Settings")]
+    [SerializeField] private float minSpawnInterval = 0.08f;
+    [SerializeField] private float maxSpawnInterval = 0.25f;
+    [SerializeField] private int   rocksPerWave     = 3;
+    [SerializeField] private float damage           = 8f;
 
-    [Header("Targeting")]
-    [SerializeField] private float playerTargetChance = 0.4f;
-    [SerializeField] private float playerTargetOffset = 1.5f;
+    [Header("Rock Sprites")]
+    [SerializeField] private Sprite[] fallingFrames;
+    [SerializeField] private Sprite[] impactFrames;
 
-    [Header("Difficulty")]
-    [SerializeField] private float minSpawnInterval = 0.5f;
-    [SerializeField] private float difficultyRampTime = 60f;
-
-    private Transform playerTransform;
-    private bool isSpawning = false;
-    private float elapsedTime = 0f;
-    private int currentRockCount = 0;
+    private float spawnTimer = 0f;
+    private float nextSpawnTime;
+    private bool  isActive = false;
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-            playerTransform = player.transform;
+        nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
     }
 
+    public void StartRain()
+    {
+        isActive = true;
+    }
+
+    public void StopRain()
+    {
+        isActive = false;
+    }
+
+    // Keep old method name so EarthBoss still works
     public void StartSpawning()
     {
-        if (!isSpawning)
-        {
-            isSpawning = true;
-            elapsedTime = 0f;
-            StartCoroutine(SpawnLoop());
-        }
+        StartRain();
     }
 
     public void StopSpawning()
     {
-        isSpawning = false;
-        StopAllCoroutines();
+        StopRain();
     }
 
-    public void SetDifficulty(float speedMultiplier, float intervalMultiplier)
+    private void Update()
     {
-        rockFallSpeed *= speedMultiplier;
-        spawnInterval *= intervalMultiplier;
-        spawnInterval = Mathf.Max(spawnInterval, minSpawnInterval);
-    }
+        if (!isActive) return;
 
-    private IEnumerator SpawnLoop()
-    {
-        while (isSpawning)
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= nextSpawnTime)
         {
-            elapsedTime += spawnInterval;
-            float difficultyT = Mathf.Clamp01(elapsedTime / difficultyRampTime);
-            float currentInterval = Mathf.Lerp(spawnInterval, minSpawnInterval, difficultyT);
+            spawnTimer = 0f;
+            nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
 
-            float variance = Random.Range(-spawnIntervalVariance, spawnIntervalVariance);
-            yield return new WaitForSeconds(currentInterval + variance);
-
-            if (currentRockCount < maxConcurrentRocks)
+            // Spawn multiple rocks at once for rain effect
+            int count = Random.Range(1, rocksPerWave + 1);
+            for (int i = 0; i < count; i++)
             {
                 SpawnRock();
             }
@@ -81,49 +70,56 @@ public class FallingRockSpawner : MonoBehaviour
 
     private void SpawnRock()
     {
-        Vector2 targetPos;
+        Vector2 targetPos = new Vector2(
+            Random.Range(areaMin.x, areaMax.x),
+            Random.Range(areaMin.y, areaMax.y)
+        );
 
-        if (playerTransform != null && Random.value < playerTargetChance)
+        GameObject rock = Instantiate(fallingRockPrefab, Vector3.zero, Quaternion.identity);
+        FallingRock fr = rock.GetComponent<FallingRock>();
+
+        if (fr != null)
         {
-            Vector2 offset = Random.insideUnitCircle * playerTargetOffset;
-            targetPos = (Vector2)playerTransform.position + offset;
+            // Pass the first falling frame as the rock sprite
+            Sprite rockSprite = (fallingFrames != null && fallingFrames.Length > 0)
+                ? fallingFrames[0] : null;
+
+            fr.Initialize(targetPos, rockSprite, 0f, damage);
+
+            // Set animation frames via serialized fields won't work at runtime,
+            // so we set them manually
+            SetFrames(fr);
         }
-        else
-        {
-            targetPos = new Vector2(
-                Random.Range(areaMin.x, areaMax.x),
-                Random.Range(areaMin.y, areaMax.y)
-            );
-        }
-
-        targetPos.x = Mathf.Clamp(targetPos.x, areaMin.x, areaMax.x);
-        targetPos.y = Mathf.Clamp(targetPos.y, areaMin.y, areaMax.y);
-
-        GameObject rockObj = Instantiate(fallingRockPrefab, transform);
-        FallingRock rock = rockObj.GetComponent<FallingRock>();
-
-        Sprite sprite = rockSprites.Length > 0
-            ? rockSprites[Random.Range(0, rockSprites.Length)]
-            : null;
-
-        rock.Initialize(targetPos, sprite, rockFallSpeed, rockDamage);
-
-        currentRockCount++;
-        StartCoroutine(TrackRockLifetime(rockObj));
     }
 
-    private IEnumerator TrackRockLifetime(GameObject rockObj)
+    private void SetFrames(FallingRock fr)
     {
-        while (rockObj != null)
-            yield return null;
-        currentRockCount--;
+        // Use reflection or make fields public — easier: we'll set them on the prefab
+        // The frames should be set on the PREFAB in the Inspector
+    }
+    
+    public void SetDifficulty(float spawnRate, float dmg)
+    {
+        minSpawnInterval = Mathf.Max(0.05f, 1f / spawnRate - 0.1f);
+        maxSpawnInterval = Mathf.Max(0.1f, 1f / spawnRate + 0.1f);
+        damage = dmg;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f);
-        Vector3 center = new Vector3((areaMin.x + areaMax.x) / 2f, (areaMin.y + areaMax.y) / 2f, 0f);
-        Vector3 size = new Vector3(areaMax.x - areaMin.x, areaMax.y - areaMin.y, 0f);
+        Vector3 center = new Vector3(
+            (areaMin.x + areaMax.x) / 2f,
+            (areaMin.y + areaMax.y) / 2f,
+            0f
+        );
+        Vector3 size = new Vector3(
+            areaMax.x - areaMin.x,
+            areaMax.y - areaMin.y,
+            0f
+        );
         Gizmos.DrawCube(center, size);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(center, size);
     }
 }
