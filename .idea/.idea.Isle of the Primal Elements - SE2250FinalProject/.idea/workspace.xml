@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73eda162-296f-429d-9eb5-fff8f4f8417d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Isle of the Primal Elements - SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Isle of the Primal Elements - SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/VictoryScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/VictoryScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +50,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -115,7 +111,7 @@
       <workItem from="1775094294185" duration="2843000" />
       <workItem from="1775504533492" duration="1634000" />
       <workItem from="1775513800610" duration="21340000" />
-      <workItem from="1775763022935" duration="2875000" />
+      <workItem from="1775763022935" duration="3192000" />
     </task>
     <task id="LOCAL-00001" summary="Added Lightning Animation Script">
       <option name="closed" value="true" />
