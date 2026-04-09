@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+/// <summary>
+/// ArenaRevealTrigger — fixed activation order:
+///   Boss is enabled BEFORE the health bar so OnEnable() on BossHealthBarUI
+///   can find EarthBossHealth and subscribe to events correctly.
+/// </summary>
 public class ArenaRevealTrigger : MonoBehaviour
 {
     [Header("Lighting")]
@@ -22,6 +27,7 @@ public class ArenaRevealTrigger : MonoBehaviour
 
     private void Start()
     {
+        // Keep boss and UI hidden until player enters
         if (earthBoss != null)
             earthBoss.SetActive(false);
 
@@ -33,7 +39,8 @@ public class ArenaRevealTrigger : MonoBehaviour
     {
         if (revealed)
         {
-            globalLight.intensity = Mathf.Lerp(globalLight.intensity, brightIntensity, fadeSpeed * Time.deltaTime);
+            if (globalLight != null)
+                globalLight.intensity = Mathf.Lerp(globalLight.intensity, brightIntensity, fadeSpeed * Time.deltaTime);
 
             if (playerSpotlight != null)
                 playerSpotlight.intensity = Mathf.Lerp(playerSpotlight.intensity, 0f, fadeSpeed * Time.deltaTime);
@@ -47,9 +54,11 @@ public class ArenaRevealTrigger : MonoBehaviour
 
         revealed = true;
 
+        // FIX: Enable boss FIRST so EarthBossHealth exists when the health bar subscribes
         if (earthBoss != null)
             earthBoss.SetActive(true);
 
+        // THEN enable the health bar — its OnEnable() will find EarthBossHealth
         if (bossHealthBar != null)
             bossHealthBar.gameObject.SetActive(true);
 
