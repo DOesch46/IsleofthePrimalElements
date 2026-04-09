@@ -22,6 +22,9 @@ public class ArenaRevealTrigger : MonoBehaviour
 
     [Header("Rocks")]
     [SerializeField] private FallingRockSpawner rockSpawner;
+    
+    [Header("Cutscene")]
+    [SerializeField] private BossIntroCutscene introCutscene;
 
     private bool revealed = false;
 
@@ -66,5 +69,7 @@ public class ArenaRevealTrigger : MonoBehaviour
             rockSpawner.StartSpawning();
 
         Debug.Log("BOSS FIGHT BEGIN!");
+        if (introCutscene != null)
+            introCutscene.StartCutscene();
     }
 }
