@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="Merge branch 'main' of https://github.com/DOesch46/SE2250FinalProject&#10;&#10;# Conflicts:&#10;#&#9;.idea/.idea.SE2250FinalProject/.idea/workspace.xml&#10;#&#9;Assets/Prefabs/Player/Player.prefab&#10;#&#9;Assets/Scenes/Levels/FireLevel.unity&#10;#&#9;Assets/Scenes/MainIsland.unity&#10;#&#9;obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache">
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hazards/FallingRock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hazards/FallingRock.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossAI.cs" afterDir="false" />
-    </list>
+    <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="Merge branch 'main' of https://github.com/DOesch46/SE2250FinalProject&#10;&#10;# Conflicts:&#10;#&#9;.idea/.idea.SE2250FinalProject/.idea/workspace.xml&#10;#&#9;Assets/Prefabs/Player/Player.prefab&#10;#&#9;Assets/Scenes/Levels/FireLevel.unity&#10;#&#9;Assets/Scenes/MainIsland.unity&#10;#&#9;obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
