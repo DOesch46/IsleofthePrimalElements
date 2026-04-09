@@ -24,23 +24,23 @@ public class GameProgressManager : MonoBehaviour
     public bool lightningUnlocked = false;
 
     public void UnlockAbility(string ability)
-{
-    switch (ability)
     {
-        case "fire":
-            fireUnlocked = true;
-            break;
-        case "water":
-            waterUnlocked = true;
-            break;
-        case "earth":
-            earthUnlocked = true;
-            break;
-        case "lightning":
-            lightningUnlocked = true;
-            break;
+        switch (ability.ToLowerInvariant())
+        {
+            case "fire":
+                CollectElement(ElementType.Fire);
+                break;
+            case "water":
+                CollectElement(ElementType.Water);
+                break;
+            case "earth":
+                CollectElement(ElementType.Earth);
+                break;
+            case "lightning":
+                CollectElement(ElementType.Lightning);
+                break;
+        }
     }
-}
     /// <summary>
     /// Access the GameProgressManager from anywhere in your code.
     /// Example: GameProgressManager.Instance.HasElement(ElementType.Fire)
@@ -118,7 +118,6 @@ public class GameProgressManager : MonoBehaviour
 
     private void Start()
     {
-        ResetAllProgress();
         UpdateDebugLists();
     }
 
@@ -206,6 +205,7 @@ public class GameProgressManager : MonoBehaviour
         if (!collectedElements.Contains(element))
         {
             collectedElements.Add(element);
+            UpdateLegacyUnlockFlags();
             Debug.Log($"Element collected: {element}!");
 
             UpdateDebugLists();
@@ -235,6 +235,7 @@ public class GameProgressManager : MonoBehaviour
         if (collectedElements.Contains(element))
         {
             collectedElements.Remove(element);
+            UpdateLegacyUnlockFlags();
             Debug.Log($"Element lost: {element}! You must reclaim it.");
 
             UpdateDebugLists();
@@ -469,6 +470,8 @@ public class GameProgressManager : MonoBehaviour
             }
         }
 
+        UpdateLegacyUnlockFlags();
+
         // Load coins
         totalCoins = PlayerPrefs.GetInt(saveKeyPrefix + "TotalCoins", 0);
         debugCoinCount = totalCoins;
@@ -505,6 +508,7 @@ public class GameProgressManager : MonoBehaviour
         completedLevels.Clear();
         collectedElements.Clear();
         totalCoins = 0;
+        UpdateLegacyUnlockFlags();
 
         UpdateDebugLists();
 
@@ -521,6 +525,15 @@ public class GameProgressManager : MonoBehaviour
 
         Debug.Log("All progress has been reset.");
     }
+
+    private void UpdateLegacyUnlockFlags()
+    {
+        fireUnlocked = collectedElements.Contains(ElementType.Fire);
+        waterUnlocked = collectedElements.Contains(ElementType.Water);
+        earthUnlocked = collectedElements.Contains(ElementType.Earth);
+        lightningUnlocked = collectedElements.Contains(ElementType.Lightning);
+    }
+
     private void OnEnable()
 {
     ItemPickup.OnItemCollected += HandleItemCollected;

@@ -6,17 +6,20 @@ public class TridentPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
+        GameObject playerObject = other.attachedRigidbody != null
+            ? other.attachedRigidbody.gameObject
+            : other.transform.root.gameObject;
+
+        if (!playerObject.CompareTag("Player"))
             return;
 
         if (GameProgressManager.Instance != null)
         {
-            Debug.Log("Trident picked up, unlocking " + unlockElement);
             GameProgressManager.Instance.CollectElement(unlockElement);
         }
         else
         {
-            Debug.LogWarning("GameProgressManager.Instance is null");
+            Debug.LogWarning("GameProgressManager.Instance is NULL");
         }
 
         Destroy(gameObject);
