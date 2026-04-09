@@ -6,6 +6,7 @@ public class EarthBossAI : MonoBehaviour
     [Header("References")]
     [SerializeField] private EarthBossHealth bossHealth;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator; // Drag the Animator here (optional)
 
     [Header("Ground Slam")]
     [SerializeField] private GameObject groundSlamPrefab;
@@ -20,6 +21,11 @@ public class EarthBossAI : MonoBehaviour
     [SerializeField] private float attackRange = 4f;
     [SerializeField] private float stopRange = 3f;
 
+    [Header("Rendering — IMPORTANT")]
+    [Tooltip("Must be higher than your ground/grass tile sorting order (usually 0). Set to 5 or higher.")]
+    [SerializeField] private string sortingLayerName = "Enemies";  // was "Characters"
+    [SerializeField] private int sortingOrder = 5;
+
     [Header("Phase 2")]
     [SerializeField] private float phase2HealthThreshold = 0.5f;
     [SerializeField] private int phase2SlamCount = 3;
@@ -27,6 +33,10 @@ public class EarthBossAI : MonoBehaviour
 
     [Header("Rock Rain")]
     [SerializeField] private FallingRockSpawner rockSpawner;
+
+    [Header("Death Reward")]
+    [Tooltip("Drag the player GameObject here, or leave empty to auto-find by tag.")]
+    [SerializeField] private GameObject playerObject;
 
     private Transform playerTransform;
     private bool isAttacking = false;
@@ -37,22 +47,50 @@ public class EarthBossAI : MonoBehaviour
     private enum BossState { Idle, Chase, Attack, Stunned, Dead }
     private BossState currentState = BossState.Idle;
 
+    // -------------------------------------------------------------------------
+    // Unity Lifecycle
+    // -------------------------------------------------------------------------
+
+    private void Awake()
+    {
+        // FIX 1: Make sure the boss renders above the ground tiles.
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingLayerName = sortingLayerName;
+            spriteRenderer.sortingOrder = sortingOrder;
+        }
+
+        // Also fix any child SpriteRenderers (e.g. animation children)
+        foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.sortingLayerName = sortingLayerName;
+            sr.sortingOrder = sortingOrder;
+        }
+    }
+
     private void Start()
     {
         if (bossHealth == null)
             bossHealth = GetComponent<EarthBossHealth>();
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
+        if (animator == null)
+            animator = GetComponent<Animator>();
 
         bossHealth.OnDied += HandleDeath;
         bossHealth.OnHealthChanged += CheckPhaseTransition;
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-            playerTransform = player.transform;
+        // Find player
+        if (playerObject == null)
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+            playerTransform = playerObject.transform;
 
         currentState = BossState.Idle;
         slamTimer = slamCooldown;
+
+        PlayAnim("Idle");
     }
 
     private void Update()
@@ -65,14 +103,31 @@ public class EarthBossAI : MonoBehaviour
         switch (currentState)
         {
             case BossState.Idle:
+                PlayAnim("Idle");
                 if (distToPlayer < chaseRange)
                     currentState = BossState.Chase;
                 break;
+
             case BossState.Chase:
                 ChasePlayer(distToPlayer);
                 break;
         }
     }
+
+    // -------------------------------------------------------------------------
+    // Animation Helper
+    // -------------------------------------------------------------------------
+
+    private void PlayAnim(string stateName)
+    {
+        if (animator == null) return;
+        // Use CrossFade so it doesn't restart the same clip
+        animator.CrossFade(stateName, 0f, 0);
+    }
+
+    // -------------------------------------------------------------------------
+    // AI Logic
+    // -------------------------------------------------------------------------
 
     private void ChasePlayer(float distance)
     {
@@ -87,17 +142,24 @@ public class EarthBossAI : MonoBehaviour
 
         if (distance > stopRange)
         {
+            PlayAnim("Walk");
+
             Vector2 dirToPlayer = ((Vector2)playerTransform.position - (Vector2)transform.position).normalized;
             transform.position += (Vector3)dirToPlayer * moveSpeed * Time.deltaTime;
 
             if (spriteRenderer != null)
                 spriteRenderer.flipX = dirToPlayer.x < 0;
         }
+        else
+        {
+            PlayAnim("Idle");
+        }
     }
 
     private IEnumerator PerformGroundSlam()
     {
         isAttacking = true;
+        PlayAnim("Attack");
 
         Vector3 originalPos = transform.position;
         float windUpTime = 0.5f;
@@ -157,15 +219,32 @@ public class EarthBossAI : MonoBehaviour
 
     private void SpawnSlamWave(Vector2 direction)
     {
+        if (groundSlamPrefab == null)
+        {
+            Debug.LogError("EarthBossAI: groundSlamPrefab is not assigned!");
+            return;
+        }
+
         Vector2 spawnPos = (Vector2)transform.position + direction * 1.0f;
         GameObject waveObj = Instantiate(groundSlamPrefab);
         GroundSlamWave wave = waveObj.GetComponent<GroundSlamWave>();
 
+        if (wave == null)
+        {
+            Debug.LogError("EarthBossAI: groundSlamPrefab does not have a GroundSlamWave component!");
+            Destroy(waveObj);
+            return;
+        }
+
         float currentWaveSpeed = isPhase2 ? waveSpeed * 1.3f : waveSpeed;
-        float currentDamage = isPhase2 ? slamDamage * 1.2f : slamDamage;
+        float currentDamage    = isPhase2 ? slamDamage * 1.2f : slamDamage;
 
         wave.Initialize(spawnPos, direction, currentWaveSpeed, currentDamage, waveSprite);
     }
+
+    // -------------------------------------------------------------------------
+    // Phase Transition
+    // -------------------------------------------------------------------------
 
     private void CheckPhaseTransition(float current, float max)
     {
@@ -179,7 +258,7 @@ public class EarthBossAI : MonoBehaviour
     private IEnumerator Phase2Transition()
     {
         currentState = BossState.Stunned;
-        isAttacking = true;
+        isAttacking  = true;
 
         for (int i = 0; i < 6; i++)
         {
@@ -194,23 +273,39 @@ public class EarthBossAI : MonoBehaviour
         if (rockSpawner != null)
             rockSpawner.SetDifficulty(1.3f, 0.6f);
 
-        isAttacking = false;
+        isAttacking  = false;
         currentState = BossState.Chase;
     }
 
+    // -------------------------------------------------------------------------
+    // Death
+    // -------------------------------------------------------------------------
+
     private void HandleDeath()
     {
-        isDead = true;
+        isDead       = true;
         currentState = BossState.Dead;
 
         if (rockSpawner != null)
             rockSpawner.StopSpawning();
+
+        // Grant the player the ground shockwave ability
+        if (playerObject != null)
+        {
+            PlayerGroundShockwave shockwave = playerObject.GetComponent<PlayerGroundShockwave>();
+            if (shockwave != null)
+                shockwave.UnlockAbility();
+            else
+                Debug.LogWarning("EarthBossAI: PlayerGroundShockwave not found on player. Add the script!");
+        }
 
         StartCoroutine(DeathSequence());
     }
 
     private IEnumerator DeathSequence()
     {
+        PlayAnim("Death");
+
         for (int i = 0; i < 10; i++)
         {
             if (spriteRenderer != null)
@@ -219,7 +314,7 @@ public class EarthBossAI : MonoBehaviour
         }
 
         float fadeTime = 1f;
-        float elapsed = 0f;
+        float elapsed  = 0f;
         while (elapsed < fadeTime)
         {
             elapsed += Time.deltaTime;
@@ -230,6 +325,10 @@ public class EarthBossAI : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
 
     private Vector2 RotateVector2(Vector2 v, float degrees)
     {
