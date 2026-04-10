@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 2888040227966681610}
   - component: {fileID: 6699043981516295889}
   - component: {fileID: 2299786000510534795}
-  - component: {fileID: 2415541472488255756}
   - component: {fileID: 260593968958709937}
   - component: {fileID: 737471810530897006}
   - component: {fileID: 4609581083346521076}
+  - component: {fileID: 7331115534207798760}
+  - component: {fileID: 4082892862792206307}
   m_Layer: 9
   m_Name: EarthBoss
   m_TagString: Boss
@@ -159,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc07e7dbab654fe59781d301ada83b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EarthBossAI
-  bossHealth: {fileID: 2415541472488255756}
+  bossHealth: {fileID: 4082892862792206307}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
   groundSlamPrefab: {fileID: 3548971030918772574, guid: f6836aab059b54b2394013f8b0b744e3, type: 3}
@@ -178,19 +179,6 @@ MonoBehaviour:
   phase2SlamSpread: 30
   rockSpawner: {fileID: 0}
   playerObject: {fileID: 0}
---- !u!114 &2415541472488255756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8123615099126094555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03c11634e86dc41ae862ea27c51dd25c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EarthBossHealth
-  maxHealth: 300
 --- !u!114 &260593968958709937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,3 +257,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb368792f4fd948479db005e4ffe2587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+--- !u!114 &7331115534207798760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8123615099126094555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d279456ed83e4730b5fed2a36eb1d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EarthBossDeathHandler
+  exitPortal: {fileID: 0}
+  portalSpawnPoint: {fileID: 0}
+  coinPrefab: {fileID: 8305527822653216029, guid: 9a471a929b973b243b669a5e18170c20, type: 3}
+  coinCount: 50
+  coinSpreadRadius: 3
+  bossHealth: {fileID: 4082892862792206307}
+  rockSpawner: {fileID: 0}
+  pillarSpawner: {fileID: 0}
+  bossHealthBar: {fileID: 0}
+--- !u!114 &4082892862792206307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8123615099126094555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d344005996bdffc4681e4978f85261b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  isBoss: 1
+  elementReward: 3
+  maxHealth: 250
+  coinPrefab: {fileID: 8305527822653216029, guid: 9a471a929b973b243b669a5e18170c20, type: 3}
+  coinDropCount: 0
+  coinScatterRadius: 0.5
+  tridentDrop: {fileID: 0}
