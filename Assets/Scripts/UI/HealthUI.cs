@@ -54,8 +54,7 @@ public class HealthUI : MonoBehaviour
             return;
         }
 
-        if (player == null)
-            player = FindFirstObjectByType<PlayerHealth>();
+        player = FindFirstObjectByType<PlayerHealth>();
 
         if (player == null)
         {
@@ -65,13 +64,17 @@ public class HealthUI : MonoBehaviour
         }
 
         player.OnHealthChanged += UpdateHealth;
+        Debug.Log($"HealthUI: Bound to player '{player.name}'.");
         UpdateHealth(player.GetCurrentHealth(), player.GetMaxHealth());
     }
 
     private void UnbindPlayer()
     {
         if (player != null)
+        {
             player.OnHealthChanged -= UpdateHealth;
+            player = null;
+        }
     }
 
     private void UpdateHealth(float current, float max)

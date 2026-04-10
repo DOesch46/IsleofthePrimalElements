@@ -59,18 +59,7 @@ public class EnemyDamage : MonoBehaviour
 
         animAttackHash = Animator.StringToHash(attackTriggerName);
         runBoolHash = Animator.StringToHash(runBoolName);
-
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-            playerHealth = playerObj.GetComponent<PlayerHealth>();
-            Debug.Log($"{name}: Found player. PlayerHealth attached: {playerHealth != null}");
-        }
-        else
-        {
-            Debug.LogWarning($"{name}: No GameObject with tag 'Player' found.");
-        }
+        ResolvePlayerReferences(logResult: true);
 
         if (animator == null)
         {
@@ -82,6 +71,9 @@ public class EnemyDamage : MonoBehaviour
     {
         if (cooldownTimer > 0f)
             cooldownTimer -= Time.deltaTime;
+
+        if (player == null || playerHealth == null)
+            ResolvePlayerReferences();
 
         if (player == null || playerHealth == null)
             return;
@@ -140,5 +132,25 @@ public class EnemyDamage : MonoBehaviour
 
         isAttacking = false;
         Debug.Log($"{name}: Attack finished.");
+    }
+
+    private void ResolvePlayerReferences(bool logResult = false)
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null)
+        {
+            if (logResult)
+                Debug.LogWarning($"{name}: No GameObject with tag 'Player' found.");
+
+            player = null;
+            playerHealth = null;
+            return;
+        }
+
+        player = playerObj.transform;
+        playerHealth = playerObj.GetComponent<PlayerHealth>();
+
+        if (logResult)
+            Debug.Log($"{name}: Found player '{playerObj.name}'. PlayerHealth attached: {playerHealth != null}");
     }
 }

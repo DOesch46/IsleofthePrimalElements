@@ -51,19 +51,14 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-        }
-        else
-        {
-            Debug.LogWarning($"{gameObject.name}: No GameObject with tag 'Player' found.");
-        }
+        ResolvePlayerReference(logResult: true);
     }
 
     private void FixedUpdate()
     {
+        if (player == null)
+            ResolvePlayerReference();
+
         if (player == null) return;
 
         // Don't move if currently attacking
@@ -106,6 +101,22 @@ public class EnemyAI : MonoBehaviour
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
             transform.localScale = scale;
+        }
+    }
+
+    private void ResolvePlayerReference(bool logResult = false)
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+
+            if (logResult)
+                Debug.Log($"{gameObject.name}: Tracking player '{playerObj.name}'.");
+        }
+        else if (logResult)
+        {
+            Debug.LogWarning($"{gameObject.name}: No GameObject with tag 'Player' found.");
         }
     }
 
