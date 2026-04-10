@@ -4,9 +4,9 @@ using System.Collections;
 public class EarthBossAI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EarthBossHealth bossHealth;
+    [SerializeField] private EnemyHealth bossHealth;  // ✅ Changed from EarthBossHealth
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Animator animator; // Drag the Animator here (optional)
+    [SerializeField] private Animator animator;
 
     [Header("Ground Slam")]
     [SerializeField] private GameObject groundSlamPrefab;
@@ -22,8 +22,7 @@ public class EarthBossAI : MonoBehaviour
     [SerializeField] private float stopRange = 3f;
 
     [Header("Rendering — IMPORTANT")]
-    [Tooltip("Must be higher than your ground/grass tile sorting order (usually 0). Set to 5 or higher.")]
-    [SerializeField] private string sortingLayerName = "Enemies";  // was "Characters"
+    [SerializeField] private string sortingLayerName = "Enemies";
     [SerializeField] private int sortingOrder = 5;
 
     [Header("Phase 2")]
@@ -35,7 +34,6 @@ public class EarthBossAI : MonoBehaviour
     [SerializeField] private FallingRockSpawner rockSpawner;
 
     [Header("Death Reward")]
-    [Tooltip("Drag the player GameObject here, or leave empty to auto-find by tag.")]
     [SerializeField] private GameObject playerObject;
 
     private Transform playerTransform;
@@ -56,7 +54,6 @@ public class EarthBossAI : MonoBehaviour
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // HARDCODED — ignores the serialized field so Unity can't override it
         if (spriteRenderer != null)
         {
             spriteRenderer.sortingLayerName = "Enemies";
@@ -73,12 +70,19 @@ public class EarthBossAI : MonoBehaviour
     private void Start()
     {
         if (bossHealth == null)
-            bossHealth = GetComponent<EarthBossHealth>();
+            bossHealth = GetComponent<EnemyHealth>();  // ✅ Changed
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        bossHealth.OnDied += HandleDeath;
-        bossHealth.OnHealthChanged += CheckPhaseTransition;
+        if (bossHealth != null)
+        {
+            bossHealth.OnDied += HandleDeath;  // ✅ Uses EnemyHealth.OnDied
+            bossHealth.OnHealthChanged += CheckPhaseTransition;
+        }
+        else
+        {
+            Debug.LogError("EarthBossAI: No EnemyHealth found on this GameObject!");
+        }
 
         // Find player
         if (playerObject == null)
@@ -120,7 +124,6 @@ public class EarthBossAI : MonoBehaviour
     private void PlayAnim(string stateName)
     {
         if (animator == null) return;
-        // Use CrossFade so it doesn't restart the same clip
         animator.CrossFade(stateName, 0f, 0);
     }
 
@@ -236,7 +239,7 @@ public class EarthBossAI : MonoBehaviour
         }
 
         float currentWaveSpeed = isPhase2 ? waveSpeed * 1.3f : waveSpeed;
-        float currentDamage    = isPhase2 ? slamDamage * 1.2f : slamDamage;
+        float currentDamage = isPhase2 ? slamDamage * 1.2f : slamDamage;
 
         wave.Initialize(spawnPos, direction, currentWaveSpeed, currentDamage, waveSprite);
     }
@@ -257,7 +260,7 @@ public class EarthBossAI : MonoBehaviour
     private IEnumerator Phase2Transition()
     {
         currentState = BossState.Stunned;
-        isAttacking  = true;
+        isAttacking = true;
 
         for (int i = 0; i < 6; i++)
         {
@@ -272,7 +275,7 @@ public class EarthBossAI : MonoBehaviour
         if (rockSpawner != null)
             rockSpawner.SetDifficulty(1.3f, 0.6f);
 
-        isAttacking  = false;
+        isAttacking = false;
         currentState = BossState.Chase;
     }
 
@@ -282,20 +285,23 @@ public class EarthBossAI : MonoBehaviour
 
     private void HandleDeath()
     {
-        isDead       = true;
+        isDead = true;
         currentState = BossState.Dead;
 
         if (rockSpawner != null)
             rockSpawner.StopSpawning();
 
         // Grant the player the ground shockwave ability
+        if (playerObject == null)
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+
         if (playerObject != null)
         {
             PlayerGroundShockwave shockwave = playerObject.GetComponent<PlayerGroundShockwave>();
             if (shockwave != null)
                 shockwave.UnlockAbility();
             else
-                Debug.LogWarning("EarthBossAI: PlayerGroundShockwave not found on player. Add the script!");
+                Debug.LogWarning("EarthBossAI: PlayerGroundShockwave not found on player!");
         }
 
         StartCoroutine(DeathSequence());
@@ -313,7 +319,7 @@ public class EarthBossAI : MonoBehaviour
         }
 
         float fadeTime = 1f;
-        float elapsed  = 0f;
+        float elapsed = 0f;
         while (elapsed < fadeTime)
         {
             elapsed += Time.deltaTime;
@@ -322,7 +328,8 @@ public class EarthBossAI : MonoBehaviour
             yield return null;
         }
 
-        Destroy(gameObject);
+        // ✅ Don't destroy here — let EarthBossDeathHandler handle it
+        // Destroy(gameObject);
     }
 
     // -------------------------------------------------------------------------
