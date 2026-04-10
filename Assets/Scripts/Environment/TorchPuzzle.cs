@@ -137,6 +137,10 @@ public class TorchPuzzle : MonoBehaviour
                 gateToOpen.SetActive(false);
             }
         }
+        if (GuideBanner.Instance != null)                            
+        {                                                             
+            GuideBanner.Instance.Show("Proceed Downwards");     
+        }                                                             
     }
 
     /// <summary>

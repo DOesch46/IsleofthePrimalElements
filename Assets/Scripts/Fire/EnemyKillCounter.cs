@@ -13,6 +13,10 @@ public class EnemyKillCounter : MonoBehaviour
     [Header("Puzzle Reference")]
     [SerializeField] private TorchPuzzle torchPuzzle;
 
+    [Header("Enemy Gate")]                                                    // ← NEW
+    [Tooltip("Wall/gate to remove when all enemies are defeated")]            // ← NEW
+    [SerializeField] private GameObject enemyGate;                            // ← NEW
+
     private int enemiesDefeated = 0;
     private bool uiShown = false;
     private bool allDefeated = false;
@@ -72,10 +76,20 @@ public class EnemyKillCounter : MonoBehaviour
         if (enemiesDefeated >= totalEnemies)
         {
             allDefeated = true;
+            OpenEnemyGate();                                                  // ← NEW
         }
 
         UpdateUI();
     }
+
+    private void OpenEnemyGate()                                              // ← NEW
+    {                                                                         // ← NEW
+        if (enemyGate != null)                                                // ← NEW
+        {                                                                     // ← NEW
+            enemyGate.SetActive(false);                                       // ← NEW
+            Debug.Log("*** ENEMY GATE OPENED! Path to boss unlocked! ***");   // ← NEW
+        }                                                                     // ← NEW
+    }                                                                         // ← NEW
 
     private void UpdateUI()
     {
@@ -83,7 +97,7 @@ public class EnemyKillCounter : MonoBehaviour
 
         if (allDefeated)
         {
-            enemyCountText.text = "All enemies defeated!";
+            enemyCountText.text = "All enemies defeated! Path opened!";
             enemyCountText.color = Color.green;
         }
         else
