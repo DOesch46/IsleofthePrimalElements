@@ -13,6 +13,10 @@ public class BossPortalSpawner : MonoBehaviour
     [SerializeField] private Transform portalSpawnPoint;
     [SerializeField] private Vector3 spawnOffset = Vector3.zero;
 
+    [Header("Optional Reward Pickup")]
+    [SerializeField] private Transform rewardSpawnPoint;
+    [SerializeField] private Vector3 rewardSpawnOffset = Vector3.zero;
+
     [Header("Portal Destination")]
     [SerializeField] private string returnSceneName = "MainIsland";
     [SerializeField] private string returnSpawnId = "HubReturn";
@@ -24,6 +28,7 @@ public class BossPortalSpawner : MonoBehaviour
     [SerializeField] private LevelData completedLevel;
 
     private bool portalSpawned;
+    private bool rewardSpawned;
 
     private void OnEnable()
     {
@@ -96,6 +101,56 @@ public class BossPortalSpawner : MonoBehaviour
 
         Debug.Log($"{name}: Boss is already defeated. Ensuring return portal exists.");
         SpawnPortal();
+    }
+
+    public void EnsureCompletedBossRewardsExist()
+    {
+        if (rewardSpawned)
+        {
+            Debug.Log($"{name}: Completed-boss reward pickup already exists in this scene.");
+            return;
+        }
+
+        EnemyHealth bossHealth = GetComponent<EnemyHealth>();
+        if (bossHealth == null)
+        {
+            Debug.LogWarning($"{name}: Cannot restore boss reward pickup because EnemyHealth is missing.");
+            return;
+        }
+
+        GameObject rewardPrefab = bossHealth.RewardPickupPrefab;
+        if (rewardPrefab == null)
+        {
+            Debug.Log($"{name}: Boss has no reward pickup prefab to restore.");
+            return;
+        }
+
+        ElementType rewardElement = bossHealth.RewardElement;
+        if (rewardElement != ElementType.None &&
+            GameProgressManager.Instance != null &&
+            GameProgressManager.Instance.HasElement(rewardElement))
+        {
+            Debug.Log($"{name}: Boss reward pickup restore skipped because element '{rewardElement}' is already unlocked.");
+            return;
+        }
+
+        if (rewardPrefab.GetComponent<TridentPickup>() != null &&
+            FindFirstObjectByType<TridentPickup>() != null)
+        {
+            rewardSpawned = true;
+            Debug.Log($"{name}: A trident pickup is already present in the scene.");
+            return;
+        }
+
+        Vector3 spawnPosition = rewardSpawnPoint != null
+            ? rewardSpawnPoint.position
+            : transform.position + rewardSpawnOffset;
+
+        Instantiate(rewardPrefab, spawnPosition, Quaternion.identity);
+        rewardSpawned = true;
+
+        Debug.Log(
+            $"{name}: Restored boss reward pickup '{rewardPrefab.name}' at {spawnPosition} because the boss is already defeated but the reward is still needed.");
     }
 
     private string ResolveBossProgressId()

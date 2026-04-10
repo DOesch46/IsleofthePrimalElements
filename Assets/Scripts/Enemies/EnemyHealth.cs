@@ -38,6 +38,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public float GetCurrentHealth() => currentHealth;
     public bool IsDead => isDead;
     public float HealthFraction => currentHealth / maxHealth;
+    public GameObject RewardPickupPrefab => tridentDrop;
+    public ElementType RewardElement => elementReward;
 
     public void SetCurrentHealth(float value)
     {

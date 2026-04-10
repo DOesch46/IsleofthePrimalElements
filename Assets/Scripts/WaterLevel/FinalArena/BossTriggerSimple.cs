@@ -20,6 +20,7 @@ public class BossTriggerSimple : MonoBehaviour
 
             if (portalSpawner != null)
             {
+                portalSpawner.EnsureCompletedBossRewardsExist();
                 portalSpawner.EnsurePortalExistsForCompletedBoss();
             }
             else
