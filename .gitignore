@@ -16,3 +16,9 @@ UserSettings/
 
 .DS_Store
 Thumbs.db
+
+!Build/
+!Build/**
+!TemplateData/
+!TemplateData/**
+!index.html
