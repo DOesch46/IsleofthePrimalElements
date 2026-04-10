@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Enemy health component that handles taking damage, dying,
 /// dropping coins, and notifying the level objective system.
@@ -46,7 +46,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // -------------------------------------------------------------------------
     // Private State
     // -------------------------------------------------------------------------
-
+    public bool isFinalBoss = false;
     private float currentHealth;
     private bool isInvulnerable = false;
     private Animator animator;
@@ -172,11 +172,18 @@ if (isBoss && tridentDrop != null)
     }
 
     private System.Collections.IEnumerator DestroyAfterDeathAnim()
+{
+    yield return new WaitForSeconds(1f);
+
+    if (isFinalBoss)
     {
-        // Wait for death animation to play
-        yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+        Debug.Log("Final Boss defeated → VictoryScene");
+        SceneManager.LoadScene("VictoryScene");
+        yield break; // 🚨 stops here, no destroy needed
     }
+
+    Destroy(gameObject);
+}
 
     private void DropCoins()
     {

@@ -48,7 +48,7 @@ if (tileName.Contains("lava"))
 
     if (lavaTimer >= lavaTickInterval)
     {
-        lavaTimer = 0f;
+        lavaTimer = 1f;
 
         Debug.Log("🔥 Taking lava damage");
 
