@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73eda162-296f-429d-9eb5-fff8f4f8417d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Isle of the Primal Elements - SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Isle of the Primal Elements - SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +25,8 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Prefabs/Enemies/AqualisMinionPrefab.prefab" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scenes/Levels/WaterLevel.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Abilities/ChargedWaveProjectile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Abilities/PlayerWaterAbility.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/WaterLevel/Challenge3/Challenge3Lever.cs" root0="FORCE_HIGHLIGHTING" />
@@ -50,7 +52,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -111,7 +113,7 @@
       <workItem from="1775094294185" duration="2843000" />
       <workItem from="1775504533492" duration="1634000" />
       <workItem from="1775513800610" duration="21340000" />
-      <workItem from="1775763022935" duration="3192000" />
+      <workItem from="1775763022935" duration="4041000" />
     </task>
     <task id="LOCAL-00001" summary="Added Lightning Animation Script">
       <option name="closed" value="true" />
