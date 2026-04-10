@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="Merge branch 'main' of https://github.com/DOesch46/SE2250FinalProject&#10;&#10;# Conflicts:&#10;#&#9;.idea/.idea.SE2250FinalProject/.idea/workspace.xml&#10;#&#9;Assets/Prefabs/Player/Player.prefab&#10;#&#9;Assets/Scenes/Levels/FireLevel.unity&#10;#&#9;Assets/Scenes/MainIsland.unity&#10;#&#9;obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossAI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +35,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/FireTorch.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LevelExit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/TorchPuzzle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Fire/GuideBanner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Hazards/LavaPool.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/CameraFollow.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -76,7 +75,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/6000.3.5f2/Unity.app/Contents/MacOS/Unity" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.3.5f2\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath C:\Users\deepa\Documents\SE2250FinalProject -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\deepa\Documents\SE2250FinalProject" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -86,7 +85,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="/Applications/Unity/Hub/Editor/6000.3.5f2/Unity.app/Contents/MacOS/Unity" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.3.5f2\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\deepa\Documents\SE2250FinalProject -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\deepa\Documents\SE2250FinalProject" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -137,6 +136,7 @@
       <workItem from="1775781788465" duration="1030000" />
       <workItem from="1775782846045" duration="1396000" />
       <workItem from="1775784567288" duration="1010000" />
+      <workItem from="1775788779315" duration="19000" />
     </task>
     <servers />
   </component>
