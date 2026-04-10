@@ -18,14 +18,31 @@ public class GroundSlamWave : MonoBehaviour
 
     private Vector2 direction;
     private Vector2 origin;
-    private HashSet<int> hitPlayers = new HashSet<int>();
+    private HashSet<int> hitTargets = new HashSet<int>();
+    private bool firedByPlayer = false;  // ✅ Track who fired it
 
+    // ✅ Original Initialize (used by boss) — damages player
     public void Initialize(Vector2 startPos, Vector2 dir, float speed, float dmg, Sprite sprite)
     {
         origin = startPos;
         direction = dir.normalized;
         travelSpeed = speed;
         damage = dmg;
+        firedByPlayer = false;  // Boss fired it
+        if (sprite != null) waveSegmentSprite = sprite;
+
+        transform.position = startPos;
+        StartCoroutine(PropagateWave());
+    }
+
+    // ✅ NEW overload (used by player) — damages enemies only
+    public void InitializeAsPlayer(Vector2 startPos, Vector2 dir, float speed, float dmg, Sprite sprite)
+    {
+        origin = startPos;
+        direction = dir.normalized;
+        travelSpeed = speed;
+        damage = dmg;
+        firedByPlayer = true;  // ✅ Player fired it
         if (sprite != null) waveSegmentSprite = sprite;
 
         transform.position = startPos;
@@ -47,13 +64,32 @@ public class GroundSlamWave : MonoBehaviour
             foreach (Collider2D hit in hits)
             {
                 int id = hit.gameObject.GetInstanceID();
-                if (hitPlayers.Contains(id)) continue;
+                if (hitTargets.Contains(id)) continue;
 
-                PlayerHealth health = hit.GetComponent<PlayerHealth>();
-                if (health != null)
+                if (firedByPlayer)
                 {
-                    health.TakeDamage(damage);
-                    hitPlayers.Add(id);
+                    // ✅ Player fired — damage ENEMIES only
+                    IDamageable damageable = hit.GetComponent<IDamageable>();
+                    PlayerHealth playerHP = hit.GetComponent<PlayerHealth>();
+
+                    // Skip the player — only hit enemies
+                    if (playerHP != null) continue;
+
+                    if (damageable != null)
+                    {
+                        damageable.TakeDamage(damage);
+                        hitTargets.Add(id);
+                    }
+                }
+                else
+                {
+                    // Boss fired — damage PLAYER only
+                    PlayerHealth health = hit.GetComponent<PlayerHealth>();
+                    if (health != null)
+                    {
+                        health.TakeDamage(damage);
+                        hitTargets.Add(id);
+                    }
                 }
             }
 

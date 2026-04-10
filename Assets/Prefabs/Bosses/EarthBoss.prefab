@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4609581083346521076}
   m_Layer: 9
   m_Name: EarthBoss
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -117504,7 +117504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583775348937052398, guid: ab47c7d1eb457804aa63237bc1dd9365, type: 3}
       propertyPath: maxHealth
-      value: 300
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4583775348937052398, guid: ab47c7d1eb457804aa63237bc1dd9365, type: 3}
       propertyPath: tridentDrop

@@ -2,45 +2,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// Boss Health Bar UI — fixes:
-///   1. The boss is disabled at scene start, so this script waits until the
-///      boss is actually alive before subscribing to its events.
-///   2. Manually calls UpdateHealth once on enable so the bar starts full.
-/// </summary>
 public class BossHealthBarUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EarthBossHealth bossHealth;
-    [SerializeField] private Image           healthFillImage;
-    [SerializeField] private TMP_Text        bossNameText;
-    [SerializeField] private GameObject      healthBarPanel;
+    [SerializeField] private EnemyHealth bossHealth;  // ✅ Changed from EarthBossHealth
+    [SerializeField] private Image healthFillImage;
+    [SerializeField] private TMP_Text bossNameText;
+    [SerializeField] private GameObject healthBarPanel;
 
     [Header("Settings")]
-    [SerializeField] private string bossName    = "EARTH GUARDIAN";
-    [SerializeField] private float  smoothSpeed = 5f;
+    [SerializeField] private string bossName = "EARTH GUARDIAN";
+    [SerializeField] private float smoothSpeed = 5f;
 
     private float targetFill = 1f;
-    private bool  subscribed = false;
+    private bool subscribed = false;
 
     // -------------------------------------------------------------------------
-    // Called by ArenaRevealTrigger when it enables this GameObject
+    // Called when this GameObject is enabled
     // -------------------------------------------------------------------------
 
     private void OnEnable()
     {
-        // Subscribe now — boss is guaranteed to be active at this point
         TrySubscribe();
 
         if (bossNameText != null)
             bossNameText.text = bossName;
 
-        // Reset bar to full
         targetFill = 1f;
         if (healthFillImage != null)
         {
             healthFillImage.fillAmount = 1f;
-            healthFillImage.color      = Color.green;
+            healthFillImage.color = Color.green;
         }
 
         if (healthBarPanel != null)
@@ -53,20 +45,20 @@ public class BossHealthBarUI : MonoBehaviour
 
         // Try to find bossHealth if not assigned
         if (bossHealth == null)
-            bossHealth = FindFirstObjectByType<EarthBossHealth>();
+            bossHealth = FindFirstObjectByType<EnemyHealth>();  // ✅ Changed
 
         if (bossHealth != null)
         {
             bossHealth.OnHealthChanged += UpdateHealth;
-            bossHealth.OnDied          += HideBar;
+            bossHealth.OnDied += HideBar;  // ✅ Uses the new OnDied event
             subscribed = true;
 
             // Sync immediately to current health
-            UpdateHealth(bossHealth.HealthFraction * 300f, 300f); // approximate
+            UpdateHealth(bossHealth.GetCurrentHealth(), bossHealth.GetMaxHealth());  // ✅ Fixed
         }
         else
         {
-            Debug.LogWarning("BossHealthBarUI: Could not find EarthBossHealth. Assign it in the Inspector.");
+            Debug.LogWarning("BossHealthBarUI: Could not find EnemyHealth. Assign it in the Inspector.");
         }
     }
 
@@ -77,7 +69,11 @@ public class BossHealthBarUI : MonoBehaviour
     private void Update()
     {
         if (healthFillImage != null)
-            healthFillImage.fillAmount = Mathf.Lerp(healthFillImage.fillAmount, targetFill, smoothSpeed * Time.deltaTime);
+            healthFillImage.fillAmount = Mathf.Lerp(
+                healthFillImage.fillAmount, 
+                targetFill, 
+                smoothSpeed * Time.deltaTime
+            );
     }
 
     // -------------------------------------------------------------------------
@@ -113,7 +109,7 @@ public class BossHealthBarUI : MonoBehaviour
         if (bossHealth != null && subscribed)
         {
             bossHealth.OnHealthChanged -= UpdateHealth;
-            bossHealth.OnDied          -= HideBar;
+            bossHealth.OnDied -= HideBar;
         }
     }
 }
