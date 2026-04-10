@@ -45,7 +45,17 @@ public class BossController : MonoBehaviour
             EnemyHealth oldHealth = currentBoss.GetComponent<EnemyHealth>();
             if (oldHealth != null)
             {
-                currentHealth = oldHealth.GetCurrentHealth();
+                float hp = oldHealth.GetCurrentHealth();
+
+            // 🔥 Treat near-zero as dead
+            if (hp <= 0.1f)
+    {
+        currentHealth = -1f; // mark as dead
+    }
+        else
+    {
+        currentHealth = hp;
+    }
             }
 
             Destroy(currentBoss);
@@ -77,6 +87,12 @@ public class BossController : MonoBehaviour
 
         currentBoss = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity, transform);
 
+        EnemyHealth health = currentBoss.GetComponent<EnemyHealth>();
+
+if (health != null)
+{
+    health.isFinalBoss = true; // 👑 ONLY THIS INSTANCE is final boss
+}
         EnemyHealth newHealth = currentBoss.GetComponent<EnemyHealth>();
         if (newHealth != null)
         {

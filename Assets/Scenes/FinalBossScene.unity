@@ -263,7 +263,7 @@ MonoBehaviour:
   fireBossPrefab: {fileID: 7174611317740016221, guid: 5f8ec8a845763894bb5f34ff52f03ce2, type: 3}
   waterBossPrefab: {fileID: 8029542926078214650, guid: ab47c7d1eb457804aa63237bc1dd9365, type: 3}
   lightningBossPrefab: {fileID: 7756645740764539660, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
-  earthBossPrefab: {fileID: 7174611317740016221, guid: 5f8ec8a845763894bb5f34ff52f03ce2, type: 3}
+  earthBossPrefab: {fileID: 8123615099126094555, guid: a9e361abc22b14df48b92f987db0ec58, type: 3}
   healthBarUI: {fileID: 0}
 --- !u!114 &117578693
 MonoBehaviour:
@@ -281,6 +281,9 @@ MonoBehaviour:
   damageCooldown: 1
   damageRange: 0.8
   attackWindup: 0.4
+  attackRecovery: 0.4
+  attackTriggerName: Attack
+  runBoolName: Run
 --- !u!114 &117578694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +303,7 @@ MonoBehaviour:
   coinDropCount: 3
   coinScatterRadius: 0.5
   tridentDrop: {fileID: 0}
+  isFinalBoss: 1
 --- !u!114 &117578695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10681,7 +10685,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4, y: -8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 760361637}
@@ -10735,7 +10739,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: c6230b02c36b1724cb6cdf59ac44c58f, type: 3}
+  m_Sprite: {fileID: 4096472716793604320, guid: e5a4c6877f7a1d74aac8a9fc1620e166, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10962,7 +10966,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.5, y: -5.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 760361637}
@@ -11016,7 +11020,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: c6230b02c36b1724cb6cdf59ac44c58f, type: 3}
+  m_Sprite: {fileID: 4096472716793604320, guid: e5a4c6877f7a1d74aac8a9fc1620e166, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -11404,7 +11408,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 760361637}
@@ -11458,7 +11462,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: c6230b02c36b1724cb6cdf59ac44c58f, type: 3}
+  m_Sprite: {fileID: 4096472716793604320, guid: e5a4c6877f7a1d74aac8a9fc1620e166, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -11478,11 +11482,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1202992941319068393, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 1202992941319068393, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1202992941319068393, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11713,7 +11717,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 760361637}
@@ -11767,7 +11771,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: c6230b02c36b1724cb6cdf59ac44c58f, type: 3}
+  m_Sprite: {fileID: 4096472716793604320, guid: e5a4c6877f7a1d74aac8a9fc1620e166, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
