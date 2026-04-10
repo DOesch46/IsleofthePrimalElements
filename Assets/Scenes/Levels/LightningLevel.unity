@@ -475,7 +475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4275985254392560152, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: maxHealth
-      value: 500
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4275985254392560152, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: coinDropCount
@@ -490,8 +490,12 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6193804726320922809, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
+      propertyPath: attackWindup
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193804726320922809, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: contactDamage
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7756645740764539660, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
       propertyPath: m_Name
@@ -20753,6 +20757,7 @@ GameObject:
   - component: {fileID: 1994866359}
   - component: {fileID: 1994866358}
   - component: {fileID: 1994866357}
+  - component: {fileID: 1994866372}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -20772,7 +20777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb15b1d5e1ce48b9b79ed7b31efe4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  wallet: {fileID: 0}
+  wallet: {fileID: 11400000, guid: 5b38bc4c0a6554054ae95ebd832c421f, type: 2}
 --- !u!114 &1994866358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20792,6 +20797,7 @@ MonoBehaviour:
   hitboxOffset: 0.7
   waveProjectilePrefab: {fileID: 9087665198237984896, guid: 319e1267513d6a74f981926c94226732, type: 3}
   maxWaveChargeTime: 1.5
+  waveCooldown: 1.5
   waveSpawnDistance: 0.6
   smallWaveDamageMultiplier: 1
   mediumWaveDamageMultiplier: 2
@@ -21113,6 +21119,24 @@ Transform:
   - {fileID: 322720487}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1994866372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994866356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231e911e329464b0b8e15806d65c6114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGroundShockwave
+  shockwavePrefab: {fileID: 6955766203746810334, guid: a5f375f7034e349be819ca1562737903, type: 3}
+  damage: 30
+  waveSpeed: 8
+  waveSprite: {fileID: 7482667652216324306, guid: f4f301ad991fa694086c27d75e79dd4d, type: 3}
+  cooldown: 4
+  abilityKey: 116
 --- !u!1 &1998168352 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7756645740764539660, guid: 5efcaed74cc4e6f4eb87fc560b9b2292, type: 3}
