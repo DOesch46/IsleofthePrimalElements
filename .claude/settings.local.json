@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"/c/Users/serka/SE2250FinalProject/Assets/Scripts\" -name \"*.cs\" -type f -exec grep -l \"class.*Boss\\\\|Lightning.*Boss\\\\|Water.*Boss\" {} \\\\;)"
+    ]
+  }
+}

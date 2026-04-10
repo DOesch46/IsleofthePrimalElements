@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   isBoss: 0
   elementReward: 0
-  maxHealth: 200
+  maxHealth: 50
   coinPrefab: {fileID: 8305527822653216029, guid: 9a471a929b973b243b669a5e18170c20, type: 3}
   coinDropCount: 3
   coinScatterRadius: 0.5
@@ -220,6 +220,9 @@ MonoBehaviour:
   damageCooldown: 1
   damageRange: 0.8
   attackWindup: 0.4
+  attackRecovery: 0.4
+  attackTriggerName: Attack
+  runBoolName: Run
 --- !u!114 &-3010836838299200512
 MonoBehaviour:
   m_ObjectHideFlags: 0

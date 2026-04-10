@@ -190,7 +190,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.875, y: 0.875}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -324,6 +324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7450722061899759933, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -331,6 +335,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4678054871860919119, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
       insertIndex: -1
       addedObject: {fileID: 92702746}
+    - targetCorrespondingSourceObject: {fileID: 4678054871860919119, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 92702760}
   m_SourcePrefab: {fileID: 100100000, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
 --- !u!1 &92702745 stripped
 GameObject:
@@ -349,12 +356,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb15b1d5e1ce48b9b79ed7b31efe4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  wallet: {fileID: 0}
+  wallet: {fileID: 11400000, guid: 5b38bc4c0a6554054ae95ebd832c421f, type: 2}
 --- !u!4 &92702759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1202992941319068393, guid: b2229a8ac0f2a4f8c894374cec2eee73, type: 3}
   m_PrefabInstance: {fileID: 92702744}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &92702760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92702745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9f614fc6d5e4af999498bdb91b62e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashSystem
+  dashSpeed: 35
+  dashDuration: 0.25
+  dashCooldown: 1
 --- !u!1 &154042726
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +842,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 315527357}
   m_HandleRect: {fileID: 315527356}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
