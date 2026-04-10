@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: ae8217de8afc39f4c983a2a3c483ede8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4979705167850504590
+    second: fireEnemies_0
+  - first:
+      213: -308773999733442252
+    second: fireEnemies_1
+  - first:
+      213: -7766448626060028508
+    second: fireEnemies_2
+  - first:
+      213: -557638977022866992
+    second: fireEnemies_3
+  - first:
+      213: 4495073949295275594
+    second: fireEnemies_4
+  - first:
+      213: 1270156278203701463
+    second: fireEnemies_5
+  - first:
+      213: -4996926551483524060
+    second: fireEnemies_6
+  - first:
+      213: -3940738360511464274
+    second: fireEnemies_7
+  - first:
+      213: 1137168731247759765
+    second: fireEnemies_8
+  - first:
+      213: 1188931717481013840
+    second: fireEnemies_9
+  - first:
+      213: 2266073786758774893
+    second: fireEnemies_10
+  - first:
+      213: -8097940558923011222
+    second: fireEnemies_11
+  - first:
+      213: 2114376399316883595
+    second: fireEnemies_12
+  - first:
+      213: -9048221139425997098
+    second: fireEnemies_13
+  - first:
+      213: 5650367710862972067
+    second: fireEnemies_14
+  - first:
+      213: 7240528554436480467
+    second: fireEnemies_15
+  - first:
+      213: -3807953593727157377
+    second: fireEnemies_16
+  - first:
+      213: -1321174474249542976
+    second: fireEnemies_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fireEnemies_0
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 515
+        width: 99
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8108ef67777b1540800000000000000
+      internalID: 4979705167850504590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_1
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 515
+        width: 91
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 439f206eea307bbf0800000000000000
+      internalID: -308773999733442252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_2
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 299
+        width: 28
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a51f5d7f18083490800000000000000
+      internalID: -7766448626060028508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_3
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 295
+        width: 45
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d9c3ad0e4ed248f0800000000000000
+      internalID: -557638977022866992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_4
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 295
+        width: 70
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4e6bd2e0f5b16e30800000000000000
+      internalID: 4495073949295275594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_5
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 293
+        width: 109
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d8509bc76080a110800000000000000
+      internalID: 1270156278203701463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_6
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 361
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42c5b1ab6c957aab0800000000000000
+      internalID: -4996926551483524060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_7
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 293
+        width: 136
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eac75fc075faf49c0800000000000000
+      internalID: -3940738360511464274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_8
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 293
+        width: 124
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59154b3afe808cf00800000000000000
+      internalID: 1137168731247759765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_9
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 295
+        width: 100
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 052a6aa091fef7010800000000000000
+      internalID: 1188931717481013840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_10
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 295
+        width: 99
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d60c4965a16b27f10800000000000000
+      internalID: 2266073786758774893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_11
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 315
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6b6a2567f55e9f80800000000000000
+      internalID: -8097940558923011222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_12
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 316
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8890caf126c75d10800000000000000
+      internalID: 2114376399316883595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_13
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 52
+        width: 99
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de455f20d24e6280800000000000000
+      internalID: -9048221139425997098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_14
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 46
+        width: 101
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a413500f732a6e40800000000000000
+      internalID: 5650367710862972067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_15
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 46
+        width: 136
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dd4249bb568b7460800000000000000
+      internalID: 7240528554436480467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_16
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 40
+        width: 154
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7b78b4c16e672bc0800000000000000
+      internalID: -3807953593727157377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fireEnemies_17
+      rect:
+        serializedVersion: 2
+        x: 779
+        y: 63
+        width: 209
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c2ea08c0de3aade0800000000000000
+      internalID: -1321174474249542976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      fireEnemies_0: 4979705167850504590
+      fireEnemies_1: -308773999733442252
+      fireEnemies_10: 2266073786758774893
+      fireEnemies_11: -8097940558923011222
+      fireEnemies_12: 2114376399316883595
+      fireEnemies_13: -9048221139425997098
+      fireEnemies_14: 5650367710862972067
+      fireEnemies_15: 7240528554436480467
+      fireEnemies_16: -3807953593727157377
+      fireEnemies_17: -1321174474249542976
+      fireEnemies_2: -7766448626060028508
+      fireEnemies_3: -557638977022866992
+      fireEnemies_4: 4495073949295275594
+      fireEnemies_5: 1270156278203701463
+      fireEnemies_6: -4996926551483524060
+      fireEnemies_7: -3940738360511464274
+      fireEnemies_8: 1137168731247759765
+      fireEnemies_9: 1188931717481013840
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

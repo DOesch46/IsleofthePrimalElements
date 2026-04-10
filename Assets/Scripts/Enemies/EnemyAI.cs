@@ -51,23 +51,19 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-        }
-        else
-        {
-            Debug.LogWarning($"{gameObject.name}: No GameObject with tag 'Player' found.");
-        }
+        ResolvePlayerReference(logResult: true);
     }
 
     private void FixedUpdate()
     {
+        if (player == null)
+            ResolvePlayerReference();
+
         if (player == null) return;
 
-        // Don't move if currently attacking
         EnemyDamage dmg = GetComponent<EnemyDamage>();
+
+        // Don't move if currently attacking
         if (dmg != null && dmg.IsAttacking)
         {
             UpdateAnimator(Vector2.zero);
@@ -76,8 +72,15 @@ public class EnemyAI : MonoBehaviour
 
         Vector2 direction = (player.position - transform.position);
         float distance = direction.magnitude;
+        float effectiveStopDistance = stopDistance;
 
-        if (distance <= detectionRange && distance > stopDistance)
+        if (dmg != null && dmg.DamageRange > 0f)
+        {
+            // Enemies must be allowed to step into their actual hit range.
+            effectiveStopDistance = Mathf.Min(stopDistance, dmg.DamageRange * 0.9f);
+        }
+
+        if (distance <= detectionRange && distance > effectiveStopDistance)
         {
             Vector2 moveDir = direction.normalized;
             rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
@@ -106,6 +109,22 @@ public class EnemyAI : MonoBehaviour
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * (direction.x < 0 ? -1f : 1f);
             transform.localScale = scale;
+        }
+    }
+
+    private void ResolvePlayerReference(bool logResult = false)
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+
+            if (logResult)
+                Debug.Log($"{gameObject.name}: Tracking player '{playerObj.name}'.");
+        }
+        else if (logResult)
+        {
+            Debug.LogWarning($"{gameObject.name}: No GameObject with tag 'Player' found.");
         }
     }
 
