@@ -17,6 +17,7 @@ public class PlayerCombat : MonoBehaviour
     [Header("Water Wave")]
     [SerializeField] private GameObject waveProjectilePrefab;
     [SerializeField] private float maxWaveChargeTime = 1.5f;
+    [SerializeField] private float waveCooldown = 1.5f;
     [SerializeField] private float waveSpawnDistance = 0.6f;
     [SerializeField] private float smallWaveDamageMultiplier = 1f;
     [SerializeField] private float mediumWaveDamageMultiplier = 2f;
@@ -43,6 +44,7 @@ public class PlayerCombat : MonoBehaviour
     // -------------------------------------------------------------------------
 
     private float cooldownTimer  = 0f;
+    private float waveCooldownTimer = 0f;
     private float hitboxTimer    = 0f;
     private bool  hitboxActive   = false;
     private bool isWaveCharging  = false;
@@ -79,6 +81,9 @@ public class PlayerCombat : MonoBehaviour
     {
         if (cooldownTimer > 0f)
             cooldownTimer -= Time.deltaTime;
+
+        if (waveCooldownTimer > 0f)
+            waveCooldownTimer -= Time.deltaTime;
 
         HandleWaveKeyboardFallback();
 
@@ -296,6 +301,13 @@ public class PlayerCombat : MonoBehaviour
             return false;
         }
 
+        if (waveCooldownTimer > 0f)
+        {
+            if (logReason)
+                Debug.Log($"{name}: Water wave blocked by cooldown. Remaining={waveCooldownTimer:F2}s.");
+            return false;
+        }
+
         bool unlocked = GameProgressManager.Instance != null &&
                         GameProgressManager.Instance.HasElement(ElementType.Water);
 
@@ -369,7 +381,9 @@ public class PlayerCombat : MonoBehaviour
             facingDirection,
             ElementType.Water);
 
+        waveCooldownTimer = waveCooldown;
         Debug.Log($"{name}: Water wave projectile initialized successfully.");
+        Debug.Log($"{name}: Water wave cooldown started for {waveCooldown:F2}s.");
     }
 
     /// <summary>
@@ -399,6 +413,11 @@ public class PlayerCombat : MonoBehaviour
     public Vector2 GetLastMoveDirection()
     {
         return lastMoveDirection;
+    }
+
+    public float GetWaveCooldownRemaining()
+    {
+        return Mathf.Max(0f, waveCooldownTimer);
     }
 
     private bool IsPlayerDead()

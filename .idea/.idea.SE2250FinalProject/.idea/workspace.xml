@@ -6,14 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="1ab58ac7-c6fa-4b87-81c1-44e645dd6431" name="Changes" comment="Merge branch 'main' of https://github.com/DOesch46/SE2250FinalProject&#10;&#10;# Conflicts:&#10;#&#9;.idea/.idea.SE2250FinalProject/.idea/workspace.xml&#10;#&#9;Assets/Prefabs/Player/Player.prefab&#10;#&#9;Assets/Scenes/Levels/FireLevel.unity&#10;#&#9;Assets/Scenes/MainIsland.unity&#10;#&#9;obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SE2250FinalProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Enemy Galore 1 - Pixel Art/Sprites/Pebble/Pebble_Full.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Enemy Galore 1 - Pixel Art/Sprites/Pebble/Pebble_Full.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hazards/FallingRock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hazards/FallingRock.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/PlayerWallet.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/PlayerWallet.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/EarthLevel.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/ArenaRevealTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/ArenaRevealTrigger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRockSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/FallingRockSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainIsland.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/BossHealthBarUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/BossHealthBarUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossDeathHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/EarthBossDeathHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/GroundSlamWave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EarthLevel/GroundSlamWave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/EnemyHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/EnemyHealth.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerGroundShockwave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerGroundShockwave.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +50,9 @@
     <urls />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -136,6 +139,9 @@
       <workItem from="1775518521299" duration="83000" />
       <workItem from="1775523145703" duration="130000" />
       <workItem from="1775705059082" duration="553000" />
+      <workItem from="1775781788465" duration="1030000" />
+      <workItem from="1775782846045" duration="1396000" />
+      <workItem from="1775784567288" duration="93000" />
     </task>
     <servers />
   </component>

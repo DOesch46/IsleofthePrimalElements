@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca55ec81843484e2ba517ef9d2c3e519, type: 3}
   m_Name: PlayerWallet
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWalletSO
-  coins: 0
+  coins: 100
