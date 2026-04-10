@@ -22670,6 +22670,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c11634e86dc41ae862ea27c51dd25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EarthBossHealth
+--- !u!114 &1541870392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541870385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d279456ed83e4730b5fed2a36eb1d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EarthBossDeathHandler
+  exitPortal: {fileID: 1851198327}
+  portalSpawnPoint: {fileID: 0}
+  coinPrefab: {fileID: 8305527822653216029, guid: 9a471a929b973b243b669a5e18170c20, type: 3}
+  coinCount: 50
+  coinSpreadRadius: 1.5
+  abilityName: GroundSlam
+  bossHealth: {fileID: 1541870391}
+  rockSpawner: {fileID: 1741208168}
+  pillarSpawner: {fileID: 179151173}
+  bossHealthBar: {fileID: 1094961587}
 --- !u!1 &1561748523
 GameObject:
   m_ObjectHideFlags: 0
@@ -27139,6 +27161,10 @@ PrefabInstance:
       propertyPath: rockSpawner
       value: 
       objectReference: {fileID: 1741208168}
+    - target: {fileID: 2415541472488255756, guid: a9e361abc22b14df48b92f987db0ec58, type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 8123615099126094555, guid: a9e361abc22b14df48b92f987db0ec58, type: 3}
       propertyPath: m_Name
       value: EarthBoss
@@ -27186,7 +27212,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8123615099126094555, guid: a9e361abc22b14df48b92f987db0ec58, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1541870392}
   m_SourcePrefab: {fileID: 100100000, guid: a9e361abc22b14df48b92f987db0ec58, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

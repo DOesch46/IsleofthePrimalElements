@@ -1,11 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-/// <summary>
-/// ArenaRevealTrigger — fixed activation order:
-///   Boss is enabled BEFORE the health bar so OnEnable() on BossHealthBarUI
-///   can find EarthBossHealth and subscribe to events correctly.
-/// </summary>
 public class ArenaRevealTrigger : MonoBehaviour
 {
     [Header("Lighting")]
@@ -22,7 +17,7 @@ public class ArenaRevealTrigger : MonoBehaviour
 
     [Header("Rocks")]
     [SerializeField] private FallingRockSpawner rockSpawner;
-    
+
     [Header("Cutscene")]
     [SerializeField] private BossIntroCutscene introCutscene;
 
@@ -30,7 +25,6 @@ public class ArenaRevealTrigger : MonoBehaviour
 
     private void Start()
     {
-        // Keep boss and UI hidden until player enters
         if (earthBoss != null)
             earthBoss.SetActive(false);
 
@@ -57,19 +51,38 @@ public class ArenaRevealTrigger : MonoBehaviour
 
         revealed = true;
 
-        // FIX: Enable boss FIRST so EarthBossHealth exists when the health bar subscribes
         if (earthBoss != null)
             earthBoss.SetActive(true);
 
-        // THEN enable the health bar — its OnEnable() will find EarthBossHealth
         if (bossHealthBar != null)
             bossHealthBar.gameObject.SetActive(true);
 
-        if (rockSpawner != null)
-            rockSpawner.StartSpawning();
-
         Debug.Log("BOSS FIGHT BEGIN!");
+
         if (introCutscene != null)
             introCutscene.StartCutscene();
+        else
+        {
+            // If no cutscene, start rocks directly
+            if (rockSpawner != null)
+                rockSpawner.StartSpawning();
+        }
+    }
+
+    // Call this to reset everything for re-entry
+    public void ResetArena()
+    {
+        revealed = false;
+
+        if (earthBoss != null)
+            earthBoss.SetActive(false);
+
+        if (bossHealthBar != null)
+            bossHealthBar.gameObject.SetActive(false);
+
+        if (rockSpawner != null)
+            rockSpawner.StopSpawning();
+
+        Debug.Log("Arena reset for re-entry.");
     }
 }
