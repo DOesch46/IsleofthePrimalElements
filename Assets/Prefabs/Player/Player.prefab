@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 63290372532297826}
   - component: {fileID: 5200868442600228855}
   - component: {fileID: 760333081691566507}
+  - component: {fileID: -8210628919582461158}
+  - component: {fileID: -5993295825605448601}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -217,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514095525815be3468e89e002c75a4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementSystem
-  moveSpeed: 3
+  moveSpeed: 5
 --- !u!114 &7371413604887642107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 100
   invincibleTime: 0.8
+  autoRespawnIfAvailable: 1
+  respawnDelay: 1.25
 --- !u!114 &760333081691566507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,10 +333,9 @@ MonoBehaviour:
   hitboxActiveTime: 0.15
   attackRange: 4
   hitboxOffset: 0.7
-  attackHitbox: {fileID: 0}
-  animator: {fileID: 0}
   waveProjectilePrefab: {fileID: 9087665198237984896, guid: 319e1267513d6a74f981926c94226732, type: 3}
   maxWaveChargeTime: 1.5
+  waveCooldown: 1.5
   waveSpawnDistance: 0.6
   smallWaveDamageMultiplier: 1
   mediumWaveDamageMultiplier: 2
@@ -346,3 +349,33 @@ MonoBehaviour:
   smallWaveSprite: {fileID: -530430118, guid: 8b1af597d3f345f43a3e5fb7a615108b, type: 3}
   mediumWaveSprite: {fileID: -1765135478, guid: 8b1af597d3f345f43a3e5fb7a615108b, type: 3}
   largeWaveSprite: {fileID: 694261327, guid: 8b1af597d3f345f43a3e5fb7a615108b, type: 3}
+  attackHitbox: {fileID: 0}
+  animator: {fileID: 0}
+--- !u!114 &-8210628919582461158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678054871860919119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9f614fc6d5e4af999498bdb91b62e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashSystem
+  dashSpeed: 35
+  dashDuration: 0.25
+  dashCooldown: 1
+--- !u!114 &-5993295825605448601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678054871860919119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb15b1d5e1ce48b9b79ed7b31efe4dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  wallet: {fileID: 11400000, guid: 5b38bc4c0a6554054ae95ebd832c421f, type: 2}
