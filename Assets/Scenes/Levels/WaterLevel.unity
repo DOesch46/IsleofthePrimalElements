@@ -117507,6 +117507,10 @@ PrefabInstance:
       value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4583775348937052398, guid: ab47c7d1eb457804aa63237bc1dd9365, type: 3}
+      propertyPath: isFinalBoss
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583775348937052398, guid: ab47c7d1eb457804aa63237bc1dd9365, type: 3}
       propertyPath: tridentDrop
       value: 
       objectReference: {fileID: 5723264179405668211, guid: f6ca765aa4e9d904d89f117f96d72c54, type: 3}
@@ -117563,6 +117567,8 @@ MonoBehaviour:
   portalPrefab: {fileID: 5538097848529911008, guid: 0c9d3886b759d5144884dfec804d837c, type: 3}
   portalSpawnPoint: {fileID: 1619044382}
   spawnOffset: {x: 0, y: 0, z: 0}
+  rewardSpawnPoint: {fileID: 0}
+  rewardSpawnOffset: {x: 0, y: 0, z: 0}
   returnSceneName: MainIsland
   returnSpawnId: FromWaterBoss
   bossProgressId: 

@@ -12,13 +12,17 @@ public class BossHealthUI : MonoBehaviour
         if (target != null)
         {
             target.OnHealthChanged -= UpdateHealth;
+            target.OnDied -= HandleTargetDied;
         }
 
         target = newTarget;
 
+        gameObject.SetActive(target != null);
+
         if (target != null)
         {
             target.OnHealthChanged += UpdateHealth;
+            target.OnDied += HandleTargetDied;
             UpdateHealth(target.GetCurrentHealth(), target.GetMaxHealth());
         }
     }
@@ -29,5 +33,17 @@ public class BossHealthUI : MonoBehaviour
         {
             fill.fillAmount = current / max;
         }
+    }
+
+    private void HandleTargetDied()
+    {
+        if (target != null)
+        {
+            target.OnHealthChanged -= UpdateHealth;
+            target.OnDied -= HandleTargetDied;
+            target = null;
+        }
+
+        gameObject.SetActive(false);
     }
 }

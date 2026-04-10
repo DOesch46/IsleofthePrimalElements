@@ -88,6 +88,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (isDead) return;
         isDead = true;
 
+        bool hasCustomBossCleanup = GetComponent<EarthBossDeathHandler>() != null;
+
         Debug.Log($"{gameObject.name} died!");
 
         EnemyAI ai = GetComponent<EnemyAI>();
@@ -103,7 +105,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
         if (isBoss)
         {
-            Debug.Log($"{gameObject.name}: Boss died. Letting DeathHandler manage cleanup.");
+            Debug.Log($"{gameObject.name}: Boss died. Processing boss death cleanup.");
 
             if (tridentDrop != null)
             {
@@ -115,6 +117,15 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             }
 
             OnEnemyDied?.Invoke(gameObject);
+
+            if (hasCustomBossCleanup)
+            {
+                Debug.Log($"{gameObject.name}: Custom boss death handler found. Skipping generic cleanup.");
+                return;
+            }
+
+            DropCoins();
+            StartCoroutine(DestroyAfterDeathAnim());
             return;
         }
 
