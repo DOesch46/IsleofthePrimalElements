@@ -12,11 +12,8 @@ public class EarthBossDeathHandler : MonoBehaviour
     [SerializeField] private int coinCount = 10;
     [SerializeField] private float coinSpreadRadius = 1.5f;
 
-    [Header("Ability")]
-    [SerializeField] private string abilityName = "GroundSlam";
-
     [Header("References")]
-    [SerializeField] private EarthBossHealth bossHealth;
+    [SerializeField] private EnemyHealth bossHealth;  // ✅ Changed from EarthBossHealth
     [SerializeField] private FallingRockSpawner rockSpawner;
     [SerializeField] private EarthPillarSpawner pillarSpawner;
     [SerializeField] private GameObject bossHealthBar;
@@ -39,43 +36,39 @@ public class EarthBossDeathHandler : MonoBehaviour
     {
         Debug.Log("Earth Boss has been defeated!");
 
-        // Stop all hazards
         if (rockSpawner != null)
             rockSpawner.StopSpawning();
 
         if (pillarSpawner != null)
             pillarSpawner.StopSpawning();
 
-        // Destroy all remaining rocks and pillars
         foreach (FallingRock rock in FindObjectsOfType<FallingRock>())
             Destroy(rock.gameObject);
 
         foreach (EarthPillar pillar in FindObjectsOfType<EarthPillar>())
             Destroy(pillar.gameObject);
 
-        // Hide health bar
         if (bossHealthBar != null)
             bossHealthBar.SetActive(false);
 
-        // Camera shake for dramatic death
         CameraShake shake = Camera.main?.GetComponent<CameraShake>();
         if (shake != null)
             shake.Shake(0.5f, 0.15f);
 
         yield return new WaitForSeconds(0.5f);
 
-        // Spawn coins
         SpawnCoins();
 
         yield return new WaitForSeconds(0.5f);
 
-        // Grant ability
         GrantAbility();
 
         yield return new WaitForSeconds(1f);
 
-        // Spawn exit portal
         SpawnPortal();
+
+        // ✅ Destroy the boss after the death sequence
+        Destroy(bossHealth.gameObject);
 
         Debug.Log("Boss death sequence complete!");
     }
@@ -88,7 +81,7 @@ public class EarthBossDeathHandler : MonoBehaviour
             return;
         }
 
-        Vector3 bossPos = transform.position;
+        Vector3 bossPos = bossHealth != null ? bossHealth.transform.position : transform.position;
 
         for (int i = 0; i < coinCount; i++)
         {
@@ -103,45 +96,24 @@ public class EarthBossDeathHandler : MonoBehaviour
     private void GrantAbility()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
-        // Try to find and enable the ground slam ability
-        // Check for common ability script names
-        MonoBehaviour[] allScripts = player.GetComponents<MonoBehaviour>();
-        foreach (MonoBehaviour script in allScripts)
+        if (player != null)
         {
-            string typeName = script.GetType().Name.ToLower();
-            if (typeName.Contains("groundslam") || typeName.Contains("earthability") 
-                || typeName.Contains("slam"))
+            PlayerGroundShockwave shockwave = player.GetComponent<PlayerGroundShockwave>();
+            if (shockwave != null)
             {
-                script.enabled = true;
-                Debug.Log($"Enabled ability: {script.GetType().Name}");
+                shockwave.UnlockAbility();
+                Debug.Log("Ground Slam ability granted! Press T to use.");
                 return;
+            }
+            else
+            {
+                Debug.LogWarning("PlayerGroundShockwave script not found on player!");
             }
         }
 
-        // Also check children
-        MonoBehaviour[] childScripts = player.GetComponentsInChildren<MonoBehaviour>(true);
-        foreach (MonoBehaviour script in childScripts)
-        {
-            string typeName = script.GetType().Name.ToLower();
-            if (typeName.Contains("groundslam") || typeName.Contains("earthability")
-                || typeName.Contains("slam"))
-            {
-                script.enabled = true;
-                Debug.Log($"Enabled ability: {script.GetType().Name}");
-                return;
-            }
-        }
-
-        // If no specific ability script found, try GameProgressManager
-        if (GameProgressManager.Instance != null)
-        {
-            // Mark earth element as unlocked
-            Debug.Log("Ground Slam ability granted via progress!");
-        }
-
-        Debug.Log("Ground Slam ability granted! Press T to use.");
+        PlayerPrefs.SetInt("GroundShockwaveUnlocked", 1);
+        PlayerPrefs.Save();
+        Debug.Log("Ground Slam saved to PlayerPrefs for next scene.");
     }
 
     private void SpawnPortal()
@@ -152,14 +124,12 @@ public class EarthBossDeathHandler : MonoBehaviour
             return;
         }
 
-        // If portal is in the scene but disabled, just enable it
         if (exitPortal.scene.IsValid())
         {
             exitPortal.SetActive(true);
         }
         else
         {
-            // It's a prefab — instantiate it
             Vector3 spawnPos;
             if (portalSpawnPoint != null)
                 spawnPos = portalSpawnPoint.position;

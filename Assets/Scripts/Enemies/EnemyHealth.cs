@@ -1,78 +1,54 @@
 using UnityEngine;
 using System;
 
-/// <summary>
-/// Enemy health component that handles taking damage, dying,
-/// dropping coins, and notifying the level objective system.
-///
-/// SETUP:
-/// 1. Attach to the enemy GameObject (alongside EnemyAI and EnemyDamage).
-/// 2. Assign a coin prefab in the Inspector for coin drops.
-/// 3. Adjust maxHealth and coinDropCount as needed.
-/// </summary>
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
-    // -------------------------------------------------------------------------
-    // Inspector Settings
-    // -------------------------------------------------------------------------
-
     [SerializeField] private bool isBoss = false;
     [SerializeField] private ElementType elementReward;
-    
+
     [Header("Health")]
     [SerializeField] private float maxHealth = 50f;
 
     [Header("Coin Drop")]
-    [Tooltip("Coin prefab to spawn on death. Must have CoinPickup component.")]
     [SerializeField] private GameObject coinPrefab;
-
-    [Tooltip("Number of coins to drop on death.")]
     [SerializeField] private int coinDropCount = 3;
-
-    [Tooltip("How far coins scatter from the death position.")]
     [SerializeField] private float coinScatterRadius = 0.5f;
 
     [SerializeField] private GameObject tridentDrop;
-    // -------------------------------------------------------------------------
+
     // Events
-    // -------------------------------------------------------------------------
-
-    /// <summary>Fired when this enemy dies. Passes this enemy's GameObject.</summary>
     public static event Action<GameObject> OnEnemyDied;
-
-    /// <summary>Fired when health changes. Passes (current, max).</summary>
     public event Action<float, float> OnHealthChanged;
+    public event Action OnDied;  // ✅ Added so death handler can subscribe
 
-    // -------------------------------------------------------------------------
-    // Private State
-    // -------------------------------------------------------------------------
-
+    // State
     private float currentHealth;
     private bool isInvulnerable = false;
     private Animator animator;
     private bool isDead = false;
 
-    // Golem controller parameter hashes
-    private static readonly int AnimHit   = Animator.StringToHash("Hit");
+    private static readonly int AnimHit = Animator.StringToHash("Hit");
     private static readonly int AnimDeath = Animator.StringToHash("Death");
+
+    // -------------------------------------------------------------------------
+    // Public Getters/Setters
+    // -------------------------------------------------------------------------
+
+    public float GetMaxHealth() => maxHealth;
+    public float GetCurrentHealth() => currentHealth;
+    public bool IsDead => isDead;
+    public float HealthFraction => currentHealth / maxHealth;
+
+    public void SetCurrentHealth(float value)
+    {
+        currentHealth = value;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
 
     // -------------------------------------------------------------------------
     // Unity Lifecycle
     // -------------------------------------------------------------------------
-    public float GetMaxHealth()
-{
-    return maxHealth;
-}
-    public float GetCurrentHealth()
-{
-    return currentHealth;
-}
 
-public void SetCurrentHealth(float value)
-{
-    currentHealth = value;
-    OnHealthChanged?.Invoke(currentHealth, maxHealth);
-}
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -80,7 +56,7 @@ public void SetCurrentHealth(float value)
     }
 
     // -------------------------------------------------------------------------
-    // IDamageable Implementation
+    // IDamageable
     // -------------------------------------------------------------------------
 
     public void TakeDamage(float damage)
@@ -88,8 +64,15 @@ public void SetCurrentHealth(float value)
         if (isInvulnerable || isDead) return;
 
         currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0f);
+
         Debug.Log($"{gameObject.name} took {damage} damage. Health: {currentHealth}/{maxHealth}");
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        // ✅ Hit flash support (for bosses and regular enemies)
+        HitFlash flash = GetComponent<HitFlash>();
+        if (flash != null)
+            flash.Flash();
 
         if (currentHealth <= 0f)
         {
@@ -97,19 +80,15 @@ public void SetCurrentHealth(float value)
         }
         else
         {
-            // Play hit animation
             if (animator != null)
                 animator.SetTrigger(AnimHit);
         }
     }
 
     // -------------------------------------------------------------------------
-    // Invulnerability — used by BossCutsceneTrigger to protect boss
+    // Invulnerability
     // -------------------------------------------------------------------------
 
-    /// <summary>
-    /// Makes this enemy immune to all damage.
-    /// </summary>
     public void SetInvulnerable(bool invulnerable)
     {
         isInvulnerable = invulnerable;
@@ -121,7 +100,7 @@ public void SetCurrentHealth(float value)
 
     private void Die()
     {
-
+        if (isDead) return;
         isDead = true;
         Debug.Log($"{gameObject.name} died!");
 
@@ -136,44 +115,43 @@ public void SetCurrentHealth(float value)
         if (animator != null)
             animator.SetTrigger(AnimDeath);
 
-       // Drop coins
-DropCoins();
+        // ✅ Fire the OnDied event (EarthBossDeathHandler listens to this)
+        OnDied?.Invoke();
 
-// Spawn trident if this is the boss
-if (isBoss && tridentDrop != null)
-{
-    Instantiate(tridentDrop, transform.position, Quaternion.identity);
-}
-
+        // ✅ If this is a boss, let the DeathHandler manage coins, portal, etc.
         if (isBoss)
         {
+            Debug.Log($"{gameObject.name}: Boss died. Letting DeathHandler manage cleanup.");
+
             if (tridentDrop != null)
             {
-                Debug.Log($"{gameObject.name}: Boss died with a pickup-based reward. Element unlock is deferred to the trident pickup.");
+                Instantiate(tridentDrop, transform.position, Quaternion.identity);
             }
             else if (elementReward != ElementType.None && GameProgressManager.Instance != null)
             {
-                Debug.Log($"{gameObject.name}: Granting boss element reward {elementReward} on death.");
                 GameProgressManager.Instance.CollectElement(elementReward);
             }
+
+            // Fire event for listeners
+            OnEnemyDied?.Invoke(gameObject);
+
+            // ✅ DON'T destroy — let the DeathHandler handle it
+            return;
         }
 
-        // Notify the level objective system
+        // --- Regular enemy death (not a boss) ---
+        DropCoins();
+
         if (LevelObjective.Instance != null)
-        {
             LevelObjective.Instance.EnemyDefeated();
-        }
 
-        // Fire event for any listeners
         OnEnemyDied?.Invoke(gameObject);
 
-        // Wait for death animation then destroy
         StartCoroutine(DestroyAfterDeathAnim());
     }
 
     private System.Collections.IEnumerator DestroyAfterDeathAnim()
     {
-        // Wait for death animation to play
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
@@ -189,10 +167,6 @@ if (isBoss && tridentDrop != null)
             Instantiate(coinPrefab, spawnPos, Quaternion.identity);
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Public API
-    // -------------------------------------------------------------------------
 
     public float GetHealthFraction() => currentHealth / maxHealth;
 }
