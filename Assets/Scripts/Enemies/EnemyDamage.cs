@@ -42,6 +42,7 @@ public class EnemyDamage : MonoBehaviour
     private bool isAttacking = false;
 
     public bool IsAttacking => isAttacking;
+    public float DamageRange => damageRange;
 
     private int animAttackHash;
     private int runBoolHash;

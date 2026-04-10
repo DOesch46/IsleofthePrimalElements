@@ -61,8 +61,9 @@ public class EnemyAI : MonoBehaviour
 
         if (player == null) return;
 
-        // Don't move if currently attacking
         EnemyDamage dmg = GetComponent<EnemyDamage>();
+
+        // Don't move if currently attacking
         if (dmg != null && dmg.IsAttacking)
         {
             UpdateAnimator(Vector2.zero);
@@ -71,8 +72,15 @@ public class EnemyAI : MonoBehaviour
 
         Vector2 direction = (player.position - transform.position);
         float distance = direction.magnitude;
+        float effectiveStopDistance = stopDistance;
 
-        if (distance <= detectionRange && distance > stopDistance)
+        if (dmg != null && dmg.DamageRange > 0f)
+        {
+            // Enemies must be allowed to step into their actual hit range.
+            effectiveStopDistance = Mathf.Min(stopDistance, dmg.DamageRange * 0.9f);
+        }
+
+        if (distance <= detectionRange && distance > effectiveStopDistance)
         {
             Vector2 moveDir = direction.normalized;
             rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
