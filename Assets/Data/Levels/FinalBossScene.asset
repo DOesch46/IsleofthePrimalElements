@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31e80c212171614d854942a7e864453, type: 3}
+  m_Name: FinalBossScene
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelName: Zerath's Fortress
+  sceneName: FinalBossScene
+  description: The final battle against Zerath.
+  elementType: 0
+  grantElementOnComplete: 0
+  bossName: Zerath
+  unlockedByDefault: 0
+  requiresAllElements: 1
+  requiredLevels:
+  - {fileID: 11400000, guid: 92b83a6fda96713429d92199ede96508, type: 2}
+  - {fileID: 11400000, guid: cef48da63be7d744c8d478a691f4bcf4, type: 2}
+  - {fileID: 11400000, guid: 347070d6f5b692747b9f6c72f4a9fb24, type: 2}
+  - {fileID: 11400000, guid: ba10b7e7caa5b544bb422e7bc94d94af, type: 2}
+  hubPortalPosition: {x: 0, y: 0}
+  portalColor: {r: 0.48549056, g: 0, b: 0.5396226, a: 1}
