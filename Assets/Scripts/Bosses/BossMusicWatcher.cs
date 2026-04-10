@@ -9,6 +9,7 @@ using UnityEngine;
 public class BossMusicWatcher : MonoBehaviour
 {
     private GameObject boss;
+    private EnemyHealth bossHealth;
     private AudioSource musicSource;
     private GameObject exitPortal;
 
@@ -16,6 +17,8 @@ public class BossMusicWatcher : MonoBehaviour
     {
         boss = bossObj;
         musicSource = source;
+        if (boss != null)
+            bossHealth = boss.GetComponent<EnemyHealth>();
     }
 
     public void SetExitPortal(GameObject portal)
@@ -25,12 +28,16 @@ public class BossMusicWatcher : MonoBehaviour
 
     private void Update()
     {
-        // Boss has been destroyed (died)
-        if (boss == null)
+        // Boss has been destroyed or killed
+        if (boss == null || (bossHealth != null && bossHealth.IsDead))
         {
             // Stop boss music
             if (musicSource != null)
                 musicSource.Stop();
+
+            // Destroy the boss GameObject
+            if (boss != null)
+                Destroy(boss);
 
             // Activate the exit portal
             if (exitPortal != null)
