@@ -314,7 +314,7 @@ The `docs/` directory contains a pre-built WebGL deployment. To update:
 
 Built as the SE2250 final project — Western University Software Engineering.
 
-- **Design & Development**: Mihir Grover & team
+- **Development Team**: Deepansh, Owen, Dylan, Sserkan, Mihir
 - **Art**: Pixel art assets from open sources including *Enemy Galore 1* pack
 - **Engine**: Unity 2022.3 LTS
 
